@@ -1,0 +1,32 @@
+﻿<Window x:Class="WpfApplication1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1"
+        mc:Ignorable="d"
+        Title="myPlayer" Height="550" Width="825" Background="Azure">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*"  />
+        </Grid.ColumnDefinitions>
+        <Menu Background="White">
+            <MenuItem Background="WhiteSmoke"  Header="Importer" BorderBrush="Gray">
+                <MenuItem Width="150" Height="20" Click="Open_File" Header="Photo"/>
+                <MenuItem Width="150" Height="20" Click="Open_File" Header="Video"/>
+                <MenuItem Width="150" Height="20" Click="Open_File" Header="Musique"/>
+                <MenuItem Width="150" Height="20" Click="Open_Playlist" Header="Playlist"/>
+            </MenuItem>
+        </Menu>
+
+        <MediaElement Name="player" Height="300" Margin="0,22,0.4,0.4"  Visibility="Hidden"/>
+        <StackPanel Name="options" Orientation="Horizontal" Visibility="Hidden" Width="333" Height="30" Margin="184,437,184.2,35.4" Panel.ZIndex="1" RenderTransformOrigin="0.498,1.564">
+            <Button Name="play" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="False">Play</Button>
+            <Button Name="pause" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="True">Pause</Button>
+            <Button Name="stop" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="True">Stop</Button>
+        </StackPanel>
+    </Grid>
+</Window>
