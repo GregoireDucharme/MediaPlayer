@@ -75,21 +75,18 @@ namespace WpfApplication1
 
             try
             {
-                bool k = false;
                 files.AddRange(Directory.GetFiles(path, pattern, SearchOption.TopDirectoryOnly));
                 foreach (string name in files)
                 {
-                    Image img = new Image();
-                    BitmapImage tmp = new BitmapImage();
-                    tmp.UriSource = new Uri(new Uri(name).LocalPath);
-                    img.Source = tmp;
-                    k = true;
-                    listBox1.Items.Add("lol");
+                    MediaElement media = new MediaElement();
+                    media.Source = new Uri(new Uri(name).LocalPath);
+                    media.Width = 20;
+                    media.Height = 20;
+                    listBox1.Items.Add(media);
                 }
                 foreach (var directory in Directory.GetDirectories(path))
                 {
-                    if (k == false)
-                        GetFiles(directory, pattern);
+                    GetFiles(directory, pattern);
                 }
             }
             catch (UnauthorizedAccessException) {
