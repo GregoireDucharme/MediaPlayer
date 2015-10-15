@@ -20,9 +20,14 @@
                 <MenuItem Width="150" Height="20" Click="Open_File" Header="Musique"/>
                 <MenuItem Width="150" Height="20" Click="Open_Playlist" Header="Playlist"/>
             </MenuItem>
+            <MenuItem Background="WhiteSmoke"  Header="Créer" BorderBrush="Gray">
+                <MenuItem Width="150" Height="20" Click="Create_Playlist" Header="Playlist"/>
+            </MenuItem>
         </Menu>
-
-        <MediaElement Name="player" Height="300" Margin="0,22,0.4,0.4"  Visibility="Hidden"/>
+        <ListBox Name="listBox1" Width="400" Height="400" Margin="25,38,643.4,84.4" Panel.ZIndex="1">
+            
+        </ListBox>
+        <MediaElement Name="player" Width="600" Margin="0,22,0.4,0.4"  Visibility="Hidden"/>
         <StackPanel Name="options" Orientation="Horizontal" Visibility="Hidden" Width="333" Height="30" Margin="184,437,184.2,35.4" Panel.ZIndex="1" RenderTransformOrigin="0.498,1.564">
             <Button Name="play" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="False">Play</Button>
             <Button Name="pause" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="True">Pause</Button>

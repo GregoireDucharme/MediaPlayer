@@ -1,9 +1,11 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,6 +22,7 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
@@ -64,6 +67,42 @@ namespace WpfApplication1
         private void Open_Playlist(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void GetFiles(string path, string pattern)
+        {
+            var files = new List<string>();
+
+            try
+            {
+                bool k = false;
+                files.AddRange(Directory.GetFiles(path, pattern, SearchOption.TopDirectoryOnly));
+                foreach (string name in files)
+                {
+                    Image img = new Image();
+                    BitmapImage tmp = new BitmapImage();
+                    tmp.UriSource = new Uri(new Uri(name).LocalPath);
+                    img.Source = tmp;
+                    k = true;
+                    listBox1.Items.Add("lol");
+                }
+                foreach (var directory in Directory.GetDirectories(path))
+                {
+                    if (k == false)
+                        GetFiles(directory, pattern);
+                }
+            }
+            catch (UnauthorizedAccessException) {
+            }
+            catch (PathTooLongException) {
+            }
+        }
+        private void Create_Playlist(object sender, RoutedEventArgs e)
+        {
+            string userName = Environment.UserName;
+            string path = @"c:\users\"+userName;
+            string searchPattern = "*.png";
+            GetFiles(path, searchPattern);
         }
         private void Action_File(object sender, RoutedEventArgs e)
         {
