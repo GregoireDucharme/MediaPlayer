@@ -1,32 +1,96 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
+
 namespace WpfApplication1
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
+    
+    public class ButtonMedia : INotifyPropertyChanged
+    {
+        private bool playState = false;
+        private bool pauseState = true;
+        private bool stopState = true;
+        public ButtonMedia()
+        {
+            OnPropertyChanged("PlayState");
+            OnPropertyChanged("PauseState");
+            OnPropertyChanged("StopState");
+        }
+        private void _trigger()
+        {
+            OnPropertyChanged("PlayState");
+            OnPropertyChanged("PauseState");
+            OnPropertyChanged("StopState");
+        }
+        public bool PlayState
+        {
+            get
+            {
+                return playState;
+            }
+            set
+            {
+                playState = value;
+                pauseState = true;
+                stopState = true;
+                _trigger();
+            }
+        }
+        public bool PauseState
+        {
+            get
+            {
+                return pauseState;
+            }
+            set
+            {
+                playState = true;
+                pauseState = value;
+                stopState = true;
+                _trigger();
+            }
+        }
+        public bool StopState
+        {
+            get
+            {
+                return stopState;
+            }
+            set
+            {
+                playState = true;
+                pauseState = value;
+                stopState = value;
+                _trigger();
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string v)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(v));
+            }
+        }
+
+    }
     public partial class MainWindow : Window
     {
-
+        ButtonMedia btn = new ButtonMedia();
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = btn;    
         }
+
         private void Open_File(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -48,6 +112,7 @@ namespace WpfApplication1
                     type = 'm';
                     break;
             }
+            player.MediaOpened += new RoutedEventHandler(Get_Len);
 
             if (openFileDialog.ShowDialog() == true)
             {
@@ -59,17 +124,29 @@ namespace WpfApplication1
                     options.Visibility = Visibility.Hidden;
                 player.LoadedBehavior = MediaState.Manual;
                 player.Play();
-                play.IsEnabled = false;
-                pause.IsEnabled = true;
-                stop.IsEnabled = true;
+                player.Pause();
+                player.Play();
             }
+        }
+        private void Get_Len(object sender, RoutedEventArgs e)
+        {
+            timeline.Maximum = player.NaturalDuration.TimeSpan.TotalMilliseconds;
         }
         private void Open_Playlist(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void GetFiles(string path, string pattern)
+        private void Open_Dir(object sender, RoutedEventArgs e)
+        {
+            ListView tmp = (ListView)sender;
+            res.Visibility = Visibility.Visible;
+            tmp.SelectedIndex = 0;
+            res.Content = tmp.SelectedValue.ToString();
+            GetFiles(tmp.SelectedValue.ToString(), "*.png", (ListView)sender);
+        }
+
+        private void GetFiles(string path, string pattern, ListView listPM)
         {
             var files = new List<string>();
 
@@ -82,11 +159,21 @@ namespace WpfApplication1
                     media.Source = new Uri(new Uri(name).LocalPath);
                     media.Width = 20;
                     media.Height = 20;
-                    listBox1.Items.Add(media);
+                    listPM.Items.Add(media);
                 }
                 foreach (var directory in Directory.GetDirectories(path))
                 {
-                    GetFiles(directory, pattern);
+                    if (!directory.Contains("."))
+                    {
+                        var newList = new ListView();
+                        newList.MouseLeftButtonDown += Open_Dir;
+                        // newList.Name = "paul";
+                        newList.Items.Add(directory);
+                        newList.Width = 115;
+                        newList.Height = 35;
+                        listPM.Items.Add(newList);
+                        //GetFiles(directory, pattern, newList);
+                    }
                 }
             }
             catch (UnauthorizedAccessException) {
@@ -94,12 +181,12 @@ namespace WpfApplication1
             catch (PathTooLongException) {
             }
         }
-        private void Create_Playlist(object sender, RoutedEventArgs e)
+        private void Import_Image(object sender, RoutedEventArgs e)
         {
             string userName = Environment.UserName;
-            string path = @"c:\users\"+userName;
+            string path = @"c:\users\" + userName;
             string searchPattern = "*.png";
-            GetFiles(path, searchPattern);
+            GetFiles(path, searchPattern, list);
         }
         private void Action_File(object sender, RoutedEventArgs e)
         {
@@ -107,24 +194,36 @@ namespace WpfApplication1
             switch (sender.ToString())
             {
                 case "System.Windows.Controls.Button: Play":
+                    btn.PlayState = false;
                     player.Play();
-                    play.IsEnabled = false;
-                    pause.IsEnabled = true;
-                    stop.IsEnabled = true;
                     break;
                 case "System.Windows.Controls.Button: Pause":
+                    btn.PauseState = false;
                     player.Pause();
-                    pause.IsEnabled = false;
-                    play.IsEnabled = true;
                     break;
                 case "System.Windows.Controls.Button: Stop":
-                    pause.IsEnabled = false;
-                    play.IsEnabled = true;
-                    stop.IsEnabled = false;
+                    btn.StopState = false;
                     player.Stop();
                     break;
             }
         }
+        private void Change_Timeline(object sender, RoutedPropertyChangedEventArgs<double> args)
+        {
+            time.Text = TimeSpan.FromMilliseconds(timeline.Value).ToString(@"hh\:mm\:ss");
+        }
+
+        private void End_Timeline(object sender, DragCompletedEventArgs args)
+        {
+            int t = (int)timeline.Value;
+
+            //TimeSpan ts = new TimeSpan(0, 0, 0, 0, t);
+            player.Position = TimeSpan.FromMilliseconds(t);
+        }
+        private void Change_Volume(object sender, RoutedPropertyChangedEventArgs<double> args)
+        {
+            player.Volume = (double)volume.Value;
+        }
+
 
     }
 }
