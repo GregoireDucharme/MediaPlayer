@@ -7,18 +7,18 @@
         mc:Ignorable="d"
         Title="Media Player" Height="600" Width="800">
 
-    <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0">
+    <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0" MouseWheel="Mouse_Volume">
         <TabControl SelectedIndex="{Binding CurrentTab}">
             <TabItem Header="En lecture">
                 <Grid>
-                    <MediaElement Name="mediaElement" Width="700" Height="450" LoadedBehavior="Manual" Margin="75,0,59,0" Source="{Binding Source}"/>
+                    <MediaElement Name="mediaElement" Width="700" Height="450" LoadedBehavior="Manual" Margin="75,0,59,0" Source="{Binding Source}" MediaOpened="Get_Len"/>
                     <StackPanel Name="options" Visibility="{Binding OptionVisi}" Orientation="Horizontal" Width="578" Height="auto" Margin="173,443,67.4,49.4" Panel.ZIndex="1" RenderTransformOrigin="0.498,1.564">
                         <Button Name="play" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding Path=PlayState}">Play</Button>
                         <Button Name="pause" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding Path=PauseState}">Pause</Button>
                         <Button Name="stop" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding StopState}">Stop</Button>
-                        <TextBlock Name="time">00:00:00</TextBlock>
+                        <TextBlock Name="time" Text="{Binding TimeTxt}"/>
                         <Slider Name="timeline" Margin="5" Value="{Binding Timer}" ValueChanged="Change_Timeline" Width="80" Thumb.DragCompleted="End_Timeline"/>
-                        <ProgressBar Height="15" Name="volume" Value="{Binding ElementName=player,Path=Volume}" VerticalAlignment="Center" Opacity="1" ValueChanged="Change_Volume" Minimum="0" Maximum="1" Width="50"/>
+                        <ProgressBar Height="15" Name="volume" Value="{Binding ElementName=mediaElement,Path=Volume}" VerticalAlignment="Center" Opacity="1" ValueChanged="Change_Volume" Minimum="0" Maximum="1" Width="50"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

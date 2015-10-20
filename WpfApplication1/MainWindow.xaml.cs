@@ -20,6 +20,19 @@ namespace WpfApplication1
 {
     public class ButtonMedia : INotifyPropertyChanged
     {
+        private String timeTxt = "00:00:00";
+        public String TimeTxt
+        {
+            get
+            {
+                return timeTxt;
+            }
+            set
+            {
+                timeTxt = TimeSpan.FromMilliseconds(timer).ToString(@"hh\:mm\:ss");
+                OnPropertyChanged("TimeTxt");
+            }
+        }
         private int currentTab = 0;
         public int CurrentTab
         {
@@ -218,7 +231,8 @@ namespace WpfApplication1
         }
         private void ListBox_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            StackPanel current = (StackPanel)listBox.Items[listBox.SelectedIndex];
+            ListBoxItem item = (ListBoxItem)sender;
+            StackPanel current = (StackPanel)item.Content;
             MediaElement media = (MediaElement)current.Children[0];
             string file = media.Source.AbsoluteUri;
             btn.Source = new Uri(new Uri(file).LocalPath);
@@ -246,7 +260,7 @@ namespace WpfApplication1
         }
         private void Change_Timeline(object sender, RoutedPropertyChangedEventArgs<double> args)
         {
-            time.Text = TimeSpan.FromMilliseconds(timeline.Value).ToString(@"hh\:mm\:ss");
+            btn.TimeTxt = "set";
         }
 
         private void End_Timeline(object sender, DragCompletedEventArgs args)
@@ -265,6 +279,11 @@ namespace WpfApplication1
             mediaElement.Volume = (mediaElement.Volume > 1) ? 1 : mediaElement.Volume;
             mediaElement.Volume = (mediaElement.Volume < 0) ? 0 : mediaElement.Volume;
         }
-
+        private void Get_Len(object sender, RoutedEventArgs e)
+        {
+            timeline.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
+            btn._len = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
+            btn.Timer = 0;
+        }
     }
 }
