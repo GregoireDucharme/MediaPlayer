@@ -48,7 +48,23 @@ namespace WpfApplication1
         }
         DispatcherTimer _timer = new DispatcherTimer();
         private int timer = 0;
-        public double _len;
+        private double _len = 0;
+        public double _Len
+        {
+            get
+            {
+                return _len;
+            }
+            set
+            {
+                if (chck == true)
+                {
+                    _len = value;
+                    Timer = 0;
+                    chck = false;
+                }
+            }
+        }
         private Uri source;
         private Visibility optionVisi = Visibility.Hidden;
         public Visibility OptionVisi
@@ -63,7 +79,8 @@ namespace WpfApplication1
                 OnPropertyChanged("OptionVisi");
             }
         }
-            
+
+        private bool chck;
         public Uri Source
         {
             get
@@ -72,10 +89,16 @@ namespace WpfApplication1
             }
             set
             {
-                source = value;
-                OnPropertyChanged("Source");
-                CurrentTab = 0;
-                OptionVisi = Visibility.Visible;
+                if (value != source)
+                {
+                    chck = true;
+                    source = value;
+                    OnPropertyChanged("Source");
+                    CurrentTab = 0;
+                    OptionVisi = Visibility.Visible;
+                }
+                else
+                    chck = false;
             }
         }
         public int Timer
@@ -344,8 +367,9 @@ namespace WpfApplication1
         private void Get_Len(object sender, RoutedEventArgs e)
         {
             timeline.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
-            btn._len = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
-            btn.Timer = 0;
+            btn._Len = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
+            if (btn.Timer != 0)
+                mediaElement.Position = TimeSpan.FromMilliseconds(btn.Timer);
         }
     }
 }
