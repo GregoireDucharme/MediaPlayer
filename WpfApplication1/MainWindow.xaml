@@ -22,10 +22,26 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="Musiques" />
-                <TabItem Header="Videos" />
+            <TabItem Header="Musiques">
+                <ListBox Name="listBoxMusiques">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                            <EventSetter Event="MouseDoubleClick" Handler="ListBox_MouseDoubleClick"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </TabItem>
+            <TabItem Header="Videos">
+                <ListBox Name="listBoxVideos">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                            <EventSetter Event="MouseDoubleClick" Handler="ListBox_MouseDoubleClick"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </TabItem>
             <TabItem Header="Images">
-                <ListBox Name="listBox">
+                <ListBox Name="listBoxImages">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                             <EventSetter Event="MouseDoubleClick" Handler="ListBox_MouseDoubleClick"/>
