@@ -2,10 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace WpfApplication1
 {
@@ -15,6 +18,36 @@ namespace WpfApplication1
     
     public class ButtonMedia : INotifyPropertyChanged
     {
+
+        DispatcherTimer _timer = new DispatcherTimer();
+        private int timer = 0;
+        public double _len;
+        public int Timer
+        {
+            get
+            {
+                return timer;
+            }
+            set
+            {
+                if (value == 0)
+                    timer = 0;
+                if (timer == 0)
+                    _timer.Start();
+                timer = value;
+                if (timer >= _len)
+                {
+                    timer = 0;
+                    _timer.Stop();
+                }
+                OnPropertyChanged("Timer");
+            }
+        }
+        private void _actualisation(object sender, EventArgs e)
+        {
+            Timer += 1000; 
+        }
+
         private bool playState = false;
         private bool pauseState = true;
         private bool stopState = true;
@@ -23,6 +56,8 @@ namespace WpfApplication1
             OnPropertyChanged("PlayState");
             OnPropertyChanged("PauseState");
             OnPropertyChanged("StopState");
+            _timer.Interval = TimeSpan.FromMilliseconds(1000);
+            _timer.Tick += new EventHandler(_actualisation);
         }
         private void _trigger()
         {
@@ -41,6 +76,7 @@ namespace WpfApplication1
                 playState = value;
                 pauseState = true;
                 stopState = true;
+                _timer.Start();
                 _trigger();
             }
         }
@@ -55,6 +91,7 @@ namespace WpfApplication1
                 playState = true;
                 pauseState = value;
                 stopState = true;
+                _timer.Stop();
                 _trigger();
             }
         }
@@ -69,6 +106,9 @@ namespace WpfApplication1
                 playState = true;
                 pauseState = value;
                 stopState = value;
+                _timer.Stop();
+                timer = 0;
+                OnPropertyChanged("Timer");
                 _trigger();
             }
         }
@@ -131,6 +171,8 @@ namespace WpfApplication1
         private void Get_Len(object sender, RoutedEventArgs e)
         {
             timeline.Maximum = player.NaturalDuration.TimeSpan.TotalMilliseconds;
+            btn._len = player.NaturalDuration.TimeSpan.TotalMilliseconds;
+            btn.Timer = 0;
         }
         private void Open_Playlist(object sender, RoutedEventArgs e)
         {
@@ -223,7 +265,11 @@ namespace WpfApplication1
         {
             player.Volume = (double)volume.Value;
         }
-
-
+        private void Mouse_Volume(object sender, MouseWheelEventArgs e)
+        {
+            player.Volume += (e.Delta > 0) ? 0.1 : -0.1;
+            player.Volume = (player.Volume > 1) ? 1 : player.Volume;
+            player.Volume = (player.Volume < 0) ? 0 : player.Volume;
+        }
     }
 }

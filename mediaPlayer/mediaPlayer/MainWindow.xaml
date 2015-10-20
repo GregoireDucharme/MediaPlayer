@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:WpfApplication1"
         mc:Ignorable="d"
         Title="myPlayer" Height="550" Width="825" Background="Azure" >
-    <Grid>
+    <Grid MouseWheel="Mouse_Volume">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100*" />
+            <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*"  />
+            <ColumnDefinition Width="100*"/>
         </Grid.ColumnDefinitions>
         <Menu Background="White">
             <MenuItem Background="WhiteSmoke"  Header="Importer" BorderBrush="Gray">
@@ -31,13 +31,13 @@
         </ListView>
         <Button Name="res" Width="400" Height="400" Visibility="Hidden"></Button>
         <MediaElement Name="player" Width="600" Margin="0,22,0.4,0.4"  Visibility="Hidden"/>
-        <StackPanel Name="options" Orientation="Horizontal" Width="5783" Height="30" Margin="182,443,-5146.6,49.4" Panel.ZIndex="1" RenderTransformOrigin="0.498,1.564">
+        <StackPanel Name="options" Orientation="Horizontal" Width="578" Height="auto" Margin="173,443,67.4,49.4" Panel.ZIndex="1" RenderTransformOrigin="0.498,1.564">
             <Button Name="play" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding Path=PlayState}">Play</Button>
             <Button Name="pause" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding Path=PauseState}">Pause</Button>
             <Button Name="stop" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding StopState}">Stop</Button>
             <TextBlock Name="time">00:00:00</TextBlock>
-            <Slider Name="timeline" Margin="5" Background="Orange" ValueChanged="Change_Timeline" Width="80" Thumb.DragCompleted="End_Timeline"/>
-            <Slider Name="volume" VerticalAlignment="Center" Background="Blue" Opacity="1" ValueChanged="Change_Volume" Minimum="0" Maximum="1" Value="1" Width="50"/>
+            <Slider Name="timeline" Margin="5" Value="{Binding Timer}" ValueChanged="Change_Timeline" Width="80" Thumb.DragCompleted="End_Timeline"/>
+            <ProgressBar Height="15" Name="volume" Value="{Binding ElementName=player,Path=Volume}" VerticalAlignment="Center" Opacity="1" ValueChanged="Change_Volume" Minimum="0" Maximum="1" Width="50"/>
         </StackPanel>
     </Grid>
 </Window>
