@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication1"
         mc:Ignorable="d"
-        Title="myPlayer" Height="550" Width="825" Background="Azure">
+        Title="myPlayer" Height="550" Width="825" Background="Azure" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100*" />
@@ -21,17 +21,23 @@
                 <MenuItem Width="150" Height="20" Click="Open_Playlist" Header="Playlist"/>
             </MenuItem>
             <MenuItem Background="WhiteSmoke"  Header="Créer" BorderBrush="Gray">
-                <MenuItem Width="150" Height="20" Click="Create_Playlist" Header="Playlist"/>
+                <MenuItem Width="150" Height="20" Header="Playlist">
+                    <MenuItem Click="Import_Image" Header="Importer image"/>
+                </MenuItem>
             </MenuItem>
         </Menu>
-        <ListBox Name="listBox1" Width="400" Height="400" Margin="25,38,643.4,84.4" Panel.ZIndex="1">
+        <ListView Name="list" Width="400" Height="400" Margin="25,38,643.4,84.4" Panel.ZIndex="1" Visibility="Hidden">
             
-        </ListBox>
+        </ListView>
+        <Button Name="res" Width="400" Height="400" Visibility="Hidden"></Button>
         <MediaElement Name="player" Width="600" Margin="0,22,0.4,0.4"  Visibility="Hidden"/>
-        <StackPanel Name="options" Orientation="Horizontal" Visibility="Hidden" Width="333" Height="30" Margin="184,437,184.2,35.4" Panel.ZIndex="1" RenderTransformOrigin="0.498,1.564">
-            <Button Name="play" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="False">Play</Button>
-            <Button Name="pause" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="True">Pause</Button>
-            <Button Name="stop" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="True">Stop</Button>
+        <StackPanel Name="options" Orientation="Horizontal" Width="5783" Height="30" Margin="182,443,-5146.6,49.4" Panel.ZIndex="1" RenderTransformOrigin="0.498,1.564">
+            <Button Name="play" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding Path=PlayState}">Play</Button>
+            <Button Name="pause" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding Path=PauseState}">Pause</Button>
+            <Button Name="stop" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding StopState}">Stop</Button>
+            <TextBlock Name="time">00:00:00</TextBlock>
+            <Slider Name="timeline" Margin="5" Background="Orange" ValueChanged="Change_Timeline" Width="80" Thumb.DragCompleted="End_Timeline"/>
+            <Slider Name="volume" VerticalAlignment="Center" Background="Blue" Opacity="1" ValueChanged="Change_Volume" Minimum="0" Maximum="1" Value="1" Width="50"/>
         </StackPanel>
     </Grid>
 </Window>
