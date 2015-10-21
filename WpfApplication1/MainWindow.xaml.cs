@@ -364,10 +364,13 @@ namespace WpfApplication1
         }
         private void Get_Len(object sender, RoutedEventArgs e)
         {
-            timeline.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
-            btn._Len = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
-            if (btn.Timer != 0)
-                mediaElement.Position = TimeSpan.FromMilliseconds(btn.Timer);
+            if (mediaElement.NaturalDuration.HasTimeSpan)
+            {
+                timeline.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
+                btn._Len = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
+                if (btn.Timer != 0)
+                    mediaElement.Position = TimeSpan.FromMilliseconds(btn.Timer);
+            }
         }
     }
 }
