@@ -11,15 +11,17 @@
         <TabControl SelectedIndex="{Binding CurrentTab}">
             <TabItem Header="En lecture">
                 <Grid>
-                    <MediaElement Name="mediaElement" Width="700" Height="450" LoadedBehavior="Manual" Margin="75,0,59,0" Source="{Binding Source}" MediaOpened="Get_Len"/>
-                    <StackPanel Name="options" Visibility="{Binding OptionVisi}" Orientation="Horizontal" Width="578" Height="auto" Margin="173,443,67.4,49.4" Panel.ZIndex="1" RenderTransformOrigin="0.498,1.564">
-                        <Button Name="play" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding Path=PlayState}">Play</Button>
-                        <Button Name="pause" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding Path=PauseState}">Pause</Button>
-                        <Button Name="stop" Padding="1" Background="Orange" Width="111" Height="30" Click="Action_File" IsEnabled="{Binding StopState}">Stop</Button>
-                        <TextBlock Name="time" Text="{Binding TimeTxt}"/>
-                        <Slider Name="timeline" Margin="5" Value="{Binding Timer}" ValueChanged="Change_Timeline" Width="80" Thumb.DragCompleted="End_Timeline"/>
-                        <ProgressBar Height="15" Name="volume" Value="{Binding ElementName=mediaElement,Path=Volume}" VerticalAlignment="Center" Opacity="1" ValueChanged="Change_Volume" Minimum="0" Maximum="1" Width="50"/>
+                    <MediaElement Name="mediaElement" LoadedBehavior="Manual" Margin="10,10,10,40" Source="{Binding Source}" MediaOpened="Get_Len"/>
+                    <StackPanel Name="options" Orientation="Horizontal" Width="578" Height="auto" Margin="120,457,120,32" Panel.ZIndex="1">
+                        <Button x:Name="prec" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding NextState}" Content="prec"/>
+                        <Button x:Name="play" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding PlayState}" Content="Play"/>
+                        <Button x:Name="pause" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding PauseState}" Content="Pause"/>
+                        <Button x:Name="stop" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding StopState}" Content="Stop"/>
+                            <Button x:Name="next" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding NextState}" Content="next"/>
                     </StackPanel>
+                    <TextBlock Name="time" Text="{Binding TimeTxt}" Margin="54,471,-54,-19.2"/>
+                    <Slider Name="timeline" Margin="60,440,60,60" Value="{Binding Timer}" ValueChanged="Change_Timeline" Width="700" Thumb.DragCompleted="End_Timeline"/>
+                    <ProgressBar Height="24" Name="volume" Value="{Binding ElementName=mediaElement,Path=Volume}" VerticalAlignment="Center" Opacity="1" ValueChanged="Change_Volume" Minimum="0" Maximum="1" Margin="626,470,92,46"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques">

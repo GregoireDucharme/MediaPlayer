@@ -5,7 +5,6 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -13,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Serialization;
+
 namespace mediaPlayer
 {
     public class ButtonMedia : INotifyPropertyChanged
@@ -30,7 +30,7 @@ namespace mediaPlayer
                 OnPropertyChanged("TimeTxt");
             }
         }
-        private int currentTab = 0;
+        private int currentTab = 1;
         public int CurrentTab
         {
             get
@@ -125,13 +125,15 @@ namespace mediaPlayer
         }
 
         private bool playState = false;
-        private bool pauseState = true;
-        private bool stopState = true;
+        private bool pauseState = false;
+        private bool stopState = false;
+        private bool nextState = false;
         public ButtonMedia()
         {
             OnPropertyChanged("PlayState");
             OnPropertyChanged("PauseState");
             OnPropertyChanged("StopState");
+            OnPropertyChanged("NextState");
             _timer.Interval = TimeSpan.FromMilliseconds(1000);
             _timer.Tick += new EventHandler(_actualisation);
         }
@@ -140,6 +142,7 @@ namespace mediaPlayer
             OnPropertyChanged("PlayState");
             OnPropertyChanged("PauseState");
             OnPropertyChanged("StopState");
+            OnPropertyChanged("NextState");
         }
         public bool PlayState
         {
@@ -152,6 +155,7 @@ namespace mediaPlayer
                 playState = value;
                 pauseState = true;
                 stopState = true;
+                nextState = true;
                 _timer.Start();
                 _trigger();
             }
@@ -167,6 +171,7 @@ namespace mediaPlayer
                 playState = true;
                 pauseState = value;
                 stopState = true;
+                nextState = true;
                 _timer.Stop();
                 _trigger();
             }
@@ -182,6 +187,25 @@ namespace mediaPlayer
                 playState = true;
                 pauseState = value;
                 stopState = value;
+                nextState = false;
+                _timer.Stop();
+                timer = 0;
+                OnPropertyChanged("Timer");
+                _trigger();
+            }
+        }
+        public bool NextState
+        {
+            get
+            {
+                return nextState;
+            }
+            set
+            {
+                playState = value;
+                pauseState = value;
+                stopState = value;
+                nextState = value;
                 _timer.Stop();
                 timer = 0;
                 OnPropertyChanged("Timer");
@@ -197,6 +221,8 @@ namespace mediaPlayer
             }
         }
     }
+
+
     public partial class MainWindow : Window
     {
         ButtonMedia btn = new ButtonMedia();
@@ -208,6 +234,7 @@ namespace mediaPlayer
         List<Media> listMedia = new List<Media>();
         private string RootRepo = ConfigurationManager.AppSettings.Get("RootRepo");
         private string PublicRepo = ConfigurationManager.AppSettings.Get("PublicRepo");
+        private int _index;
 
         public MainWindow()
         {
@@ -311,7 +338,6 @@ namespace mediaPlayer
 
         public void handling_files()
         {
-
             try
             {
                 // IMAGES
@@ -340,7 +366,10 @@ namespace mediaPlayer
             StackPanel current = (StackPanel)item.Content;
             Label label = (Label)current.Children[0];
             btn.Source = new Uri(new Uri(label.Content.ToString()).LocalPath);
+            
             mediaElement.Play();
+            btn.NextState = true;
+            btn.PlayState = false;
         }
 
         private void Action_File(object sender, RoutedEventArgs e)
@@ -357,6 +386,14 @@ namespace mediaPlayer
                     mediaElement.Pause();
                     break;
                 case "System.Windows.Controls.Button: Stop":
+                    btn.StopState = false;
+                    mediaElement.Stop();
+                    break;
+                case "System.Windows.Controls.Button: prec":
+                    btn.StopState = false;
+                    mediaElement.Stop();
+                    break;
+                case "System.Windows.Controls.Button: next":
                     btn.StopState = false;
                     mediaElement.Stop();
                     break;
