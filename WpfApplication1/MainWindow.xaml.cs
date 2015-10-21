@@ -2,20 +2,12 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-
+using System.Configuration;
 namespace WpfApplication1
 {
     public class ButtonMedia : INotifyPropertyChanged
@@ -203,115 +195,121 @@ namespace WpfApplication1
     public partial class MainWindow : Window
     {
         ButtonMedia btn = new ButtonMedia();
+        private string RootRepo = ConfigurationManager.AppSettings.Get("RootRepo");
+        private string PublicRepo = ConfigurationManager.AppSettings.Get("PublicRepo");
         public MainWindow()
         {
             InitializeComponent();
             DataContext = btn;
             handling_files();
         }
+
+        private void _get_files(string filePM, string type0, string type1, string type2, char box)
+        {
+            var files = Directory.EnumerateFiles(RootRepo + Environment.UserName + filePM, "*.*", SearchOption.AllDirectories)
+            .Where(s => s.EndsWith("." + type0, StringComparison.OrdinalIgnoreCase) || s.EndsWith("." + type1, StringComparison.OrdinalIgnoreCase) ||
+            s.EndsWith("." + type2, StringComparison.OrdinalIgnoreCase));
+            foreach (string dir in files)
+            {
+                StackPanel penel = new StackPanel();
+                MediaElement media = new MediaElement();
+                Label label = new Label();
+                media.Source = new Uri(new Uri(dir).LocalPath);
+                media.Width = 100;
+                media.Height = 120;
+                penel.Orientation = Orientation.Horizontal;
+                penel.Margin = new Thickness(10, 10, 0, 10);
+                label.Margin = new Thickness(10, 20, 0, 0);
+                penel.Height = 76;
+                penel.Width = 700;
+                int index = dir.LastIndexOf('\\');
+                label.Content = dir.Substring(index + 1);
+                penel.Children.Add(media);
+                penel.Children.Add(label);
+                switch (box)
+                {
+                    case 'i':
+                        listBoxImages.Items.Add(penel);
+                        break;
+                    case 'v':
+                        media.LoadedBehavior = MediaState.Manual;
+                        media.Play();
+                        media.Pause();
+                        listBoxVideos.Items.Add(penel);
+                        break;
+                    case 'm':
+                        media.LoadedBehavior = MediaState.Manual;
+                        media.Play();
+                        media.Pause();
+                        listBoxMusiques.Items.Add(penel);
+                        break;
+                }
+            }
+            files = Directory.EnumerateFiles(RootRepo + PublicRepo + filePM, "*.*", SearchOption.AllDirectories)
+            .Where(s => s.EndsWith("." + type0, StringComparison.OrdinalIgnoreCase) || s.EndsWith("." + type1, StringComparison.OrdinalIgnoreCase) ||
+            s.EndsWith("." + type2, StringComparison.OrdinalIgnoreCase));
+            foreach (string dir in files)
+            {
+                StackPanel penel = new StackPanel();
+                MediaElement media = new MediaElement();
+                Label label = new Label();
+                media.Source = new Uri(new Uri(dir).LocalPath);
+                media.Width = 100;
+                media.Height = 120;
+                media.LoadedBehavior = MediaState.Manual;
+                media.Play();
+                penel.Orientation = Orientation.Horizontal;
+                penel.Margin = new Thickness(10, 10, 0, 10);
+                label.Margin = new Thickness(10, 20, 0, 0);
+                penel.Height = 76;
+                penel.Width = 700;
+                int index = dir.LastIndexOf('\\');
+                label.Content = dir.Substring(index + 1);
+                penel.Children.Add(media);
+                penel.Children.Add(label);
+                switch (box)
+                {
+                    case 'i':
+                        listBoxImages.Items.Add(penel);
+                        break;
+                    case 'v':
+                        media.LoadedBehavior = MediaState.Manual;
+                        media.Play();
+                        media.Pause();
+                        listBoxVideos.Items.Add(penel);
+                        break;
+                    case 'm':
+                        media.LoadedBehavior = MediaState.Manual;
+                        media.Play();
+                        media.Pause();
+                        listBoxMusiques.Items.Add(penel);
+                        break;
+                }
+            }
+        }
         public void handling_files()
         {
 
             // IMAGES
+            try {
+                _get_files(@"\Pictures", "jpg", "png", "gif", 'i');
 
-            var files = Directory.EnumerateFiles(@"C:\Users\" + Environment.UserName + @"\Pictures", "*.*", SearchOption.AllDirectories)
-            .Where(s => s.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase));
-            foreach (string dir in files)
-            {
-                StackPanel penel = new StackPanel();
-                MediaElement media = new MediaElement();
-                Label label = new Label();
-                media.Source = new Uri(new Uri(dir).LocalPath);
-                media.Width = 100;
-                media.Height = 120;
-                penel.Orientation = Orientation.Horizontal;
-                penel.Margin = new Thickness(10, 10, 0, 10);
-                label.Margin = new Thickness(10, 20, 0, 0);
-                penel.Height = 76;
-                penel.Width = 700;
-                int index = dir.LastIndexOf('\\');
-                label.Content = dir.Substring(index + 1);
-                penel.Children.Add(media);
-                penel.Children.Add(label);
-                listBoxImages.Items.Add(penel);
+                // VIDEOS
+
+                _get_files(@"\Videos", "mp4", "avi", "wmv", 'v');
+
+                // MUSIQUES
+                _get_files(@"\Music", "mp3", "wav", "wma", 'm');
             }
-            files = Directory.EnumerateFiles(@"C:\Users\public\Pictures", "*.*", SearchOption.AllDirectories)
-            .Where(s => s.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase));
-            foreach (string dir in files)
+            catch (UnauthorizedAccessException)
             {
-                StackPanel penel = new StackPanel();
-                MediaElement media = new MediaElement();
-                Label label = new Label();
-                media.Source = new Uri(new Uri(dir).LocalPath);
-                media.Width = 100;
-                media.Height = 120;
-                penel.Orientation = Orientation.Horizontal;
-                penel.Margin = new Thickness(10, 10, 0, 10);
-                label.Margin = new Thickness(10, 20, 0, 0);
-                penel.Height = 76;
-                penel.Width = 700;
-                int index = dir.LastIndexOf('\\');
-                label.Content = dir.Substring(index + 1);
-                penel.Children.Add(media);
-                penel.Children.Add(label);
-                listBoxImages.Items.Add(penel);
             }
-
-
-            // VIDEOS
-
-
-            files = Directory.EnumerateFiles(@"C:\Users\" + Environment.UserName + @"\Videos", "*.*", SearchOption.AllDirectories)
-            .Where(s => s.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".avi", StringComparison.OrdinalIgnoreCase));
-            foreach (string dir in files)
+            catch (PathTooLongException)
             {
-                StackPanel penel = new StackPanel();
-                MediaElement media = new MediaElement();
-                Label label = new Label();
-                media.Source = new Uri(new Uri(dir).LocalPath);
-                media.Width = 100;
-                media.Height = 120;
-                media.LoadedBehavior = MediaState.Manual;
-                media.Play();
-                media.Pause();
-                penel.Orientation = Orientation.Horizontal;
-                penel.Margin = new Thickness(10, 10, 0, 10);
-                label.Margin = new Thickness(10, 20, 0, 0);
-                penel.Height = 76;
-                penel.Width = 700;
-                int index = dir.LastIndexOf('\\');
-                label.Content = dir.Substring(index + 1);
-                penel.Children.Add(media);
-                penel.Children.Add(label);
-                listBoxVideos.Items.Add(penel);
             }
-            files = Directory.EnumerateFiles(@"C:\Users\public\Videos", "*.*", SearchOption.AllDirectories)
-            .Where(s => s.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".avi", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".wmv", StringComparison.OrdinalIgnoreCase));
-            foreach (string dir in files)
+            catch (DirectoryNotFoundException)
             {
-                StackPanel penel = new StackPanel();
-                MediaElement media = new MediaElement();
-                Label label = new Label();
-                media.Source = new Uri(new Uri(dir).LocalPath);
-                media.Width = 100;
-                media.Height = 120;
-                media.LoadedBehavior = MediaState.Manual;
-                media.Play();
-                media.Pause();
-                penel.Orientation = Orientation.Horizontal;
-                penel.Margin = new Thickness(10, 10, 0, 10);
-                label.Margin = new Thickness(10, 20, 0, 0);
-                penel.Height = 76;
-                penel.Width = 700;
-                int index = dir.LastIndexOf('\\');
-                label.Content = dir.Substring(index + 1);
-                penel.Children.Add(media);
-                penel.Children.Add(label);
-                listBoxVideos.Items.Add(penel);
             }
-
-
-            // MUSIQUES
 
         }
         private void ListBox_MouseDoubleClick(object sender, RoutedEventArgs e)
