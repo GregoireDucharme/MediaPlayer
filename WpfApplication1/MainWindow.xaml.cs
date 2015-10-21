@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -204,6 +205,62 @@ namespace WpfApplication1
             handling_files();
         }
 
+
+        private void _fill_list(string dir, char box)
+        {
+            StackPanel penel = new StackPanel();
+            MediaElement media = new MediaElement();
+            TextBlock infos = new TextBlock();
+            MediaElement tn = new MediaElement();
+            media.Source = new Uri(new Uri(dir).LocalPath);
+            penel.Orientation = Orientation.Horizontal;
+            penel.Margin = new Thickness(10, 10, 0, 10);
+            infos.Margin = new Thickness(10, 10, 0, 10);
+            infos.Height = 100;
+            infos.Width = 700;
+            penel.Height = 76;
+            penel.Width = 700;
+            int index = dir.LastIndexOf('\\');
+            string filename = dir.Substring(index + 1);
+            switch (box)
+            {
+                // IMAGES
+                case 'i':
+                    infos.Text = filename;
+                    media.Width = 100;
+                    media.Height = 120;
+                    penel.Children.Add(media);
+                    penel.Children.Add(infos);
+                    listBoxImages.Items.Add(penel);
+                    break;
+                // VIDEOS
+                case 'v':
+                    infos.Text = filename;
+                    media.Visibility = Visibility.Collapsed;
+                    tn.Source = new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg");
+                    tn.Width = 100;
+                    tn.Height = 120;
+                    penel.Children.Add(media);
+                    penel.Children.Add(tn);
+                    penel.Children.Add(infos);
+                    listBoxVideos.Items.Add(penel);
+                    break;
+                // MUSIQUES
+                case 'm':
+                    infos.Text = filename;
+                    media.LoadedBehavior = MediaState.Pause;
+                    media.Visibility = Visibility.Collapsed;
+                    tn.Source = new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg");
+                    tn.Width = 76;
+                    tn.Height = 100;
+                    penel.Children.Add(media);
+                    penel.Children.Add(tn);
+                    penel.Children.Add(infos);
+                    listBoxMusiques.Items.Add(penel);
+                    break;
+                }
+            }
+
         private void _get_files(string filePM, string type0, string type1, string type2, char box)
         {
             var files = Directory.EnumerateFiles(RootRepo + Environment.UserName + filePM, "*.*", SearchOption.AllDirectories)
@@ -211,121 +268,26 @@ namespace WpfApplication1
             s.EndsWith("." + type2, StringComparison.OrdinalIgnoreCase));
             foreach (string dir in files)
             {
-                StackPanel penel = new StackPanel();
-                MediaElement media = new MediaElement();
-                TextBlock infos = new TextBlock();
-                MediaElement tn = new MediaElement();
-                media.Source = new Uri(new Uri(dir).LocalPath);
-                penel.Orientation = Orientation.Horizontal;
-                penel.Margin = new Thickness(10, 10, 0, 10);
-                infos.Margin = new Thickness(10, 10, 0, 10);
-                infos.Height = 100;
-                infos.Width = 700;
-                penel.Height = 76;
-                penel.Width = 700;
-                int index = dir.LastIndexOf('\\');
-                string filename = dir.Substring(index + 1);
-                switch (box)
-                {
-                    case 'i':
-                        infos.Text = filename;
-                        media.Width = 76;
-                        media.Height = 100;
-                        penel.Children.Add(media);
-                        penel.Children.Add(infos);
-                        listBoxImages.Items.Add(penel);
-                        break;
-                    case 'v':
-                        infos.Text = filename;
-                        media.LoadedBehavior = MediaState.Pause;
-                        media.Visibility = Visibility.Collapsed;
-                        tn.Source = new Uri(new Uri(RootRepo + Environment.UserName + "/Pictures/film.jpg").LocalPath);
-                        tn.Width = 76;
-                        tn.Height = 100;
-                        penel.Children.Add(tn);
-                        penel.Children.Add(media);
-                        penel.Children.Add(infos);
-                        listBoxVideos.Items.Add(penel);
-                        break;
-                    case 'm':
-                        infos.Text = filename;
-                        media.LoadedBehavior = MediaState.Pause;
-                        media.Visibility = Visibility.Collapsed;
-                        tn.Source = new Uri(new Uri(RootRepo + Environment.UserName + "/Pictures/music.jpg").LocalPath);
-                        tn.Width = 76;
-                        tn.Height = 100;
-                        penel.Children.Add(tn);
-                        penel.Children.Add(media);
-                        penel.Children.Add(infos);
-                        listBoxMusiques.Items.Add(penel);
-                        break;
-                }
+                _fill_list(dir, box);
             }
             files = Directory.EnumerateFiles(RootRepo + PublicRepo + filePM, "*.*", SearchOption.AllDirectories)
             .Where(s => s.EndsWith("." + type0, StringComparison.OrdinalIgnoreCase) || s.EndsWith("." + type1, StringComparison.OrdinalIgnoreCase) ||
             s.EndsWith("." + type2, StringComparison.OrdinalIgnoreCase));
             foreach (string dir in files)
             {
-                StackPanel penel = new StackPanel();
-                MediaElement media = new MediaElement();
-                TextBlock infos = new TextBlock();
-                MediaElement tn = new MediaElement();
-                media.Source = new Uri(new Uri(dir).LocalPath);
-                penel.Orientation = Orientation.Horizontal;
-                penel.Margin = new Thickness(10, 10, 0, 10);
-                infos.Margin = new Thickness(10, 10, 0, 10);
-                infos.Height = 100;
-                infos.Width = 700;
-                penel.Height = 76;
-                penel.Width = 700;
-                int index = dir.LastIndexOf('\\');
-                string filename = dir.Substring(index + 1);
-                switch (box)
-                {
-                    case 'i':
-                        infos.Text = filename;
-                        media.Width = 100;
-                        media.Height = 120;
-                        penel.Children.Add(media);
-                        penel.Children.Add(infos);
-                        listBoxImages.Items.Add(penel);
-                        break;
-                    case 'v':
-                        infos.Text = filename;
-                        media.LoadedBehavior = MediaState.Pause;
-                        media.Visibility = Visibility.Collapsed;
-                        tn.Source = new Uri(new Uri(RootRepo + Environment.UserName + "/Pictures/film.jpg").LocalPath);
-                        tn.Width = 76;
-                        tn.Height = 100;
-                        penel.Children.Add(tn);
-                        penel.Children.Add(media);
-                        penel.Children.Add(infos);
-                        listBoxVideos.Items.Add(penel);
-                        break;
-                    case 'm':
-                        infos.Text = filename;
-                        media.LoadedBehavior = MediaState.Pause;
-                        media.Visibility = Visibility.Collapsed;
-                        tn.Source = new Uri(new Uri(RootRepo + Environment.UserName + "/Pictures/music.jpg").LocalPath);
-                        tn.Width = 76;
-                        tn.Height = 100;
-                        penel.Children.Add(tn);
-                        penel.Children.Add(media);
-                        penel.Children.Add(infos);
-                        listBoxMusiques.Items.Add(penel);
-                        break;
-                }
+                _fill_list(dir, box);
             }
         }
+
         public void handling_files()
         {
 
-            // IMAGES
-            try {
+            try
+            {
+                // IMAGES
                 _get_files(@"\Pictures", "jpg", "png", "gif", 'i');
 
                 // VIDEOS
-
                 _get_files(@"\Videos", "mp4", "avi", "wmv", 'v');
 
                 // MUSIQUES
@@ -394,10 +356,13 @@ namespace WpfApplication1
         }
         private void Get_Len(object sender, RoutedEventArgs e)
         {
-            timeline.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
-            btn._Len = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
-            if (btn.Timer != 0)
-                mediaElement.Position = TimeSpan.FromMilliseconds(btn.Timer);
+            if (mediaElement.NaturalDuration.HasTimeSpan)
+            {
+                timeline.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
+                btn._Len = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
+                if (btn.Timer != 0)
+                    mediaElement.Position = TimeSpan.FromMilliseconds(btn.Timer);
+            }
         }
     }
 }
