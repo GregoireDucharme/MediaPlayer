@@ -9,7 +9,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Configuration;
-namespace WpfApplication1
+namespace mediaPlayer
 {
     public class ButtonMedia : INotifyPropertyChanged
     {
@@ -204,7 +204,6 @@ namespace WpfApplication1
             DataContext = btn;
             handling_files();
         }
-
 
         private void _fill_list(string dir, char box)
         {
