@@ -239,10 +239,10 @@ namespace mediaPlayer
         private void _fill_list(string dir, char box)
         {
             StackPanel penel = new StackPanel();
-            MediaElement media = new MediaElement();
+            Label label = new Label();
             TextBlock infos = new TextBlock();
             MediaElement tn = new MediaElement();
-            media.Source = new Uri(new Uri(dir).LocalPath);
+            label.Content = dir;
             penel.Orientation = Orientation.Horizontal;
             penel.Margin = new Thickness(10, 10, 0, 10);
             infos.Margin = new Thickness(10, 10, 0, 10);
@@ -251,27 +251,28 @@ namespace mediaPlayer
             penel.Height = 76;
             penel.Width = 700;
             int index = dir.LastIndexOf('\\');
+            label.Visibility = Visibility.Collapsed;
             string filename = dir.Substring(index + 1);
             switch (box)
             {
                 // IMAGES
                 case 'i':
                     infos.Text = filename;
-                    media.Width = 100;
-                    media.Height = 120;
-                    penel.Children.Add(media);
+                    tn.Source = new Uri(new Uri(dir).LocalPath);
+                    tn.Width = 100;
+                    tn.Height = 120;
+                    penel.Children.Add(label);
+                    penel.Children.Add(tn);
                     penel.Children.Add(infos);
                     listBoxImages.Items.Add(penel);
                     break;
                 // VIDEOS
                 case 'v':
                     infos.Text = filename;
-                    media.Visibility = Visibility.Collapsed;
-                    media.LoadedBehavior = MediaState.Stop;
                     tn.Source = new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg");
                     tn.Width = 100;
                     tn.Height = 120;
-                    penel.Children.Add(media);
+                    penel.Children.Add(label);
                     penel.Children.Add(tn);
                     penel.Children.Add(infos);
                     listBoxVideos.Items.Add(penel);
@@ -279,12 +280,10 @@ namespace mediaPlayer
                 // MUSIQUES
                 case 'm':
                     infos.Text = filename;
-                    media.LoadedBehavior = MediaState.Stop;
-                    media.Visibility = Visibility.Collapsed;
                     tn.Source = new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg");
                     tn.Width = 76;
                     tn.Height = 100;
-                    penel.Children.Add(media);
+                    penel.Children.Add(label);
                     penel.Children.Add(tn);
                     penel.Children.Add(infos);
                     listBoxMusiques.Items.Add(penel);
@@ -339,9 +338,8 @@ namespace mediaPlayer
         {
             ListBoxItem item = (ListBoxItem)sender;
             StackPanel current = (StackPanel)item.Content;
-            MediaElement media = (MediaElement)current.Children[0];
-            string file = media.Source.AbsoluteUri;
-            btn.Source = new Uri(new Uri(file).LocalPath);
+            Label label = (Label)current.Children[0];
+            btn.Source = new Uri(new Uri(label.Content.ToString()).LocalPath);
             mediaElement.Play();
         }
 
