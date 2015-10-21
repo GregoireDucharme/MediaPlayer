@@ -213,34 +213,50 @@ namespace WpfApplication1
             {
                 StackPanel penel = new StackPanel();
                 MediaElement media = new MediaElement();
-                Label label = new Label();
+                TextBlock infos = new TextBlock();
+                MediaElement tn = new MediaElement();
                 media.Source = new Uri(new Uri(dir).LocalPath);
-                media.Width = 100;
-                media.Height = 120;
                 penel.Orientation = Orientation.Horizontal;
                 penel.Margin = new Thickness(10, 10, 0, 10);
-                label.Margin = new Thickness(10, 20, 0, 0);
+                infos.Margin = new Thickness(10, 10, 0, 10);
+                infos.Height = 100;
+                infos.Width = 700;
                 penel.Height = 76;
                 penel.Width = 700;
                 int index = dir.LastIndexOf('\\');
-                label.Content = dir.Substring(index + 1);
-                penel.Children.Add(media);
-                penel.Children.Add(label);
+                string filename = dir.Substring(index + 1);
                 switch (box)
                 {
                     case 'i':
+                        infos.Text = filename;
+                        media.Width = 76;
+                        media.Height = 100;
+                        penel.Children.Add(media);
+                        penel.Children.Add(infos);
                         listBoxImages.Items.Add(penel);
                         break;
                     case 'v':
-                        media.LoadedBehavior = MediaState.Manual;
-                        media.Play();
-                        media.Pause();
+                        infos.Text = filename;
+                        media.LoadedBehavior = MediaState.Pause;
+                        media.Visibility = Visibility.Collapsed;
+                        tn.Source = new Uri(new Uri(RootRepo + Environment.UserName + "/Pictures/film.jpg").LocalPath);
+                        tn.Width = 76;
+                        tn.Height = 100;
+                        penel.Children.Add(tn);
+                        penel.Children.Add(media);
+                        penel.Children.Add(infos);
                         listBoxVideos.Items.Add(penel);
                         break;
                     case 'm':
-                        media.LoadedBehavior = MediaState.Manual;
-                        media.Play();
-                        media.Pause();
+                        infos.Text = filename;
+                        media.LoadedBehavior = MediaState.Pause;
+                        media.Visibility = Visibility.Collapsed;
+                        tn.Source = new Uri(new Uri(RootRepo + Environment.UserName + "/Pictures/music.jpg").LocalPath);
+                        tn.Width = 76;
+                        tn.Height = 100;
+                        penel.Children.Add(tn);
+                        penel.Children.Add(media);
+                        penel.Children.Add(infos);
                         listBoxMusiques.Items.Add(penel);
                         break;
                 }
@@ -252,36 +268,50 @@ namespace WpfApplication1
             {
                 StackPanel penel = new StackPanel();
                 MediaElement media = new MediaElement();
-                Label label = new Label();
+                TextBlock infos = new TextBlock();
+                MediaElement tn = new MediaElement();
                 media.Source = new Uri(new Uri(dir).LocalPath);
-                media.Width = 100;
-                media.Height = 120;
-                media.LoadedBehavior = MediaState.Manual;
-                media.Play();
                 penel.Orientation = Orientation.Horizontal;
                 penel.Margin = new Thickness(10, 10, 0, 10);
-                label.Margin = new Thickness(10, 20, 0, 0);
+                infos.Margin = new Thickness(10, 10, 0, 10);
+                infos.Height = 100;
+                infos.Width = 700;
                 penel.Height = 76;
                 penel.Width = 700;
                 int index = dir.LastIndexOf('\\');
-                label.Content = dir.Substring(index + 1);
-                penel.Children.Add(media);
-                penel.Children.Add(label);
+                string filename = dir.Substring(index + 1);
                 switch (box)
                 {
                     case 'i':
+                        infos.Text = filename;
+                        media.Width = 100;
+                        media.Height = 120;
+                        penel.Children.Add(media);
+                        penel.Children.Add(infos);
                         listBoxImages.Items.Add(penel);
                         break;
                     case 'v':
-                        media.LoadedBehavior = MediaState.Manual;
-                        media.Play();
-                        media.Pause();
+                        infos.Text = filename;
+                        media.LoadedBehavior = MediaState.Pause;
+                        media.Visibility = Visibility.Collapsed;
+                        tn.Source = new Uri(new Uri(RootRepo + Environment.UserName + "/Pictures/film.jpg").LocalPath);
+                        tn.Width = 76;
+                        tn.Height = 100;
+                        penel.Children.Add(tn);
+                        penel.Children.Add(media);
+                        penel.Children.Add(infos);
                         listBoxVideos.Items.Add(penel);
                         break;
                     case 'm':
-                        media.LoadedBehavior = MediaState.Manual;
-                        media.Play();
-                        media.Pause();
+                        infos.Text = filename;
+                        media.LoadedBehavior = MediaState.Pause;
+                        media.Visibility = Visibility.Collapsed;
+                        tn.Source = new Uri(new Uri(RootRepo + Environment.UserName + "/Pictures/music.jpg").LocalPath);
+                        tn.Width = 76;
+                        tn.Height = 100;
+                        penel.Children.Add(tn);
+                        penel.Children.Add(media);
+                        penel.Children.Add(infos);
                         listBoxMusiques.Items.Add(penel);
                         break;
                 }
