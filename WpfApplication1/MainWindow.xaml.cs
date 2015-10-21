@@ -267,6 +267,7 @@ namespace mediaPlayer
                 case 'v':
                     infos.Text = filename;
                     media.Visibility = Visibility.Collapsed;
+                    media.LoadedBehavior = MediaState.Stop;
                     tn.Source = new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg");
                     tn.Width = 100;
                     tn.Height = 120;
@@ -278,7 +279,7 @@ namespace mediaPlayer
                 // MUSIQUES
                 case 'm':
                     infos.Text = filename;
-                    media.LoadedBehavior = MediaState.Pause;
+                    media.LoadedBehavior = MediaState.Stop;
                     media.Visibility = Visibility.Collapsed;
                     tn.Source = new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg");
                     tn.Width = 76;
