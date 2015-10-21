@@ -23,7 +23,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques" />
-                <TabItem Header="Videos" />
+            <TabItem Header="Videos" />
             <TabItem Header="Images">
                 <ListBox Name="listBox">
                     <ListBox.ItemContainerStyle>
@@ -33,7 +33,30 @@
                     </ListBox.ItemContainerStyle>
                 </ListBox>
             </TabItem>
-            <TabItem Header="Playlists" />
+            <TabItem Header="Playlists">
+                <Grid>
+                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                <EventSetter Event="MouseDoubleClick" Handler="ListBoxPlaylist_MouseDoubleClick"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                    <Button Name="Create_button" Width="63" Content="Create" Height="30" Click="Create_Playlist" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <StackPanel Name="SetPlaylistName" Visibility="Hidden" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                        <Label Height="30" Width="90" Content="Playlist Name"/>
+                        <TextBox Name="playlist_name" Visibility ="Visible" Height="25px" Width="150" KeyDown="validateName"/>
+                    </StackPanel>
+                    <ListBox Name="listBoxMediaForPlaylist" Visibility="Collapsed" Margin="0,50,0,0">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                <EventSetter Event="MouseDoubleClick" Handler="ListBoxMediaForPlaylist_MouseDoubleClick"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

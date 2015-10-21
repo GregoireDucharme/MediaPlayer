@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,8 +16,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace WpfApplication1
 {
@@ -167,11 +171,37 @@ namespace WpfApplication1
     public partial class MainWindow : Window
     {
         ButtonMedia btn = new ButtonMedia();
+        public class Media
+        {
+            public string path;
+            public string name;
+        }
+        List<Media> listMedia = new List<Media>();
         public MainWindow()
         {
             InitializeComponent();
             DataContext = btn;
             handling_files();
+            handling_filesXml();
+        }
+        public void handling_filesXml()
+        {
+            string folder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string[] dirs = Directory.GetFiles(folder, "*.xml" , SearchOption.AllDirectories);
+            foreach (string dir in dirs)
+            {
+                StackPanel penel = new StackPanel();
+                Label label = new Label();
+                penel.Orientation = Orientation.Horizontal;
+                penel.Margin = new Thickness(10, 10, 0, 10);
+                label.Margin = new Thickness(10, 20, 0, 0);
+                penel.Height = 50;
+                penel.Width = 700;
+                int index = dir.LastIndexOf('\\');
+                label.Content = dir.Substring(index + 1);
+                penel.Children.Add(label);
+                listBoxPlaylist.Items.Add(penel);
+            }
         }
         public void handling_files()
         {
@@ -265,6 +295,90 @@ namespace WpfApplication1
             mediaElement.Volume = (mediaElement.Volume > 1) ? 1 : mediaElement.Volume;
             mediaElement.Volume = (mediaElement.Volume < 0) ? 0 : mediaElement.Volume;
         }
+        private void Create_Playlist(object sender, RoutedEventArgs e)
+        {
+            SetPlaylistName.Visibility = Visibility.Visible;
+            Create_button.Visibility = Visibility.Hidden;
+            Import_button.Visibility = Visibility.Hidden;
+        }
+        private void validateName(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                string rec = playlist_name.Text;
+                SetPlaylistName.Visibility = Visibility.Hidden;
 
+                TextWriter writer = new StreamWriter(rec + ".xml");
+                XmlSerializer ser = new XmlSerializer(typeof(XmlElement));
+                XmlElement myElement = new XmlDocument().CreateElement("MyElement", "ns");
+                string[] dirs = Directory.GetFiles(@"C:\Users\" + Environment.UserName + @"\Pictures", "*.jpg", SearchOption.AllDirectories);
+                foreach (string dir in dirs)
+                {
+                    StackPanel penel = new StackPanel();
+                    MediaElement media = new MediaElement();
+                    Label label = new Label();
+                    media.Source = new Uri(new Uri(dir).LocalPath);
+                    media.Width = 100;
+                    media.Height = 120;
+                    penel.Orientation = Orientation.Horizontal;
+                    penel.Margin = new Thickness(10, 10, 0, 10);
+                    label.Margin = new Thickness(10, 20, 0, 0);
+                    penel.Height = 76;
+                    penel.Width = 700;
+                    int index = dir.LastIndexOf('\\');
+                    label.Content = dir.Substring(index + 1);
+                    penel.Children.Add(media);
+                    penel.Children.Add(label);
+                    listBoxMediaForPlaylist.Items.Add(penel);
+                }
+                dirs = Directory.GetFiles(@"C:\Users\Public\Pictures", "*.jpg", SearchOption.AllDirectories);
+                foreach (string dir in dirs)
+                {
+                    StackPanel penel = new StackPanel();
+                    MediaElement media = new MediaElement();
+                    Label label = new Label();
+                    media.Source = new Uri(new Uri(dir).LocalPath);
+                    media.Width = 100;
+                    media.Height = 120;
+                    penel.Orientation = Orientation.Horizontal;
+                    penel.Margin = new Thickness(10, 10, 0, 10);
+                    label.Margin = new Thickness(10, 20, 0, 0);
+                    penel.Height = 76;
+                    penel.Width = 700;
+                    int index = dir.LastIndexOf('\\');
+                    label.Content = dir.Substring(index + 1);
+                    penel.Children.Add(media);
+                    penel.Children.Add(label);
+                    listBoxMediaForPlaylist.Items.Add(penel);
+                }
+                listBoxMediaForPlaylist.Visibility = Visibility.Visible;
+                //Import.Visibility = Visibility.Collapsed;
+                // btn.CurrentTab = 3;
+                // btn.Visibility.visibility = hidden;
+                XmlSerializer xs = new XmlSerializer(typeof(List<Media>));
+                using (StreamWriter wr = new StreamWriter("contacteBook.xml"))
+                {
+                    xs.Serialize(wr, listMedia);
+                }
+                //listMedia.Clear();
+            }
+        }
+        private void ListBoxMediaForPlaylist_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+
+            StackPanel current = (StackPanel)listBoxPlaylist.Items[listBoxPlaylist.SelectedIndex];
+            /*MediaElement media = (MediaElement)current.Children[0];
+            string file = media.Source.AbsoluteUri;
+            btn.Source = new Uri(new Uri(file).LocalPath);
+            mediaElement.Play();*/
+            Media newMedia = new Media();
+            newMedia.path = "dir";
+            newMedia.name = "cachou";
+            listMedia.Add(newMedia);
+        }
+        private void ListBoxPlaylist_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
