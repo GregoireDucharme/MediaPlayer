@@ -7,11 +7,27 @@
         mc:Ignorable="d"
         Title="Media Player" Height="600" Width="800">
 
+    <Window.Resources>
+        <DataTemplate x:Key="ListBoxPlaylistTemplate">
+            <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="50" Width="700">
+                <Label Margin="10,20,0,0" Content="{Binding Index}"/>
+            </StackPanel>
+            
+        </DataTemplate>
+        <DataTemplate x:Key="ListBoxMediaTemplate">
+            <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700">
+                <Label Visibility="Collapsed" Content="{Binding Uri}"/>
+                <MediaElement Source="{Binding ListSource}" Width="100" Height="120"/>
+                <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
+                
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0" MouseWheel="Mouse_Volume">
         <TabControl SelectedIndex="{Binding CurrentTab}">
             <TabItem Header="En lecture">
                 <Grid>
-                    <MediaElement Name="mediaElement" LoadedBehavior="Manual" Margin="10,10,10,40" Source="{Binding Source}" MediaOpened="Get_Len"/>
+                    <MediaElement Name="mediaElement" LoadedBehavior="Manual" Margin="10,10,10,40" Source="{Binding Source}" MediaOpened="Get_Len" Volume="{Binding Volume}"/>
                     <StackPanel Name="options" Orientation="Horizontal" Width="578" Height="auto" Margin="120,457,120,32" Panel.ZIndex="1">
                         <Button x:Name="prec" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding NextState}" Content="prec"/>
                         <Button x:Name="play" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding PlayState}" Content="Play"/>
@@ -20,12 +36,12 @@
                             <Button x:Name="next" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding NextState}" Content="next"/>
                     </StackPanel>
                     <TextBlock Name="time" Text="{Binding TimeTxt}" Margin="54,471,-54,-19.2"/>
-                    <Slider Name="timeline" Margin="60,440,60,60" Value="{Binding Timer}" ValueChanged="Change_Timeline" Width="700" Thumb.DragCompleted="End_Timeline"/>
-                    <ProgressBar Height="24" Name="volume" Value="{Binding ElementName=mediaElement,Path=Volume}" VerticalAlignment="Center" Opacity="1" ValueChanged="Change_Volume" Minimum="0" Maximum="1" Margin="626,470,92,46"/>
+                    <Slider Name="timeline" Maximum="{Binding Max}" Margin="60,440,60,60" Value="{Binding Timer}" ValueChanged="Change_Timeline" Width="700" Thumb.DragCompleted="End_Timeline"/>
+                    <ProgressBar Height="24" Name="volume" Value="{Binding ElementName=mediaElement,Path=Volume}" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques">
-                <ListBox Name="listBoxMusiques">
+                <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ListBoxMusique}">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                             <EventSetter Event="MouseDoubleClick" Handler="ListBox_MouseDoubleClick"/>
@@ -34,7 +50,7 @@
                 </ListBox>
             </TabItem>
             <TabItem Header="Videos">
-                <ListBox Name="listBoxVideos">
+                <ListBox Name="listBoxVideos" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ListBoxVideo}">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                             <EventSetter Event="MouseDoubleClick" Handler="ListBox_MouseDoubleClick"/>
@@ -44,7 +60,7 @@
             </TabItem>
 
             <TabItem Header="Images">
-                <ListBox Name="listBoxImages">
+                <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ListBoxImage}">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                             <EventSetter Event="MouseDoubleClick" Handler="ListBox_MouseDoubleClick"/>
@@ -54,16 +70,16 @@
             </TabItem>
             <TabItem Header="Playlists">
                 <Grid>
-                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0">
+                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ListBoxPlaylist}">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                                 <EventSetter Event="MouseDoubleClick" Handler="ListBoxPlaylist_MouseDoubleClick"/>
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-                    <Button Name="Create_button" Width="63" Content="Create" Height="30" Click="Create_Playlist" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <StackPanel Name="SetPlaylistName" Visibility="Hidden" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                    <Button Name="Create_button" Width="63" Content="Create" Height="30" Command="{Binding Create_Playlist}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
+                    <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Import_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
+                    <StackPanel Name="SetPlaylistName" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding SetPlaylistNameVisibility, Converter={StaticResource BoolToVis}}">
                         <Label Height="30" Width="90" Content="Playlist Name"/>
                         <TextBox Name="playlist_name" Visibility ="Visible" Height="25px" Width="150" KeyDown="validateName"/>
                     </StackPanel>
