@@ -26,27 +26,27 @@ class ViewModelWMP
     private string RootRepo = ConfigurationManager.AppSettings.Get("RootRepo");
     private string PublicRepo = ConfigurationManager.AppSettings.Get("PublicRepo");
 
-    private void _fill_list(string dir, IList<ModelWMP.media> tmp, string filePM)
+    private void _fill_list(string dir, IList<Media> tmp, string filePM)
     {
         int index = dir.LastIndexOf('\\');
         string filename = dir.Substring(index + 1);
         switch (filePM)
         {
             case @"\Videos":
-                tmp.Add(new ModelWMP.media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg")));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg")));
                 break;
             case @"\Music":
-                tmp.Add(new ModelWMP.media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg")));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg")));
                 break;
             default:
-                tmp.Add(new ModelWMP.media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath)));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath)));
                 break;
         }
     }
 
-    private IList<ModelWMP.media> _get_files(string filePM, string type0, string type1, string type2)
+    private IList<Media> _get_files(string filePM, string type0, string type1, string type2)
     {
-        IList<ModelWMP.media> tmp = new List<ModelWMP.media>();
+        IList<Media> tmp = new List<Media>();
         var files = Directory.EnumerateFiles(RootRepo + Environment.UserName + filePM, "*.*", SearchOption.AllDirectories)
         .Where(s => s.EndsWith("." + type0, StringComparison.OrdinalIgnoreCase) || s.EndsWith("." + type1, StringComparison.OrdinalIgnoreCase) ||
         s.EndsWith("." + type2, StringComparison.OrdinalIgnoreCase));
@@ -63,7 +63,7 @@ class ViewModelWMP
         }
         return tmp;
     }
-    public IList<ModelWMP.media> ListBoxImage
+    public IList<Media> ListBoxImage
     {
         get
         {
@@ -87,7 +87,7 @@ class ViewModelWMP
     }
     /* pas celle la */
 
-    public IList<ModelWMP.media> ListBoxMusique
+    public IList<Media> ListBoxMusique
     {
         get
         {
@@ -110,7 +110,7 @@ class ViewModelWMP
         }
     }
 
-    public IList<ModelWMP.media> ListBoxVideo
+    public IList<Media> ListBoxVideo
     {
         get
         {
@@ -149,7 +149,7 @@ class ViewModelWMP
     //{
         // VIEWMODEL
         /*ListBoxItem item = (ListBoxItem)sender;
-        ModelWMP.media current = (ModelWMP.media)item.Content;
+        Media current = (Media)item.Content;
         VM.Source = current.Uri;
 
         mediaElement.Play();
@@ -192,6 +192,27 @@ class ViewModelWMP
         public void Execute(object parameter)
         {
             _action();
+        }
+    }
+    private IList<Playlist> getPlaylist()
+    {
+        IList<Playlist> list = new List<Playlist>();
+
+        string folder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        string[] dirs = Directory.GetFiles(folder, "*.xml", SearchOption.AllDirectories);
+        int index = 0;
+        foreach (string dir in dirs)
+        {
+            index = dir.LastIndexOf('\\');
+            list.Add(new Playlist(dir.Substring(index + 1)));
+        }
+        return list;
+    }
+    public IList<Playlist> ListBoxPlaylist
+    {
+        get
+        {
+            return getPlaylist();
         }
     }
 }

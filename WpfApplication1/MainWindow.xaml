@@ -37,7 +37,7 @@
                     </StackPanel>
                     <TextBlock Name="time" Text="{Binding Model.TimeTxt}" Margin="54,471,-54,-19.2" Visibility="{Binding Model.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                     <Slider Name="timeline" Maximum="{Binding Model.Max}" Margin="60,440,60,60" Value="{Binding Model.Timer}" ValueChanged="Change_Timeline" Width="700" Thumb.DragCompleted="End_Timeline" Visibility="{Binding Model.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    <ProgressBar Height="24" Name="volume" Value="{Binding ElementName=mediaElement,Path=Model.Volume}" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46" Visibility="{Binding Model.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <ProgressBar Height="24" Name="volume" Value="{Binding Model.Volume}" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46" Visibility="{Binding Model.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques">
@@ -73,7 +73,7 @@
             </TabItem>
             <TabItem Header="Playlists">
                 <Grid>
-                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding Model.ListBoxPlaylist}">
+                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ListBoxPlaylist}">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                                 <EventSetter Event="MouseDoubleClick" Handler="ListBoxPlaylist_MouseDoubleClick"/>

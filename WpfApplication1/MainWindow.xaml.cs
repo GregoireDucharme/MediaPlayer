@@ -14,11 +14,11 @@ namespace mediaPlayer
     public partial class MainWindow : Window
     {
         ViewModelWMP VM = new ViewModelWMP();
-        public class Media
+       /*public class Media
         {
             public string path;
             public string name;
-        }
+        }*/
         /*List<Media> listMedia = new List<Media>();
         private string RootRepo = ConfigurationManager.AppSettings.Get("RootRepo");
         private string PublicRepo = ConfigurationManager.AppSettings.Get("PublicRepo");*/
@@ -32,7 +32,7 @@ namespace mediaPlayer
         {
             // VIEWMODEL
             ListBoxItem item = (ListBoxItem)sender;
-            ModelWMP.media current = (ModelWMP.media)item.Content;
+            Media current = (Media)item.Content;
             VM.Model.Source = current.Uri;
 
             mediaElement.Play();
@@ -86,6 +86,7 @@ namespace mediaPlayer
             VM.Model.Volume += (e.Delta > 0) ? 0.1 : -0.1;
             VM.Model.Volume = (VM.Model.Volume > 1) ? 1 : VM.Model.Volume;
             VM.Model.Volume = (VM.Model.Volume < 0) ? 0 : VM.Model.Volume;
+            //volume.Value = 1;
         }
 
         private void validateName(object sender, KeyEventArgs e)
