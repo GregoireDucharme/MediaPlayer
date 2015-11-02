@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -15,62 +13,65 @@ namespace mediaPlayer
 {
     public partial class MainWindow : Window
     {
-        ModelWMP btn = new ModelWMP();
+        ViewModelWMP VM = new ViewModelWMP();
         public class Media
         {
             public string path;
             public string name;
         }
-        List<Media> listMedia = new List<Media>();
+        /*List<Media> listMedia = new List<Media>();
         private string RootRepo = ConfigurationManager.AppSettings.Get("RootRepo");
-        private string PublicRepo = ConfigurationManager.AppSettings.Get("PublicRepo");
+        private string PublicRepo = ConfigurationManager.AppSettings.Get("PublicRepo");*/
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = btn;
+            DataContext = VM;
         }
         private void ListBox_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
+            // VIEWMODEL
             ListBoxItem item = (ListBoxItem)sender;
             ModelWMP.media current = (ModelWMP.media)item.Content;
-            btn.Source = current.Uri;
+            VM.Model.Source = current.Uri;
 
             mediaElement.Play();
-            btn.NextState = true;
-            btn.PlayState = false;
+            VM.Model.NextState = true;
+            VM.Model.PlayState = false;
         }
 
         private void Action_File(object sender, RoutedEventArgs e)
         {
+            // VIEWMODEL
             mediaElement.LoadedBehavior = MediaState.Manual;
             switch (sender.ToString())
             {
                 case "System.Windows.Controls.Button: Play":
-                    btn.PlayState = false;
+                    VM.Model.PlayState = false;
                     mediaElement.Play();
                     break;
                 case "System.Windows.Controls.Button: Pause":
-                    btn.PauseState = false;
+                    VM.Model.PauseState = false;
                     mediaElement.Pause();
                     break;
                 case "System.Windows.Controls.Button: Stop":
-                    btn.StopState = false;
+                    VM.Model.StopState = false;
                     mediaElement.Stop();
                     break;
                 case "System.Windows.Controls.Button: prec":
-                    btn.StopState = false;
+                    VM.Model.StopState = false;
                     mediaElement.Stop();
                     break;
                 case "System.Windows.Controls.Button: next":
-                    btn.StopState = false;
+                    VM.Model.StopState = false;
                     mediaElement.Stop();
                     break;
             }
         }
         private void Change_Timeline(object sender, RoutedPropertyChangedEventArgs<double> args)
         {
-            btn.TimeTxt = "set";
+            //VIEWMODEL
+            VM.Model.TimeTxt = "set";
         }
 
         private void End_Timeline(object sender, DragCompletedEventArgs args)
@@ -81,17 +82,18 @@ namespace mediaPlayer
         }
         private void Mouse_Volume(object sender, MouseWheelEventArgs e)
         {
-            btn.Volume += (e.Delta > 0) ? 0.1 : -0.1;
-            btn.Volume = (btn.Volume > 1) ? 1 : btn.Volume;
-            btn.Volume = (btn.Volume < 0) ? 0 : btn.Volume;
+            //VIEWMODEL
+            VM.Model.Volume += (e.Delta > 0) ? 0.1 : -0.1;
+            VM.Model.Volume = (VM.Model.Volume > 1) ? 1 : VM.Model.Volume;
+            VM.Model.Volume = (VM.Model.Volume < 0) ? 0 : VM.Model.Volume;
         }
 
         private void validateName(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return)
+            /*if (e.Key == Key.Return)
             {
                 string rec = playlist_name.Text;
-                btn.SetPlaylistNameVisibility = false;
+                VM.SetPlaylistNameVisibility = false;
 
                 TextWriter writer = new StreamWriter(rec + ".xml");
                 XmlSerializer ser = new XmlSerializer(typeof(XmlElement));
@@ -146,33 +148,34 @@ namespace mediaPlayer
                     xs.Serialize(wr, listMedia);
                 }
                 //listMedia.Clear();
-            }
+            }*/
         }
         private void ListBoxMediaForPlaylist_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-
+            /*
             StackPanel current = (StackPanel)listBoxPlaylist.Items[listBoxPlaylist.SelectedIndex];
             /*MediaElement media = (MediaElement)current.Children[0];
             string file = media.Source.AbsoluteUri;
             btn.Source = new Uri(new Uri(file).LocalPath);
             mediaElement.Play();*/
-            Media newMedia = new Media();
+           /*Media newMedia = new Media();
             newMedia.path = "dir";
             newMedia.name = "cachou";
-            listMedia.Add(newMedia);
+            listMedia.Add(newMedia);*/
         }
-        private void ListBoxPlaylist_MouseDoubleClick(object sender, RoutedEventArgs e)
+         private void ListBoxPlaylist_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
 
         }
         private void Get_Len(object sender, RoutedEventArgs e)
         {
+            //VIEWMODEL
             MediaElement tmp = (MediaElement)sender;
             if (tmp.NaturalDuration.HasTimeSpan)
             {
-                btn._Len = tmp.NaturalDuration.TimeSpan.TotalMilliseconds;
-                if (btn.Timer != 0)
-                    tmp.Position = TimeSpan.FromMilliseconds(btn.Timer);
+                VM.Model._Len = tmp.NaturalDuration.TimeSpan.TotalMilliseconds;
+                if (VM.Model.Timer != 0)
+                    tmp.Position = TimeSpan.FromMilliseconds(VM.Model.Timer);
             }
         }
     }

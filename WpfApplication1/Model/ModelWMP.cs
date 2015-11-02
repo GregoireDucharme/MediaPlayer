@@ -231,14 +231,7 @@ public class ModelWMP : INotifyPropertyChanged
             OnPropertyChanged("Max");
         }
     }
-    private ICommand create_Playlist;
-    public ICommand Create_Playlist
-    {
-        get
-        {
-            return create_Playlist ?? (create_Playlist = new CommandHandler(() => MyAction(), true));
-        }
-    }
+   
     private bool setPlaylistNameVisibility = false;
     public bool SetPlaylistNameVisibility
     {
@@ -276,35 +269,6 @@ public class ModelWMP : INotifyPropertyChanged
         {
             import_buttonVisibility = value;
             OnPropertyChanged("Import_buttonVisibility");
-        }
-    }
-    public void MyAction()
-    {
-        SetPlaylistNameVisibility = true;
-        Create_buttonVisibility = false;
-        Import_buttonVisibility = false;
-    }
-
-    public class CommandHandler : ICommand
-    {
-        private Action _action;
-        private bool _canExecute;
-        public CommandHandler(Action action, bool canExecute)
-        {
-            _action = action;
-            _canExecute = canExecute;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
-        {
-            _action();
         }
     }
 
@@ -363,47 +327,6 @@ public class ModelWMP : INotifyPropertyChanged
         }
     }
 
-    private string RootRepo = ConfigurationManager.AppSettings.Get("RootRepo");
-    private string PublicRepo = ConfigurationManager.AppSettings.Get("PublicRepo");
-
-    private void _fill_list(string dir, IList<media> tmp, string filePM)
-    {
-        int index = dir.LastIndexOf('\\');
-        string filename = dir.Substring(index + 1);
-        switch (filePM)
-        {
-            case @"\Videos":
-                tmp.Add(new media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg")));
-                break;
-            case @"\Music":
-                tmp.Add(new media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg")));
-                break;
-            default:
-                tmp.Add(new media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath)));
-                break;
-        }
-    }
-
-    private IList<media> _get_files(string filePM, string type0, string type1, string type2)
-    {
-        IList<media> tmp = new List<media>();
-        var files = Directory.EnumerateFiles(RootRepo + Environment.UserName + filePM, "*.*", SearchOption.AllDirectories)
-        .Where(s => s.EndsWith("." + type0, StringComparison.OrdinalIgnoreCase) || s.EndsWith("." + type1, StringComparison.OrdinalIgnoreCase) ||
-        s.EndsWith("." + type2, StringComparison.OrdinalIgnoreCase));
-        foreach (string dir in files)
-        {
-            _fill_list(dir, tmp, filePM);
-        }
-        files = Directory.EnumerateFiles(RootRepo + PublicRepo + filePM, "*.*", SearchOption.AllDirectories)
-        .Where(s => s.EndsWith("." + type0, StringComparison.OrdinalIgnoreCase) || s.EndsWith("." + type1, StringComparison.OrdinalIgnoreCase) ||
-        s.EndsWith("." + type2, StringComparison.OrdinalIgnoreCase));
-        foreach (string dir in files)
-        {
-            _fill_list(dir, tmp, filePM);
-        }
-        return tmp;
-    }
-
     public class media
     {
         public media(string info, Uri uri, Uri source)
@@ -450,71 +373,7 @@ public class ModelWMP : INotifyPropertyChanged
         }
 
     }
-
-    public IList<media> ListBoxImage
-    {
-        get
-        {
-            try
-            {
-                return _get_files(@"\Pictures", "jpg", "png", "gif");
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return null;
-            }
-            catch (PathTooLongException)
-            {
-                return null;
-            }
-            catch (DirectoryNotFoundException)
-            {
-                return null;
-            }
-        }
-    }
-    public IList<media> ListBoxVideo
-    {
-        get
-        {
-            try {
-                return _get_files(@"\Videos", "mp4", "avi", "wmv");
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return null;
-            }
-            catch (PathTooLongException)
-            {
-                return null;
-            }
-            catch (DirectoryNotFoundException)
-            {
-                return null;
-            }
-        }
-    }
-    public IList<media> ListBoxMusique
-    {
-        get
-        {
-            try {
-                return _get_files(@"\Music", "mp3", "wav", "wma");
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return null;
-            }
-            catch (PathTooLongException)
-            {
-                return null;
-            }
-            catch (DirectoryNotFoundException)
-            {
-                return null;
-            }
-        }
-    }
+    /* elle fait un truc */
 
     public event PropertyChangedEventHandler PropertyChanged;
     private void OnPropertyChanged(string v)
