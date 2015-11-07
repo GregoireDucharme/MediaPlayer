@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Windows.Input;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
-public class ModelWMP : IModel
+public class MainMedia : IModel
 {
-    /*private String timeTxt = "00:00:00";
+    DispatcherTimer _timer = new DispatcherTimer();
+    public MainMedia()
+    {
+        _timer.Interval = TimeSpan.FromMilliseconds(1000);
+        _timer.Tick += new EventHandler(_actualisation);
+    }
+    private String timeTxt = "00:00:00";
     public String TimeTxt
     {
         get
@@ -22,21 +25,7 @@ public class ModelWMP : IModel
             timeTxt = TimeSpan.FromMilliseconds(timer).ToString(@"hh\:mm\:ss");
             OnPropertyChanged("TimeTxt");
         }
-    }*/
-    private int currentTab = 1;
-    public int CurrentTab
-    {
-        get
-        {
-            return currentTab;
-        }
-        set
-        {
-            currentTab = value;
-            OnPropertyChanged("CurrentTab");
-        }
     }
-    /*DispatcherTimer _timer = new DispatcherTimer();
     private int timer = 0;
     private double _len = 0;
     public double _Len
@@ -85,7 +74,7 @@ public class ModelWMP : IModel
                 chck = true;
                 source = value;
                 OnPropertyChanged("Source");
-                CurrentTab = 0;
+                //CurrentTab = 0;
                 OptionVisi = true;
             }
             else
@@ -121,13 +110,8 @@ public class ModelWMP : IModel
     private bool playState = false;
     private bool pauseState = false;
     private bool stopState = false;
-    private bool nextState = false;*/
-    public ModelWMP()
-    {
-        /*_timer.Interval = TimeSpan.FromMilliseconds(1000);
-        _timer.Tick += new EventHandler(_actualisation);*/
-    }
-    /*private void _trigger()
+    private bool nextState = false;
+    private void _trigger()
     {
         OnPropertyChanged("PlayState");
         OnPropertyChanged("PauseState");
@@ -146,6 +130,9 @@ public class ModelWMP : IModel
             pauseState = true;
             stopState = true;
             nextState = true;
+            /*Uri tmp = Source;
+            Source = null;
+            Source = tmp;*/
             _timer.Start();
             _trigger();
         }
@@ -227,64 +214,5 @@ public class ModelWMP : IModel
             max = value;
             OnPropertyChanged("Max");
         }
-    }*/
-   
-    private bool setPlaylistNameVisibility = false;
-    public bool SetPlaylistNameVisibility
-    {
-        get
-        {
-            return setPlaylistNameVisibility;
-        }
-        set
-        {
-            setPlaylistNameVisibility = value;
-            OnPropertyChanged("SetPlaylistNameVisibility");
-        }
     }
-    private bool create_buttonVisibility = true;
-    public bool Create_buttonVisibility
-    {
-        get
-        {
-            return create_buttonVisibility;
-        }
-        set
-        {
-            create_buttonVisibility = value;
-            OnPropertyChanged("Create_buttonVisibility");
-        }
-    }
-    private bool import_buttonVisibility = true;
-    public bool Import_buttonVisibility
-    {
-        get
-        {
-            return import_buttonVisibility;
-        }
-        set
-        {
-            import_buttonVisibility = value;
-            OnPropertyChanged("Import_buttonVisibility");
-        }
-    }
-
-    // BINDING DE POSITION ?
-    /*private TimeSpan position;
-    public TimeSpan Position
-    {
-        get
-        {
-            return position;
-        }
-        set
-        {
-            position = value;
-            OnPropertyChanged("Position");
-        }
-    }*/
-
 }
-
-
-

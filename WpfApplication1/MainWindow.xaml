@@ -27,17 +27,17 @@
         <TabControl SelectedIndex="{Binding Model.CurrentTab}">
             <TabItem Header="En lecture">
                 <Grid>
-                    <MediaElement Name="mediaElement" LoadedBehavior="Manual" Margin="10,10,10,40" Source="{Binding Model.Source}" MediaOpened="Get_Len" Volume="{Binding Model.Volume}"/>
-                    <StackPanel Name="options" Orientation="Horizontal" Width="578" Height="auto" Margin="120,457,120,32" Panel.ZIndex="1" Visibility="{Binding Model.OptionVisi, Converter={StaticResource BoolToVis}}">
-                        <Button x:Name="prec" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding Model.NextState}" Content="Prev"/>
-                        <Button x:Name="play" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding Model.PlayState}" Content="Play"/>
-                        <Button x:Name="pause" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding Model.PauseState}" Content="Pause"/>
-                        <Button x:Name="stop" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding Model.StopState}" Content="Stop"/>
-                            <Button x:Name="next" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding Model.NextState}" Content="Next"/>
+                    <MediaElement Name="mediaElement" LoadedBehavior="Manual" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len" Volume="{Binding MainMedia.Volume}"/>
+                    <StackPanel Name="options" Orientation="Horizontal" Width="578" Height="auto" Margin="120,457,120,32" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
+                        <Button x:Name="prec" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Prev"/>
+                        <Button x:Name="play" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PlayState}" Content="Play"/>
+                        <Button x:Name="pause" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PauseState}" Content="Pause"/>
+                        <Button x:Name="stop" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Content="Stop"/>
+                        <Button x:Name="next" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Next"/>
                     </StackPanel>
-                    <TextBlock Name="time" Text="{Binding Model.TimeTxt}" Margin="54,471,-54,-19.2" Visibility="{Binding Model.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    <Slider Name="timeline" Maximum="{Binding Model.Max}" Margin="60,440,60,60" Value="{Binding Model.Timer}" ValueChanged="Change_Timeline" Width="700" Thumb.DragCompleted="End_Timeline" Visibility="{Binding Model.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    <ProgressBar Height="24" Name="volume" Value="{Binding Model.Volume}" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46" Visibility="{Binding Model.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <TextBlock Name="time" Text="{Binding MainMedia.TimeTxt}" Margin="54,471,-54,-19.2" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <Slider Name="timeline" Maximum="{Binding MainMedia.Max}" Margin="60,440,60,60" Value="{Binding MainMedia.Timer}" ValueChanged="Change_Timeline" Width="700" Thumb.DragCompleted="End_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <ProgressBar Height="24" Name="volume" Value="{Binding MainMedia.Volume}" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques">

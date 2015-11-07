@@ -4,18 +4,24 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 class ViewModelWMP
 {
     private ModelWMP model = new ModelWMP();
+    private MainMedia mainMedia = new MainMedia();
     public ModelWMP Model
     {
         get
         {
             return model;
+        }
+    }
+    public MainMedia MainMedia
+    {
+        get
+        {
+            return mainMedia;
         }
     }
     public ViewModelWMP()
@@ -85,7 +91,6 @@ class ViewModelWMP
             }
         }
     }
-    /* pas celle la */
 
     public IList<Media> ListBoxMusique
     {
@@ -216,3 +221,4 @@ class ViewModelWMP
         }
     }
 }
+    

@@ -72,6 +72,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\IModel.cs" />
+    <Compile Include="Model\MainMedia.cs" />
     <Compile Include="Model\Media.cs" />
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="ViewModel\ViewModelWMP.cs" />
