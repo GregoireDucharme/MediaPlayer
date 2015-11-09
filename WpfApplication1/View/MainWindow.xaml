@@ -17,7 +17,7 @@
         <DataTemplate x:Key="ListBoxMediaTemplate">
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700">
                 <StackPanel.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{Binding ListBox_MouseDoubleClick}" />
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ListBox_MouseDoubleClick}" />
                 </StackPanel.InputBindings>
                 <Label Visibility="Collapsed" Content="{Binding Uri}"/>
                 <MediaElement Source="{Binding ListSource}" Width="100" Height="120"/>
@@ -26,10 +26,14 @@
         </DataTemplate>
     </Window.Resources>
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0" MouseWheel="Mouse_Volume">
+        <!--
+        <Grid.InputBindings>
+            <MouseBinding Gesture="WheelClick" Command="{Binding Mouse_Volume}"/>
+        </Grid.InputBindings>-->
         <TabControl SelectedIndex="{Binding Model.CurrentTab}">
             <TabItem Header="En lecture">
                 <Grid>
-                    <MediaElement Name="mediaElement" LoadedBehavior="Manual" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len" Volume="{Binding MainMedia.Volume}"/>
+                    <MediaElement Name="mediaElement" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len" Volume="{Binding MainMedia.Volume}"/>
                     <StackPanel Name="options" Orientation="Horizontal" Width="578" Height="auto" Margin="120,457,120,32" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
                         <Button x:Name="prec" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Prev"/>
                         <Button x:Name="play" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PlayState}" Content="Play"/>
@@ -38,59 +42,34 @@
                         <Button x:Name="next" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Next"/>
                     </StackPanel>
                     <TextBlock Name="time" Text="{Binding MainMedia.TimeTxt}" Margin="54,471,-54,-19.2" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    <Slider Name="timeline" Maximum="{Binding MainMedia.Max}" Margin="60,440,60,60" Value="{Binding MainMedia.Timer}" ValueChanged="Change_Timeline" Width="700" Thumb.DragCompleted="End_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <Slider Name="timeline" Maximum="{Binding MainMedia.Max}" Margin="60,440,60,60" Value="{Binding MainMedia.Timer}" Width="700" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                     <ProgressBar Height="24" Name="volume" Value="{Binding MainMedia.Volume}" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques">
                 <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ListBoxMusique}">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                            <EventSetter Event="MouseDoubleClick" Handler="ListBox_MouseDoubleClick"/>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
                 </ListBox>
             </TabItem>
             <TabItem Header="Videos">
                 <ListBox Name="listBoxVideos" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ListBoxVideo}">
-                        <!--<ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                            <EventSetter Event="MouseDoubleClick" Handler="ListBox_MouseDoubleClick"/>
-                        </Style>
-                    </ListBox.ItemContainerStyle>-->
                 </ListBox>
             </TabItem>
 
             <TabItem Header="Images">
                 <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ListBoxImage}">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                            <EventSetter Event="MouseDoubleClick" Handler="ListBox_MouseDoubleClick"/>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
                 </ListBox>
             </TabItem>
             <TabItem Header="Playlists">
                 <Grid>
                     <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ListBoxPlaylist}">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                                <EventSetter Event="MouseDoubleClick" Handler="ListBoxPlaylist_MouseDoubleClick"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
                     </ListBox>
                     <Button Name="Create_button" Width="63" Content="Create" Height="30" Command="{Binding Create_Playlist}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
                     <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Import_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
                     <StackPanel Name="SetPlaylistName" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Model.SetPlaylistNameVisibility, Converter={StaticResource BoolToVis}}">
                         <Label Height="30" Width="90" Content="Playlist Name"/>
-                        <TextBox Name="playlist_name" Visibility ="Visible" Height="25px" Width="150" KeyDown="validateName"/>
+                        <TextBox Name="playlist_name" Visibility ="Visible" Height="25px" Width="150"/>
                     </StackPanel>
                     <ListBox Name="listBoxMediaForPlaylist" Visibility="Collapsed" Margin="0,50,0,0">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                                <EventSetter Event="MouseDoubleClick" Handler="ListBoxMediaForPlaylist_MouseDoubleClick"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
                     </ListBox>
                 </Grid>
             </TabItem>

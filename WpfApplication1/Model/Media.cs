@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Windows.Input;
+
 class Media
 {
-    public Media(string info, Uri uri, Uri source)
+    MainMedia mainMedia;
+    ModelWMP model;
+    public Media(string info, Uri uri, Uri source, MainMedia MM, ModelWMP M)
     {
         Info = info;
         ListSource = source;
         Uri = uri;
+        mainMedia = MM;
+        model = M;
     }
     private string info;
     private Uri _source;
@@ -43,5 +49,19 @@ class Media
             uri = value;
         }
     }
+    public void MyAction()
+    {
+        mainMedia.Source = Uri;
+        model.CurrentTab = 0;
+        mainMedia.NextState = true;
+        mainMedia.PlayState = false;
+    }
+    private ICommand listBox_MouseDoubleClick;
+    public ICommand ListBox_MouseDoubleClick
+    {
+        get
+        {
+            return listBox_MouseDoubleClick ?? (listBox_MouseDoubleClick = new CommandHandler(MyAction, true));
+        }
+    }
 }
-
