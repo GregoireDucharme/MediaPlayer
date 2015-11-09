@@ -151,7 +151,7 @@ class ViewModelWMP
         }
     }
   
-    public void MyAction()
+    public void MyAction(object parameter)
     {
         model.SetPlaylistNameVisibility = true;
         model.Create_buttonVisibility = false;
@@ -186,6 +186,21 @@ class ViewModelWMP
         }
     }
 
+    public void CheckName(object parameter)
+    {
+        String rec = (String)parameter;
+    }
+
+    private ICommand setPlaylistName;
+
+    public ICommand SetPlaylistName
+    {
+        get
+        {
+            return setPlaylistName ?? (setPlaylistName = new CommandHandler(CheckName, true));
+        }
+    }
+
     private IList<Playlist> getPlaylist()
     {
         IList<Playlist> list = new List<Playlist>();
@@ -199,6 +214,7 @@ class ViewModelWMP
         }
         return list;
     }
+
     public IList<Playlist> ListBoxPlaylist
     {
         get

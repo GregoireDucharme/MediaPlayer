@@ -49,7 +49,7 @@ class Media
             uri = value;
         }
     }
-    public void MyAction()
+    public void MyAction(object parameter)
     {
         mainMedia.Source = Uri;
         model.CurrentTab = 0;

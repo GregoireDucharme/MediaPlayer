@@ -69,7 +69,11 @@
                     <Button Name="Annuler" Width="63" Content="Annuler" Height="30" Margin="340,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Cancel_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
                     <StackPanel Name="SetPlaylistName" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Model.SetPlaylistNameVisibility, Converter={StaticResource BoolToVis}}">
                         <Label Height="30" Width="90" Content="Playlist Name"/>
-                        <TextBox Name="playlist_name" Visibility ="Visible" Height="25px" Width="150"/>
+                        <TextBox Name="playlist_name" Height="25px" Width="150" AcceptsReturn="False">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Enter" Command="{Binding SetPlaylistName}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                            </TextBox.InputBindings>
+                        </TextBox>
                     </StackPanel>
                     <ListBox Name="listBoxMediaForPlaylist" Visibility="Collapsed" Margin="0,50,0,0">
                     </ListBox>
