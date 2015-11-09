@@ -16,10 +16,12 @@
         </DataTemplate>
         <DataTemplate x:Key="ListBoxMediaTemplate">
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700">
+                <StackPanel.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding ListBox_MouseDoubleClick}" />
+                </StackPanel.InputBindings>
                 <Label Visibility="Collapsed" Content="{Binding Uri}"/>
                 <MediaElement Source="{Binding ListSource}" Width="100" Height="120"/>
                 <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
-                
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
@@ -51,14 +53,11 @@
             </TabItem>
             <TabItem Header="Videos">
                 <ListBox Name="listBoxVideos" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ListBoxVideo}">
-                    <!--<ListBox.InputBindings>
-                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ListBox_MouseDoubleClick}" />
-                    </ListBox.InputBindings>-->
-                    <ListBox.ItemContainerStyle>
+                        <!--<ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                             <EventSetter Event="MouseDoubleClick" Handler="ListBox_MouseDoubleClick"/>
                         </Style>
-                    </ListBox.ItemContainerStyle>
+                    </ListBox.ItemContainerStyle>-->
                 </ListBox>
             </TabItem>
 

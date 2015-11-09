@@ -164,9 +164,9 @@ class ViewModelWMP
 
     public void MyAction()
     {
-        /*SetPlaylistNameVisibility = true;
-        Create_buttonVisibility = false;
-        Import_buttonVisibility = false;*/
+        model.SetPlaylistNameVisibility = true;
+        model.Create_buttonVisibility = false;
+        model.Import_buttonVisibility = false;
     }
 
     private ICommand create_Playlist;
@@ -177,28 +177,7 @@ class ViewModelWMP
             return create_Playlist ?? (create_Playlist = new CommandHandler(() => MyAction(), true));
         }
     }
-    public class CommandHandler : ICommand
-    {
-        private Action _action;
-        private bool _canExecute;
-        public CommandHandler(Action action, bool canExecute)
-        {
-            _action = action;
-            _canExecute = canExecute;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
-        {
-            _action();
-        }
-    }
+  
     private IList<Playlist> getPlaylist()
     {
         IList<Playlist> list = new List<Playlist>();
