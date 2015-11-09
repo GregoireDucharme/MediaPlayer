@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Threading;
 
-public class MainMedia : BaseModel
+public class FirsTab : BaseModel
 {
     DispatcherTimer _timer = new DispatcherTimer();
-    public MainMedia()
+    public FirsTab()
     {
         _timer.Interval = TimeSpan.FromMilliseconds(1000);
         _timer.Tick += new EventHandler(_actualisation);
@@ -70,7 +70,6 @@ public class MainMedia : BaseModel
                 chck = true;
                 source = value;
                 OnPropertyChanged("Source");
-                //CurrentTab = 0;
                 OptionVisi = true;
             }
             else
@@ -127,9 +126,6 @@ public class MainMedia : BaseModel
             pauseState = true;
             stopState = true;
             nextState = true;
-            /*Uri tmp = Source;
-            Source = null;
-            Source = tmp;*/
             _timer.Start();
             _trigger();
         }

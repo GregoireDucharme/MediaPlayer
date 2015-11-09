@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 class ViewModelWMP
 {
     private ModelWMP model = new ModelWMP();
-    private MainMedia mainMedia = new MainMedia();
+    private FirsTab mainMedia = new FirsTab();
     public ModelWMP Model
     {
         get
@@ -19,7 +19,7 @@ class ViewModelWMP
             return model;
         }
     }
-    public MainMedia MainMedia
+    public FirsTab MainMedia
     {
         get
         {
@@ -32,7 +32,7 @@ class ViewModelWMP
     private string ProjectRepo = ConfigurationManager.AppSettings.Get("ProjectRepo");
     public ViewModelWMP()
     {
-        if (!Directory.Exists(RootRepo + Environment.UserName + ProjectRepo));
+        if (!Directory.Exists(RootRepo + Environment.UserName + ProjectRepo))
         {
             try
             {
@@ -151,19 +151,7 @@ class ViewModelWMP
         }
     }
   
-    //private void ListBox_MouseDoubleClick(object sender, RoutedEventArgs e)
-    //{
-        // VIEWMODEL
-        /*ListBoxItem item = (ListBoxItem)sender;
-        Media current = (Media)item.Content;
-        VM.Source = current.Uri;
-
-        mediaElement.Play();
-        VM.NextState = true;
-        VM.PlayState = false;*/
-    //}
-
-    public void Switch()
+    public void MyAction()
     {
         model.SetPlaylistNameVisibility = true;
         model.Create_buttonVisibility = false;

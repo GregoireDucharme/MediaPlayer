@@ -74,7 +74,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\CommandHandler.cs" />
-    <Compile Include="Model\MainMedia.cs" />
+    <Compile Include="Model\FirstTab.cs" />
     <Compile Include="Model\Media.cs" />
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="ViewModel\ViewModelWMP.cs" />

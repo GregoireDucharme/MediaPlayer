@@ -3,9 +3,9 @@ using System.Windows.Input;
 
 class Media
 {
-    MainMedia mainMedia;
+    FirsTab mainMedia;
     ModelWMP model;
-    public Media(string info, Uri uri, Uri source, MainMedia MM, ModelWMP M)
+    public Media(string info, Uri uri, Uri source, FirsTab MM, ModelWMP M)
     {
         Info = info;
         ListSource = source;

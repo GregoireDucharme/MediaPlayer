@@ -20,21 +20,9 @@ namespace mediaPlayer
             InitializeComponent();
             DataContext = VM;
         }
-/*        private void ListBox_MouseDoubleClick(object sender, RoutedEventArgs e)
-        {
-            // VIEWMODEL
-            ListBoxItem item = (ListBoxItem)sender;
-            Media current = (Media)item.Content;
-            VM.MainMedia.Source = current.Uri;
-            VM.Model.CurrentTab = 0;
-            mediaElement.Play();
-            VM.MainMedia.NextState = true;
-            VM.MainMedia.PlayState = false;
-        }
-*/
+
         private void Action_File(object sender, RoutedEventArgs e)
         {
-            // VIEWMODEL
             mediaElement.LoadedBehavior = MediaState.Manual;
             switch (sender.ToString())
             {
@@ -77,14 +65,12 @@ namespace mediaPlayer
         }
         private void Mouse_Volume(object sender, MouseWheelEventArgs e)
         {
-            //VIEWMODEL
             VM.MainMedia.Volume += (e.Delta  >0) ? 0.1 : -0.1;
             VM.MainMedia.Volume = (VM.MainMedia.Volume > 1) ? 1 : VM.MainMedia.Volume;
             VM.MainMedia.Volume = (VM.MainMedia.Volume < 0) ? 0 : VM.MainMedia.Volume;
         }
         private void Get_Len(object sender, RoutedEventArgs e)
         {
-            //VIEWMODEL
             MediaElement tmp = (MediaElement)sender;
             if (tmp.NaturalDuration.HasTimeSpan)
             {
