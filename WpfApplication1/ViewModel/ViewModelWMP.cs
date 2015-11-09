@@ -151,7 +151,7 @@ class ViewModelWMP
         }
     }
   
-    public void MyAction()
+    public void Switch()
     {
         model.SetPlaylistNameVisibility = true;
         model.Create_buttonVisibility = false;
