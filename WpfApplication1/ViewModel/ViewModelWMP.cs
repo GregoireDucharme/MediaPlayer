@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
+using System.Xml;
+using System.Xml.Serialization;
 
 class ViewModelWMP
 {
@@ -167,6 +169,10 @@ class ViewModelWMP
         model.SetPlaylistNameVisibility = true;
         model.Create_buttonVisibility = false;
         model.Import_buttonVisibility = false;
+        model.Cancel_buttonVisibility = true;
+        model.Confirm_buttonVisibility = true;
+      /*  XmlSerializer serializer = new XmlSerializer(typeof(Media));
+        XmlDocument playlistDoc = new XmlDocument();*/
     }
 
     private ICommand create_Playlist;
