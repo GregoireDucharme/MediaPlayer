@@ -151,38 +151,39 @@ class ViewModelWMP
         }
     }
   
-    public void MyAction(object parameter)
+    public void Switch(object parameter)
     {
         model.SetPlaylistNameVisibility = true;
         model.Create_buttonVisibility = false;
         model.Import_buttonVisibility = false;
         model.Cancel_buttonVisibility = true;
         model.Confirm_buttonVisibility = true;
-      /*  XmlSerializer serializer = new XmlSerializer(typeof(Media));
-        XmlDocument playlistDoc = new XmlDocument();*/
-    }
-    /*public void handle_volume(object pm)
-    {
-        //VIEWMODEL
-        //MainMedia.Volume += (e.Delta > 0) ? 0.1 : -0.1;
-        MainMedia.Volume = (MainMedia.Volume > 1) ? 1 : MainMedia.Volume;
-        MainMedia.Volume = (MainMedia.Volume < 0) ? 0 : MainMedia.Volume;
     }
 
-    private ICommand mouse_Volume;
-    public ICommand Mouse_Volume
+    private ICommand initialize_Creation;
+    public ICommand Initialize_Creation
     {
         get
         {
-            return mouse_Volume ?? (mouse_Volume = new CommandHandler(handle_volume, true));
+            return initialize_Creation ?? (initialize_Creation = new CommandHandler(Switch, true));
         }
-    }*/
-    private ICommand create_Playlist;
-    public ICommand Create_Playlist
+    }
+
+    public void CancelPlaylist(object parameter)
+    {
+        model.SetPlaylistNameVisibility = false;
+        model.Create_buttonVisibility = true;
+        model.Import_buttonVisibility = true;
+        model.Cancel_buttonVisibility = false;
+        model.Confirm_buttonVisibility = false;
+    }
+
+    private ICommand cancel_Playlist;
+    public ICommand Cancel_Playlist
     {
         get
         {
-            return create_Playlist ?? (create_Playlist = new CommandHandler(MyAction, true));
+            return cancel_Playlist ?? (cancel_Playlist = new CommandHandler(CancelPlaylist, true));
         }
     }
 

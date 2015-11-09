@@ -63,10 +63,10 @@
                 <Grid>
                     <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ListBoxPlaylist}">
                     </ListBox>
-                    <Button Name="Create_button" Width="63" Content="Create" Height="30" Command="{Binding Create_Playlist}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
+                    <Button Name="Create_button" Width="63" Content="Create" Height="30" Command="{Binding Initialize_Creation}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
                     <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Import_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <Button Name="Confirmer" Width="63" Content="Confirmer" Height="30" Margin="270,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Confirm_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <Button Name="Annuler" Width="63" Content="Annuler" Height="30" Margin="340,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Cancel_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
+                    <Button Name="Confirmer" Width="63" Content="Confirmer" Height="30" Command="{Binding Confirm_CreatePlaylist}"  Margin="270,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Confirm_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
+                    <Button Name="Annuler" Width="63" Content="Annuler" Height="30" Command="{Binding Confirm_CreatePlaylist}" Margin="340,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Cancel_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
                     <StackPanel Name="SetPlaylistName" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Model.SetPlaylistNameVisibility, Converter={StaticResource BoolToVis}}">
                         <Label Height="30" Width="90" Content="Playlist Name"/>
                         <TextBox Name="playlist_name" Height="25px" Width="150" AcceptsReturn="False">
