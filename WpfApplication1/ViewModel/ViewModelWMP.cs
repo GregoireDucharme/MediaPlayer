@@ -163,15 +163,13 @@ class ViewModelWMP
         VM.PlayState = false;*/
     //}
 
-    public void MyAction()
+    public void Switch()
     {
         model.SetPlaylistNameVisibility = true;
         model.Create_buttonVisibility = false;
         model.Import_buttonVisibility = false;
         model.Cancel_buttonVisibility = true;
         model.Confirm_buttonVisibility = true;
-      /*  XmlSerializer serializer = new XmlSerializer(typeof(Media));
-        XmlDocument playlistDoc = new XmlDocument();*/
     }
     /*public void handle_volume(object pm)
     {
@@ -189,12 +187,50 @@ class ViewModelWMP
             return mouse_Volume ?? (mouse_Volume = new CommandHandler(handle_volume, true));
         }
     }*/
-    private ICommand create_Playlist;
-    public ICommand Create_Playlist
+
+    private ICommand initialize_Creation;
+    public ICommand Initialize_Creation
     {
         get
         {
-            return create_Playlist ?? (create_Playlist = new CommandHandler(MyAction, true));
+            return initialize_Creation ?? (initialize_Creation = new CommandHandler(Switch, true));
+        }
+    }
+    public void CreatePlaylist()
+    {
+        model.SetPlaylistNameVisibility = false;
+        model.Create_buttonVisibility = true;
+        model.Import_buttonVisibility = true;
+        model.Cancel_buttonVisibility = false;
+        model.Confirm_buttonVisibility = false;
+        /*  XmlSerializer serializer = new XmlSerializer(typeof(Media));
+       XmlDocument playlistDoc = new XmlDocument();*/
+    }
+
+    private ICommand confirm_CreatePlaylist;
+    public ICommand Confirm_CreatePlaylist
+    {
+        get
+        {
+            return confirm_CreatePlaylist ?? (confirm_CreatePlaylist = new CommandHandler(CreatePlaylist, true));
+        }
+    }
+
+    public void CancelPlaylist()
+    {
+        model.SetPlaylistNameVisibility = false;
+        model.Create_buttonVisibility = true;
+        model.Import_buttonVisibility = true;
+        model.Cancel_buttonVisibility = false;
+        model.Confirm_buttonVisibility = false;
+    }
+
+    private ICommand cancel_Playlist;
+    public ICommand Cancel_Playlist
+    {
+        get
+        {
+            return cancel_Playlist ?? (cancel_Playlist = new CommandHandler(CancelPlaylist, true));
         }
     }
 
