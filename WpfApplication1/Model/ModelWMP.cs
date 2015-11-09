@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows.Input;
-using System.Windows.Threading;
-
-public class ModelWMP : IModel
+﻿public class ModelWMP : BaseModel
 {
     private int currentTab = 1;
     public int CurrentTab

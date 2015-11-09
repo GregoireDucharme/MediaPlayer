@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
-public class MainMedia : IModel
+public class MainMedia : BaseModel
 {
     DispatcherTimer _timer = new DispatcherTimer();
     public MainMedia()
