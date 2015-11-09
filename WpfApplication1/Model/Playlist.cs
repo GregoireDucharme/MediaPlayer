@@ -1,4 +1,6 @@
-﻿public class Playlist
+﻿using System.Windows.Input;
+
+public class Playlist
 {
     public Playlist(string index)
     {

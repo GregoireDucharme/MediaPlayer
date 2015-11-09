@@ -20,7 +20,7 @@ namespace mediaPlayer
             InitializeComponent();
             DataContext = VM;
         }
-        private void ListBox_MouseDoubleClick(object sender, RoutedEventArgs e)
+/*        private void ListBox_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             // VIEWMODEL
             ListBoxItem item = (ListBoxItem)sender;
@@ -31,7 +31,7 @@ namespace mediaPlayer
             VM.MainMedia.NextState = true;
             VM.MainMedia.PlayState = false;
         }
-
+*/
         private void Action_File(object sender, RoutedEventArgs e)
         {
             // VIEWMODEL
@@ -60,10 +60,11 @@ namespace mediaPlayer
                     break;
             }
         }
-        private void Change_Timeline(object sender, RoutedPropertyChangedEventArgs<double> args)
+        private void Start_Timeline(object sender, DragStartedEventArgs args)
         {
-            //VIEWMODEL
-            VM.MainMedia.TimeTxt = "set";
+            mediaElement.LoadedBehavior = MediaState.Manual;
+            VM.MainMedia.PauseState = false;
+            mediaElement.Pause();
         }
 
         private void End_Timeline(object sender, DragCompletedEventArgs args)
@@ -71,26 +72,15 @@ namespace mediaPlayer
             int t = (int)timeline.Value;
 
             mediaElement.Position = TimeSpan.FromMilliseconds(t);
+            VM.MainMedia.PlayState = false;
+            mediaElement.Play();
         }
         private void Mouse_Volume(object sender, MouseWheelEventArgs e)
         {
             //VIEWMODEL
-            VM.MainMedia.Volume += (e.Delta > 0) ? 0.1 : -0.1;
+            VM.MainMedia.Volume += (e.Delta  >0) ? 0.1 : -0.1;
             VM.MainMedia.Volume = (VM.MainMedia.Volume > 1) ? 1 : VM.MainMedia.Volume;
             VM.MainMedia.Volume = (VM.MainMedia.Volume < 0) ? 0 : VM.MainMedia.Volume;
-        }
-
-        private void validateName(object sender, KeyEventArgs e)
-        {
-
-        }
-        private void ListBoxMediaForPlaylist_MouseDoubleClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-         private void ListBoxPlaylist_MouseDoubleClick(object sender, RoutedEventArgs e)
-        {
-
         }
         private void Get_Len(object sender, RoutedEventArgs e)
         {
@@ -98,10 +88,11 @@ namespace mediaPlayer
             MediaElement tmp = (MediaElement)sender;
             if (tmp.NaturalDuration.HasTimeSpan)
             {
-                VM.MainMedia._Len = tmp.NaturalDuration.TimeSpan.TotalMilliseconds;
+                VM.MainMedia.Len = tmp.NaturalDuration.TimeSpan.TotalMilliseconds;
                 if (VM.MainMedia.Timer != 0)
                     tmp.Position = TimeSpan.FromMilliseconds(VM.MainMedia.Timer);
             }
         }
     }
+
 }

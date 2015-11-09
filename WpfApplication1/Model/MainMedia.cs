@@ -23,18 +23,18 @@ public class MainMedia : BaseModel
         }
     }
     private int timer = 0;
-    private double _len = 0;
-    public double _Len
+    private double len = 0;
+    public double Len
     {
         get
         {
-            return _len;
+            return len;
         }
         set
         {
             if (chck == true)
             {
-                _len = value;
+                len = value;
                 Max = value;
                 Timer = 0;
                 chck = false;
@@ -90,7 +90,7 @@ public class MainMedia : BaseModel
             if (timer == 0)
                 _timer.Start();
             timer = value;
-            if (timer >= _len)
+            if (timer >= len)
             {
                 timer = 0;
                 _timer.Stop();
@@ -101,6 +101,7 @@ public class MainMedia : BaseModel
     private void _actualisation(object sender, EventArgs e)
     {
         Timer += 1000;
+        TimeTxt = "actualisation";
     }
 
     private bool playState = false;
