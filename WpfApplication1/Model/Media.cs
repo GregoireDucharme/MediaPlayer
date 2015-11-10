@@ -4,15 +4,12 @@ using System.Windows.Input;
 
 class Media
 {
-    FirsTab mainMedia;
-    ModelWMP model;
-    public Media(string info, Uri uri, Uri source, FirsTab MM, ModelWMP M, ObservableCollection<Playlist> ListBoxPlaylist)
+
+    public Media(string info, Uri uri, Uri source, ObservableCollection<Playlist> ListBoxPlaylist)
     {
         Info = info;
         ListSource = source;
         Uri = uri;
-        mainMedia = MM;
-        model = M;
         _lbp = ListBoxPlaylist;
     }
 
@@ -60,22 +57,6 @@ class Media
         set
         {
             uri = value;
-        }
-    }
-    public void MyAction(object parameter)
-    {
-        mainMedia.Source = Uri;
-        model.CurrentTab = 0;
-        mainMedia.NextState = true;
-        mainMedia.PlayState = false;
-        mainMedia.Len = 10;
-    }
-    private ICommand listBox_MouseDoubleClick;
-    public ICommand ListBox_MouseDoubleClick
-    {
-        get
-        {
-            return listBox_MouseDoubleClick ?? (listBox_MouseDoubleClick = new CommandHandler(MyAction, true));
         }
     }
 }

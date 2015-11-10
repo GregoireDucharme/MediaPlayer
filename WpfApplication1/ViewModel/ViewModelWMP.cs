@@ -53,13 +53,13 @@ class ViewModelWMP : BaseModel
         switch (filePM)
         {
             case @"\Videos":
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg"), MainMedia, Model, ListBoxPlaylist));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg"), ListBoxPlaylist));
                 break;
             case @"\Music":
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg"), MainMedia, Model, ListBoxPlaylist));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg"), ListBoxPlaylist));
                 break;
             default:
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath), MainMedia, Model, ListBoxPlaylist));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath), ListBoxPlaylist));
                 break;
         }
     }
@@ -271,6 +271,23 @@ class ViewModelWMP : BaseModel
             if (listBoxPlaylist == null)
                 listBoxPlaylist = getPlaylist();
             return listBoxPlaylist;
+        }
+    }
+    public void MyAction(object parameter)
+    {
+        mainMedia.Source = (Uri)parameter;
+        model.CurrentTab = 0;
+        mainMedia.NextState = true;
+        mainMedia.PlayState = false;
+        mainMedia.Len = 10;
+    }
+
+    private ICommand listBox_MouseDoubleClick;
+    public ICommand ListBox_MouseDoubleClick
+    {
+        get
+        {
+            return listBox_MouseDoubleClick ?? (listBox_MouseDoubleClick = new CommandHandler(MyAction, true));
         }
     }
 }
