@@ -26,24 +26,23 @@
         </DataTemplate>
     </Window.Resources>
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0" MouseWheel="Mouse_Volume">
-        <!--
-        <Grid.InputBindings>
-            <MouseBinding Gesture="WheelClick" Command="{Binding Mouse_Volume}"/>
+        <!--<Grid.InputBindings>
+            <MouseBinding Gesture="WheelClick" Command="{Binding MouseVolume}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"/>
         </Grid.InputBindings>-->
         <TabControl SelectedIndex="{Binding Model.CurrentTab}">
             <TabItem Header="En lecture">
                 <Grid>
                     <MediaElement Name="mediaElement" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len" Volume="{Binding MainMedia.Volume}"/>
                     <StackPanel Name="options" Orientation="Horizontal" Width="578" Height="auto" Margin="120,457,120,32" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
-                        <Button x:Name="prec" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Prev"/>
-                        <Button x:Name="play" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PlayState}" Content="Play"/>
-                        <Button x:Name="pause" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PauseState}" Content="Pause"/>
-                        <Button x:Name="stop" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Content="Stop"/>
-                        <Button x:Name="next" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Next"/>
+                        <Button x:Name="prec" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Prev" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
+                        <Button x:Name="play" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PlayState}" Content="Play" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
+                        <Button x:Name="pause" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PauseState}" Content="Pause" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
+                        <Button x:Name="stop" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Content="Stop" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
+                        <Button x:Name="next" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Next"  Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
                     </StackPanel>
                     <TextBlock Name="time" Text="{Binding MainMedia.TimeTxt}" Margin="54,471,-54,-19.2" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    <Slider Name="timeline" Maximum="{Binding MainMedia.Max}" Margin="60,440,60,60" Value="{Binding MainMedia.Timer}" Width="700" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    <ProgressBar Height="24" Name="volume" Value="{Binding MainMedia.Volume}" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <Slider Name="timeline" Margin="60,440,60,60" Value="{Binding MainMedia.Timer}" Maximum="{Binding MainMedia.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="700" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <ProgressBar Height="24" Name="volume" Value="0.5" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques">

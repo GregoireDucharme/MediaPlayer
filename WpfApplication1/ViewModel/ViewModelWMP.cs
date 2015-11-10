@@ -150,7 +150,7 @@ class ViewModelWMP
             }
         }
     }
-  
+
     public void Switch(object parameter)
     {
         model.SetPlaylistNameVisibility = true;
@@ -166,6 +166,37 @@ class ViewModelWMP
         get
         {
             return initialize_Creation ?? (initialize_Creation = new CommandHandler(Switch, true));
+        }
+    }
+
+    public void HandleButtonFirstTab(object parameter)
+    {
+        switch ((string)parameter)
+        {
+            case "Play":
+                MainMedia.PlayState = false;
+                break;
+            case "Pause":
+                MainMedia.PauseState = false;
+                break;
+            case "Stop":
+                MainMedia.StopState = false;
+                break;
+            case "Prec":
+                MainMedia.StopState = false;
+                break;
+            case "Next":
+                MainMedia.StopState = false;
+                break;
+        }
+    }
+
+    private ICommand buttonFirstTab;
+    public ICommand ButtonFirstTab
+    {
+        get
+        {
+            return buttonFirstTab ?? (buttonFirstTab = new CommandHandler(HandleButtonFirstTab, true));
         }
     }
 
@@ -224,4 +255,3 @@ class ViewModelWMP
         }
     }
 }
-    

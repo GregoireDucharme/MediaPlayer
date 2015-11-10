@@ -55,6 +55,7 @@ class Media
         model.CurrentTab = 0;
         mainMedia.NextState = true;
         mainMedia.PlayState = false;
+        mainMedia.Len = 10;
     }
     private ICommand listBox_MouseDoubleClick;
     public ICommand ListBox_MouseDoubleClick

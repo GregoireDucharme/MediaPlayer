@@ -35,7 +35,7 @@ public class FirsTab : BaseModel
             if (chck == true)
             {
                 len = value;
-                Max = value;
+                //Max = value;
                 Timer = 0;
                 chck = false;
             }
@@ -89,7 +89,7 @@ public class FirsTab : BaseModel
             if (timer == 0)
                 _timer.Start();
             timer = value;
-            if (timer >= len)
+            if (timer >= Max)
             {
                 timer = 0;
                 _timer.Stop();
@@ -182,7 +182,7 @@ public class FirsTab : BaseModel
             _trigger();
         }
     }
-    private Double volume = 0.5;
+  /*  private Double volume = 0.5;
     public Double Volume
     {
         get
@@ -194,7 +194,7 @@ public class FirsTab : BaseModel
             volume = value;
             OnPropertyChanged("Volume");
         }
-    }
+    }*/
     private Double max = 0.5;
     public Double Max
     {
