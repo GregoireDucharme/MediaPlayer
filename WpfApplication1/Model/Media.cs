@@ -1,20 +1,31 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 class Media
 {
     FirsTab mainMedia;
     ModelWMP model;
-    public Media(string info, Uri uri, Uri source, FirsTab MM, ModelWMP M)
+    public Media(string info, Uri uri, Uri source, FirsTab MM, ModelWMP M, ObservableCollection<Playlist> ListBoxPlaylist)
     {
         Info = info;
         ListSource = source;
         Uri = uri;
         mainMedia = MM;
         model = M;
+        _lbp = ListBoxPlaylist;
     }
 
-     
+    private ObservableCollection<Playlist> _lbp;
+
+    public ObservableCollection<Playlist> LBP
+    {
+        get
+        {
+            return (_lbp);
+        }
+    }
+
     private string info;
     private Uri _source;
     public string Info

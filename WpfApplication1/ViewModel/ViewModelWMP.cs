@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Windows.Input;
 using System.Xml;
 using System.Xml.Serialization;
 
-class ViewModelWMP
+class ViewModelWMP : BaseModel
 {
     private ModelWMP model = new ModelWMP();
     private FirsTab mainMedia = new FirsTab();
@@ -52,13 +53,13 @@ class ViewModelWMP
         switch (filePM)
         {
             case @"\Videos":
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg"), MainMedia, Model));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg"), MainMedia, Model, ListBoxPlaylist));
                 break;
             case @"\Music":
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg"), MainMedia, Model));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg"), MainMedia, Model, ListBoxPlaylist));
                 break;
             default:
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath), MainMedia, Model));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath), MainMedia, Model, ListBoxPlaylist));
                 break;
         }
     }
@@ -196,6 +197,8 @@ class ViewModelWMP
         TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + rec);
         xsl.Serialize(WriteFileStream, playlist);
         WriteFileStream.Close();
+        CancelPlaylist(null);
+        ListBoxPlaylistAdd(rec);
     }
 
     private ICommand setPlaylistName;
@@ -208,9 +211,9 @@ class ViewModelWMP
         }
     }
 
-    private IList<Playlist> getPlaylist()
+    private ObservableCollection<Playlist> getPlaylist()
     {
-        IList<Playlist> list = new List<Playlist>();
+        ObservableCollection<Playlist> list = new ObservableCollection<Playlist>();
 
         string[] dirs = Directory.GetFiles(RootRepo + Environment.UserName + ProjectRepo, "*.xml", SearchOption.AllDirectories);
         int index = 0;
@@ -222,12 +225,21 @@ class ViewModelWMP
         return list;
     }
 
-    public IList<Playlist> ListBoxPlaylist
+    public void ListBoxPlaylistAdd(String rec)
+    {
+        listBoxPlaylist.Add(new Playlist(rec));
+        OnPropertyChanged("ListBoxPlaylist");
+    }
+
+    private ObservableCollection<Playlist> listBoxPlaylist = null;
+
+    public ObservableCollection<Playlist> ListBoxPlaylist
     {
         get
         {
-            return getPlaylist();
+            if (listBoxPlaylist == null)
+                listBoxPlaylist = getPlaylist();
+            return listBoxPlaylist;
         }
     }
 }
-    
