@@ -59,7 +59,6 @@ namespace mediaPlayer
         }
         private void Mouse_Volume(object sender, MouseWheelEventArgs e)
         {
-            /* ViewModel */
             mediaElement.Volume += (e.Delta > 0) ? 0.1 : -0.1;
             mediaElement.Volume = (mediaElement.Volume > 1) ? 1 : mediaElement.Volume;
             mediaElement.Volume = (mediaElement.Volume < 0) ? 0 : mediaElement.Volume;

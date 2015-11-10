@@ -76,7 +76,9 @@
     <Compile Include="Model\CommandHandler.cs" />
     <Compile Include="Model\FirstTab.cs" />
     <Compile Include="Model\Media.cs" />
+    <Compile Include="Model\MediaXML.cs" />
     <Compile Include="Model\Playlist.cs" />
+    <Compile Include="Model\PlaylistXML.cs" />
     <Compile Include="ViewModel\ViewModelWMP.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

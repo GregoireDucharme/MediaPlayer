@@ -12,18 +12,32 @@
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="50" Width="700">
                 <Label Margin="10,20,0,0" Content="{Binding Index}"/>
             </StackPanel>
-            
+
         </DataTemplate>
         <DataTemplate x:Key="ListBoxMediaTemplate">
-            <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700">
+            <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700" Background="Transparent">
                 <StackPanel.InputBindings>
                     <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ListBox_MouseDoubleClick}" />
                 </StackPanel.InputBindings>
                 <Label Visibility="Collapsed" Content="{Binding Uri}"/>
                 <MediaElement Source="{Binding ListSource}" Width="100" Height="120"/>
                 <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+
+                        <MenuItem Header="Add To ..." ItemsSource="{Binding LBP}" >
+                            <MenuItem.ItemTemplate>
+                                <DataTemplate>
+                                    <MenuItem Header="{Binding Index}"/>
+                                </DataTemplate>
+                            </MenuItem.ItemTemplate>
+                        </MenuItem>
+                        
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
             </StackPanel>
         </DataTemplate>
+        
     </Window.Resources>
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0" MouseWheel="Mouse_Volume">
         <!--<Grid.InputBindings>
@@ -60,21 +74,24 @@
             </TabItem>
             <TabItem Header="Playlists">
                 <Grid>
-                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ListBoxPlaylist}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="92*"/>
+                        <ColumnDefinition Width="691*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ListBoxPlaylist}" Grid.ColumnSpan="2">
                     </ListBox>
                     <Button Name="Create_button" Width="63" Content="Create" Height="30" Command="{Binding Initialize_Creation}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Import_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <Button Name="Confirmer" Width="63" Content="Confirmer" Height="30" Command="{Binding Confirm_CreatePlaylist}"  Margin="270,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Confirm_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <Button Name="Annuler" Width="63" Content="Annuler" Height="30" Command="{Binding Confirm_CreatePlaylist}" Margin="340,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Cancel_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <StackPanel Name="SetPlaylistName" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Model.SetPlaylistNameVisibility, Converter={StaticResource BoolToVis}}">
+                    <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Import_buttonVisibility, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2"/>
+                    <Button Name="Annuler" Width="63" Content="Annuler" Height="30" Command="{Binding Cancel_Playlist}" Margin="248.5,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Cancel_buttonVisibility, Converter={StaticResource BoolToVis}}" Grid.Column="1"/>
+                    <StackPanel Name="SetPlaylistName" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Model.SetPlaylistNameVisibility, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2">
                         <Label Height="30" Width="90" Content="Playlist Name"/>
-                        <TextBox Name="playlist_name" Height="25px" Width="150" AcceptsReturn="False">
+                        <TextBox Name="playlist_name" Height="25px" Width="230" AcceptsReturn="False">
                             <TextBox.InputBindings>
                                 <KeyBinding Key="Enter" Command="{Binding SetPlaylistName}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
                             </TextBox.InputBindings>
                         </TextBox>
                     </StackPanel>
-                    <ListBox Name="listBoxMediaForPlaylist" Visibility="Collapsed" Margin="0,50,0,0">
+                    <ListBox Name="listBoxMediaForPlaylist" Visibility="Collapsed" Margin="0,50,0,0" Grid.ColumnSpan="2">
                     </ListBox>
                 </Grid>
             </TabItem>
