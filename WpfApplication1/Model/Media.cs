@@ -13,6 +13,8 @@ class Media
         mainMedia = MM;
         model = M;
     }
+
+     
     private string info;
     private Uri _source;
     public string Info

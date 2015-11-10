@@ -189,7 +189,13 @@ class ViewModelWMP
 
     public void CheckName(object parameter)
     {
-        String rec = (String)parameter;
+        String rec = (String)parameter + ".xml";
+        PlaylistXML playlist = new PlaylistXML((String)parameter);
+        XmlSerializer xsl = new XmlSerializer(typeof(PlaylistXML));
+        Environment.CurrentDirectory = @"C:\";
+        TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + rec);
+        xsl.Serialize(WriteFileStream, playlist);
+        WriteFileStream.Close();
     }
 
     private ICommand setPlaylistName;
