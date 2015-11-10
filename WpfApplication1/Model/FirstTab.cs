@@ -97,9 +97,23 @@ public class FirsTab : BaseModel
             OnPropertyChanged("Timer");
         }
     }
+
+    private double speedratio = 1;
+    public double SpeedRatio
+    {
+        get
+        {
+            return speedratio;
+        }
+        set
+        {
+            speedratio = value;
+            OnPropertyChanged("SpeedRatio");
+        }
+    }
     private void _actualisation(object sender, EventArgs e)
     {
-        Timer += 1000;
+        Timer += (int)(1000 * speedratio);
         TimeTxt = "actualisation";
     }
 
