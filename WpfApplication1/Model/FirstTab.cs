@@ -97,6 +97,7 @@ public class FirsTab : BaseModel
             OnPropertyChanged("Timer");
         }
     }
+
     private void _actualisation(object sender, EventArgs e)
     {
         Timer += 1000;

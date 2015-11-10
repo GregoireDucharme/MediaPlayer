@@ -64,6 +64,13 @@ namespace mediaPlayer
             mediaElement.Volume = (mediaElement.Volume < 0) ? 0 : mediaElement.Volume;
             volume.Value = mediaElement.Volume;
         }
+        private void Speed_Ratio(object sender, RoutedPropertyChangedEventArgs<double> args)
+        {
+            mediaElement.SpeedRatio += (speedratio.Value > mediaElement.SpeedRatio) ? 0.5 : 0;
+            mediaElement.SpeedRatio -= (speedratio.Value < mediaElement.SpeedRatio) ? 0.5 : 0;
+            mediaElement.SpeedRatio = (mediaElement.SpeedRatio > 4) ? 4 : mediaElement.SpeedRatio;
+            mediaElement.SpeedRatio = (mediaElement.SpeedRatio < 0.5) ? 0.5 : mediaElement.SpeedRatio;
+        }
         private void Get_Len(object sender, RoutedEventArgs e)
         {
             if (mediaElement.NaturalDuration.HasTimeSpan)
