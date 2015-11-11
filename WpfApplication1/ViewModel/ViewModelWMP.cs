@@ -285,6 +285,42 @@ class ViewModelWMP : BaseModel
         }
     }
 
+    public void updatePlayListAction(object parameter)
+    {
+/*        if (parameter.Item1 && parameter.Item2)
+        {
+            String nameList = (String)parameter.Item1;
+            String nameNewMedia = (String)parameter.Item2;
+            XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(PlaylistXML));
+            Environment.CurrentDirectory = @"C:\";
+            try
+            {
+                using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList, FileMode.Open))
+                {
+                    _selectedPlaylist = (PlaylistXML)deserializerPlaylist.Deserialize(reader);
+                    reader.Close();
+                    _selectedPlaylist.Add(newMedia);
+                    // suprimer le fichier xml ouvert
+                    // Serializer la nouvelle liste
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+        }*/
+    }
+
+    private ICommand updatePlayList;
+
+    public ICommand UpdatePlayList
+    {
+        get
+        {
+            return updatePlayList ?? (updatePlayList = new CommandHandler(updatePlayListAction, true));
+        }
+    }
+
     private ObservableCollection<Playlist> getPlaylist()
     {
         ObservableCollection<Playlist> list = new ObservableCollection<Playlist>();
