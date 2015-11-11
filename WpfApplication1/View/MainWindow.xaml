@@ -18,7 +18,7 @@
 
         </DataTemplate>
         <DataTemplate x:Key="ContextMenuTemplate">
-            <MenuItem Header="{Binding Item1.Index}" Command="{Binding Item1.InsertMedia}" CommandParameter="{Binding Item2}"/>
+            <MenuItem Header="{Binding Item1.Index}" Command="{Binding DataContext.InsertMedia, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Key="ListBoxMediaTemplate">
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700" Background="Transparent">
