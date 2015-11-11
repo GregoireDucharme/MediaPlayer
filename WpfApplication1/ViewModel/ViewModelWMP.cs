@@ -152,7 +152,7 @@ class ViewModelWMP : BaseModel
             }
         }
     }
-  
+
     public void Switch(object parameter)
     {
         model.SetPlaylistNameVisibility = true;
@@ -226,7 +226,7 @@ class ViewModelWMP : BaseModel
     {
         String rec = (String)parameter + ".xml";
         Playlist playlist = new Playlist((String)parameter);
-       // var media = new MediaXML("Croquette");
+        // var media = new MediaXML("Croquette");
         //playlist.Add(new Media("Croquette"));
         //playlist.Add(new Media("Cachou"));
         //playlist.Add(media);
@@ -260,14 +260,14 @@ class ViewModelWMP : BaseModel
             {
                 _selectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
                 reader.Close();
-             //   selectedPlaylist.Add(newMedia);
-             // suprimer le fichier xml ouvert
-             // Serializer la nouvelle liste
+                //   selectedPlaylist.Add(newMedia);
+                // suprimer le fichier xml ouvert
+                // Serializer la nouvelle liste
             }
         }
         catch (InvalidOperationException e)
         {
-           
+
         }
         catch (Exception e)
         {
@@ -287,30 +287,33 @@ class ViewModelWMP : BaseModel
 
     public void updatePlayListAction(object parameter)
     {
-       // Tuple parameters = (Tuple)parameter;
-        /*
-       if (parameters.Item1 && parameters.Item2)
+        Tuple<Playlist, Media> parameters = (Tuple<Playlist, Media>)parameter;
+
+        String nameList = (String)parameters.Item1.Index;
+        // String nameNewMedia = (String)parameter.Item2;
+        XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(Playlist));
+        Environment.CurrentDirectory = @"C:\";
+        try
         {
-            String nameList = (String)parameter.Item1;
-            String nameNewMedia = (String)parameter.Item2;
-            XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(PlaylistXML));
-            Environment.CurrentDirectory = @"C:\";
-            try
+            using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList, FileMode.Open))
             {
-                using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList, FileMode.Open))
+                _selectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
+                reader.Close();
+                _selectedPlaylist.Add(parameters.Item2);
+                if (File.Exists(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList))
                 {
-                    _selectedPlaylist = (PlaylistXML)deserializerPlaylist.Deserialize(reader);
-                    reader.Close();
-                    _selectedPlaylist.Add(newMedia);
-                    // suprimer le fichier xml ouvert
-                    // Serializer la nouvelle liste
+                    File.Delete(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList);
+                    XmlSerializer serializePlaylist = new XmlSerializer(typeof(Playlist));
+                    TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList);
+                    serializePlaylist.Serialize(WriteFileStream, _selectedPlaylist);
+                    WriteFileStream.Close();
                 }
             }
-            catch (Exception e)
-            {
+        }
+        catch (Exception e)
+        {
 
-            }
-        }*/
+        }
     }
 
     private ICommand updatePlayList;
@@ -361,8 +364,8 @@ class ViewModelWMP : BaseModel
         mainMedia.NextState = true;
         mainMedia.PlayState = false;
         mainMedia.Len = 10;
-}
-    
+    }
+
     private ICommand listBox_MouseDoubleClick;
     public ICommand ListBox_MouseDoubleClick
     {
