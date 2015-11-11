@@ -21,7 +21,7 @@ class Media
     public ObservableCollection<Tuple<Playlist, Uri>> LBP
     {
         get
-        {
+        {   
             return (_lbp);
         }
     }
