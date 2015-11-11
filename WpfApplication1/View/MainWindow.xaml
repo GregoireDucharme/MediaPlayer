@@ -71,7 +71,7 @@
                         <Label Height="30" Width="90" Content="Playlist Name"/>
                         <TextBox Name="playlist_name" Height="25px" Width="150" AcceptsReturn="False">
                             <TextBox.InputBindings>
-                                <KeyBinding Key="Enter" Command="{Binding SetPlaylistName}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                <KeyBinding Key="Enter" Command="{Binding PickPlayList}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
                             </TextBox.InputBindings>
                         </TextBox>
                     </StackPanel>

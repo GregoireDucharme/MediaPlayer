@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 [Serializable]
 public class MediaXML
 {
-    private String _path;
+    public String _path;
 
     public MediaXML(String path)
     {
