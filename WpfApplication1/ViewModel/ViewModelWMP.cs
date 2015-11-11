@@ -183,10 +183,12 @@ class ViewModelWMP : BaseModel
             case "Stop":
                 MainMedia.StopState = false;
                 break;
-            case "Prec":
+            case "Prev":
+                MainMedia.StopState = false;
                 MainMedia.PlayState = false;
                 break;
             case "Next":
+                MainMedia.StopState = false;
                 MainMedia.PlayState = false;
                 break;
         }
