@@ -303,28 +303,33 @@ class ViewModelWMP : BaseModel
 
     public void updatePlayListAction(object parameter)
     {
-/*        if (parameter.Item1 && parameter.Item2)
-        {
-            String nameList = (String)parameter.Item1;
-            String nameNewMedia = (String)parameter.Item2;
-            XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(PlaylistXML));
+        Tuple<Playlist, Media> parameters = (Tuple<Playlist, Media>)parameter;
+
+        String nameList = (String)parameters.Item1.Index;
+        // String nameNewMedia = (String)parameter.Item2;
+        XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(Playlist));
             Environment.CurrentDirectory = @"C:\";
             try
             {
                 using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList, FileMode.Open))
                 {
-                    _selectedPlaylist = (PlaylistXML)deserializerPlaylist.Deserialize(reader);
+                _selectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
                     reader.Close();
-                    _selectedPlaylist.Add(newMedia);
-                    // suprimer le fichier xml ouvert
-                    // Serializer la nouvelle liste
+                _selectedPlaylist.Add(parameters.Item2);
+                if (File.Exists(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList))
+                {
+                    File.Delete(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList);
+                    XmlSerializer serializePlaylist = new XmlSerializer(typeof(Playlist));
+                    TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList);
+                    serializePlaylist.Serialize(WriteFileStream, _selectedPlaylist);
+                    WriteFileStream.Close();
+                }
                 }
             }
             catch (Exception e)
             {
 
             }
-        }*/
     }
 
     private ICommand updatePlayList;
@@ -375,7 +380,7 @@ class ViewModelWMP : BaseModel
         mainMedia.NextState = true;
         mainMedia.PlayState = false;
         mainMedia.Len = 10;
-    }
+}
     
     private ICommand listBox_MouseDoubleClick;
     public ICommand ListBox_MouseDoubleClick
