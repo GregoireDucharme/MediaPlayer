@@ -33,6 +33,7 @@ public class Media
 
     private string info;
     private Uri _source;
+    [XmlIgnore]
 
     public string Info
     {
@@ -68,6 +69,13 @@ public class Media
         set
         {
             uri = value;
+        }
+    }
+    public String UriXML
+    {
+        get
+        {
+            return Uri.ToString();
         }
     }
 }

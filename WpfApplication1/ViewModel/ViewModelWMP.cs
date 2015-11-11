@@ -13,7 +13,7 @@ class ViewModelWMP : BaseModel
 {
     private ModelWMP model = new ModelWMP();
     private FirsTab mainMedia = new FirsTab();
-    private Playlist _selectedPlaylist;
+    private Playlist _selectedPlaylist = new Playlist();
     public ModelWMP Model
     {
         get
@@ -186,10 +186,20 @@ class ViewModelWMP : BaseModel
                 break;
             case "Prev":
                 MainMedia.StopState = false;
+                if (MainMedia.Index < _selectedPlaylist.ListMedia.Count && MainMedia.Index > 0)
+                {
+                    MainMedia.Index -= 1;
+                    mainMedia.Source = new Uri(new Uri(_selectedPlaylist.ListMedia[MainMedia.Index].Info).AbsolutePath);
+                }
                 MainMedia.PlayState = false;
                 break;
             case "Next":
                 MainMedia.StopState = false;
+                if (MainMedia.Index +1 < _selectedPlaylist.ListMedia.Count)
+                {
+                    MainMedia.Index += 1;
+                    mainMedia.Source = new Uri(new Uri(_selectedPlaylist.ListMedia[MainMedia.Index].Info).AbsolutePath);
+                }
                 MainMedia.PlayState = false;
                 break;
         }
@@ -259,6 +269,12 @@ class ViewModelWMP : BaseModel
             using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + name, FileMode.Open))
             {
                 _selectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
+                if (_selectedPlaylist.ListMedia.Count > 0)
+                    mainMedia.Source = new Uri(new Uri(_selectedPlaylist.ListMedia[0].Info).AbsolutePath);
+                model.CurrentTab = 0;
+                mainMedia.NextState = true;
+                mainMedia.PlayState = false;
+                mainMedia.Len = 10;
                 reader.Close();
              //   selectedPlaylist.Add(newMedia);
              // suprimer le fichier xml ouvert
@@ -359,7 +375,7 @@ class ViewModelWMP : BaseModel
         mainMedia.NextState = true;
         mainMedia.PlayState = false;
         mainMedia.Len = 10;
-}
+    }
     
     private ICommand listBox_MouseDoubleClick;
     public ICommand ListBox_MouseDoubleClick

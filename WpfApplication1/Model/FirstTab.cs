@@ -4,6 +4,22 @@ using System.Windows.Threading;
 public class FirsTab : BaseModel
 {
     DispatcherTimer _timer = new DispatcherTimer();
+    private int index = 0;
+    public int Index
+    {
+        get
+        {
+            return index;
+        }
+        set
+        {
+            index = value;
+            index = (index < 0 ?  0 : index);
+            NextState = true;
+            PlayState = false;
+            Len = 10;
+        }
+    }
     public FirsTab()
     {
         _timer.Interval = TimeSpan.FromMilliseconds(1000);
