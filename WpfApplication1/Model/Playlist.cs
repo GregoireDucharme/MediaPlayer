@@ -45,19 +45,6 @@ public class Playlist
         if (media != null)
             _listMedia.Add(media);
     }
-    public void InsertMediaAction(object parameter)
-    {
-        Add((Media)parameter);
-    }
-
-    private ICommand insertMedia;
-    public ICommand InsertMedia
-    {
-        get
-        {
-            return insertMedia ?? (insertMedia = new CommandHandler(InsertMediaAction, true));
-        }
-    }
 }
 
 

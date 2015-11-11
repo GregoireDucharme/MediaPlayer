@@ -333,4 +333,17 @@ class ViewModelWMP : BaseModel
             return listBox_MouseDoubleClick ?? (listBox_MouseDoubleClick = new CommandHandler(MyAction, true));
         }
     }
+    public void InsertMediaAction(object parameter)
+    {
+
+    }
+
+    private ICommand insertMedia;
+    public ICommand InsertMedia
+    {
+        get
+        {
+            return insertMedia ?? (insertMedia = new CommandHandler(InsertMediaAction, true));
+        }
+    }
 }
