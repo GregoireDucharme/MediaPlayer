@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Windows.Input;
 using System.Xml;
 using System.Xml.Serialization;
 
-class ViewModelWMP
+class ViewModelWMP : BaseModel
 {
     private ModelWMP model = new ModelWMP();
     private FirsTab mainMedia = new FirsTab();
@@ -52,13 +53,13 @@ class ViewModelWMP
         switch (filePM)
         {
             case @"\Videos":
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg"), MainMedia, Model));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg"), ListBoxPlaylist));
                 break;
             case @"\Music":
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg"), MainMedia, Model));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg"), ListBoxPlaylist));
                 break;
             default:
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath), MainMedia, Model));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath), ListBoxPlaylist));
                 break;
         }
     }
@@ -169,6 +170,37 @@ class ViewModelWMP
         }
     }
 
+    public void HandleButtonFirstTab(object parameter)
+    {
+        switch ((string)parameter)
+        {
+            case "Play":
+                MainMedia.PlayState = false;
+                break;
+            case "Pause":
+                MainMedia.PauseState = false;
+                break;
+            case "Stop":
+                MainMedia.StopState = false;
+                break;
+            case "Prec":
+                MainMedia.StopState = false;
+                break;
+            case "Next":
+                MainMedia.StopState = false;
+                break;
+        }
+    }
+
+    private ICommand buttonFirstTab;
+    public ICommand ButtonFirstTab
+    {
+        get
+        {
+            return buttonFirstTab ?? (buttonFirstTab = new CommandHandler(HandleButtonFirstTab, true));
+        }
+    }
+
     public void CancelPlaylist(object parameter)
     {
         model.SetPlaylistNameVisibility = false;
@@ -200,6 +232,8 @@ class ViewModelWMP
         TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + rec);
         xsl.Serialize(WriteFileStream, playlist);
         WriteFileStream.Close();
+        CancelPlaylist(null);
+        ListBoxPlaylistAdd(rec);
     }
 
     private ICommand setPlaylistName;
@@ -246,7 +280,7 @@ class ViewModelWMP
 
     private IList<Playlist> getPlaylist()
     {
-        IList<Playlist> list = new List<Playlist>();
+        ObservableCollection<Playlist> list = new ObservableCollection<Playlist>();
 
         string[] dirs = Directory.GetFiles(RootRepo + Environment.UserName + ProjectRepo, "*.xml", SearchOption.AllDirectories);
         int index = 0;
@@ -258,12 +292,38 @@ class ViewModelWMP
         return list;
     }
 
-    public IList<Playlist> ListBoxPlaylist
+    public void ListBoxPlaylistAdd(String rec)
+    {
+        listBoxPlaylist.Add(new Playlist(rec));
+        OnPropertyChanged("ListBoxPlaylist");
+    }
+
+    private ObservableCollection<Playlist> listBoxPlaylist = null;
+
+    public ObservableCollection<Playlist> ListBoxPlaylist
     {
         get
         {
-            return getPlaylist();
+            if (listBoxPlaylist == null)
+                listBoxPlaylist = getPlaylist();
+            return listBoxPlaylist;
+        }
+    }
+    public void MyAction(object parameter)
+    {
+        mainMedia.Source = (Uri)parameter;
+        model.CurrentTab = 0;
+        mainMedia.NextState = true;
+        mainMedia.PlayState = false;
+        mainMedia.Len = 10;
+}
+    
+    private ICommand listBox_MouseDoubleClick;
+    public ICommand ListBox_MouseDoubleClick
+    {
+        get
+        {
+            return listBox_MouseDoubleClick ?? (listBox_MouseDoubleClick = new CommandHandler(MyAction, true));
         }
     }
 }
-    

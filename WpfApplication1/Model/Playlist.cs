@@ -18,6 +18,18 @@ public class Playlist
             _index = value;
         }
     }
+    public void InsertMediaAction(object parameter)
+    {
+    }
+
+    private ICommand insertMedia;
+    public ICommand InsertMedia
+    {
+        get
+        {
+            return insertMedia ?? (insertMedia = new CommandHandler(InsertMediaAction, true));
+        }
+    }
 }
 
 

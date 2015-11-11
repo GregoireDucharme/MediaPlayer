@@ -1,20 +1,31 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 class Media
 {
-    FirsTab mainMedia;
-    ModelWMP model;
-    public Media(string info, Uri uri, Uri source, FirsTab MM, ModelWMP M)
+
+    public Media(string info, Uri uri, Uri source, ObservableCollection<Playlist> ListBoxPlaylist)
     {
         Info = info;
         ListSource = source;
         Uri = uri;
-        mainMedia = MM;
-        model = M;
+        foreach (Playlist playlist in ListBoxPlaylist)
+        {
+            _lbp.Add(new Tuple<Playlist, Uri>(playlist, Uri));
+        }
     }
 
-     
+    private ObservableCollection<Tuple<Playlist, Uri>> _lbp = new ObservableCollection<Tuple<Playlist, Uri>>();
+
+    public ObservableCollection<Tuple<Playlist, Uri>> LBP
+    {
+        get
+        {
+            return (_lbp);
+        }
+    }
+
     private string info;
     private Uri _source;
     public string Info
@@ -49,21 +60,6 @@ class Media
         set
         {
             uri = value;
-        }
-    }
-    public void MyAction(object parameter)
-    {
-        mainMedia.Source = Uri;
-        model.CurrentTab = 0;
-        mainMedia.NextState = true;
-        mainMedia.PlayState = false;
-    }
-    private ICommand listBox_MouseDoubleClick;
-    public ICommand ListBox_MouseDoubleClick
-    {
-        get
-        {
-            return listBox_MouseDoubleClick ?? (listBox_MouseDoubleClick = new CommandHandler(MyAction, true));
         }
     }
 }

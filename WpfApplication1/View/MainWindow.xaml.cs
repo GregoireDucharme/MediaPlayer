@@ -24,26 +24,22 @@ namespace mediaPlayer
         private void Action_File(object sender, RoutedEventArgs e)
         {
             mediaElement.LoadedBehavior = MediaState.Manual;
-            switch (sender.ToString())
+            Button tmp = (Button)sender;
+            switch ((String)tmp.Content)
             {
-                case "System.Windows.Controls.Button: Play":
-                    VM.MainMedia.PlayState = false;
+                case "Play":
                     mediaElement.Play();
                     break;
-                case "System.Windows.Controls.Button: Pause":
-                    VM.MainMedia.PauseState = false;
+                case "Pause":
                     mediaElement.Pause();
                     break;
-                case "System.Windows.Controls.Button: Stop":
-                    VM.MainMedia.StopState = false;
+                case "Stop":
                     mediaElement.Stop();
                     break;
-                case "System.Windows.Controls.Button: prec":
-                    VM.MainMedia.StopState = false;
+                case "Prev":
                     mediaElement.Stop();
                     break;
-                case "System.Windows.Controls.Button: next":
-                    VM.MainMedia.StopState = false;
+                case "Next":
                     mediaElement.Stop();
                     break;
             }
@@ -51,7 +47,6 @@ namespace mediaPlayer
         private void Start_Timeline(object sender, DragStartedEventArgs args)
         {
             mediaElement.LoadedBehavior = MediaState.Manual;
-            VM.MainMedia.PauseState = false;
             mediaElement.Pause();
         }
 
@@ -60,23 +55,30 @@ namespace mediaPlayer
             int t = (int)timeline.Value;
 
             mediaElement.Position = TimeSpan.FromMilliseconds(t);
-            VM.MainMedia.PlayState = false;
             mediaElement.Play();
         }
         private void Mouse_Volume(object sender, MouseWheelEventArgs e)
         {
-            VM.MainMedia.Volume += (e.Delta  >0) ? 0.1 : -0.1;
-            VM.MainMedia.Volume = (VM.MainMedia.Volume > 1) ? 1 : VM.MainMedia.Volume;
-            VM.MainMedia.Volume = (VM.MainMedia.Volume < 0) ? 0 : VM.MainMedia.Volume;
+            mediaElement.Volume += (e.Delta > 0) ? 0.1 : -0.1;
+            mediaElement.Volume = (mediaElement.Volume > 1) ? 1 : mediaElement.Volume;
+            mediaElement.Volume = (mediaElement.Volume < 0) ? 0 : mediaElement.Volume;
+            volume.Value = mediaElement.Volume;
+        }
+        private void Speed_Ratio(object sender, RoutedPropertyChangedEventArgs<double> args)
+        {
+            mediaElement.SpeedRatio += (speedratio.Value > mediaElement.SpeedRatio) ? 0.5 : 0;
+            mediaElement.SpeedRatio -= (speedratio.Value < mediaElement.SpeedRatio) ? 0.5 : 0;
+            mediaElement.SpeedRatio = (mediaElement.SpeedRatio > 4) ? 4 : mediaElement.SpeedRatio;
+            mediaElement.SpeedRatio = (mediaElement.SpeedRatio < 0.5) ? 0.5 : mediaElement.SpeedRatio;
         }
         private void Get_Len(object sender, RoutedEventArgs e)
         {
-            MediaElement tmp = (MediaElement)sender;
-            if (tmp.NaturalDuration.HasTimeSpan)
+            if (mediaElement.NaturalDuration.HasTimeSpan)
             {
-                VM.MainMedia.Len = tmp.NaturalDuration.TimeSpan.TotalMilliseconds;
-                if (VM.MainMedia.Timer != 0)
-                    tmp.Position = TimeSpan.FromMilliseconds(VM.MainMedia.Timer);
+                timeline.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
+                timeline.Value = mediaElement.Position.TotalMilliseconds;
+                //if (VM.MainMedia.Timer != 0)
+                  //  mediaElement.Position = TimeSpan.FromMilliseconds(VM.MainMedia.Timer);
             }
         }
     }

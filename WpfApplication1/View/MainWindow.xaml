@@ -1,4 +1,4 @@
-﻿<Window x:Class="mediaPlayer.MainWindow"
+﻿<Window x:Name="window" x:Class="mediaPlayer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,38 +12,49 @@
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="50" Width="700">
                 <Label Margin="10,20,0,0" Content="{Binding Index}"/>
             </StackPanel>
-            
+
+        </DataTemplate>
+        <DataTemplate x:Key="ContextMenuTemplate">
+            <MenuItem Header="{Binding Item1.Index}" Command="{Binding Item1.InsertMedia}" CommandParameter="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Key="ListBoxMediaTemplate">
-            <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700">
+            <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700" Background="Transparent">
                 <StackPanel.InputBindings>
-                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ListBox_MouseDoubleClick}" />
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.ListBox_MouseDoubleClick, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding ElementName=HiddenLabel, Path=Content}"/>
                 </StackPanel.InputBindings>
-                <Label Visibility="Collapsed" Content="{Binding Uri}"/>
+                <Label Name="HiddenLabel" Visibility="Collapsed" Content="{Binding Uri}"/>
                 <MediaElement Source="{Binding ListSource}" Width="100" Height="120"/>
                 <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+
+                        <MenuItem Header="Add To ..."  ItemTemplate="{StaticResource ContextMenuTemplate}" ItemsSource="{Binding LBP}" >
+                        </MenuItem>
+
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0" MouseWheel="Mouse_Volume">
-        <!--
-        <Grid.InputBindings>
-            <MouseBinding Gesture="WheelClick" Command="{Binding Mouse_Volume}"/>
+        <!--<Grid.InputBindings>
+            <MouseBinding Gesture="WheelClick" Command="{Binding MouseVolume}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"/>
         </Grid.InputBindings>-->
         <TabControl SelectedIndex="{Binding Model.CurrentTab}">
             <TabItem Header="En lecture">
                 <Grid>
                     <MediaElement Name="mediaElement" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len" Volume="{Binding MainMedia.Volume}"/>
                     <StackPanel Name="options" Orientation="Horizontal" Width="578" Height="auto" Margin="120,457,120,32" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
-                        <Button x:Name="prec" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Prev"/>
-                        <Button x:Name="play" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PlayState}" Content="Play"/>
-                        <Button x:Name="pause" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PauseState}" Content="Pause"/>
-                        <Button x:Name="stop" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Content="Stop"/>
-                        <Button x:Name="next" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Next"/>
+                        <Button x:Name="prec" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Prev" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
+                        <Button x:Name="play" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PlayState}" Content="Play" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
+                        <Button x:Name="pause" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PauseState}" Content="Pause" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
+                        <Button x:Name="stop" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Content="Stop" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
+                        <Button x:Name="next" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Next"  Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
                     </StackPanel>
                     <TextBlock Name="time" Text="{Binding MainMedia.TimeTxt}" Margin="54,471,-54,-19.2" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    <Slider Name="timeline" Maximum="{Binding MainMedia.Max}" Margin="60,440,60,60" Value="{Binding MainMedia.Timer}" Width="700" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    <ProgressBar Height="24" Name="volume" Value="{Binding MainMedia.Volume}" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <Slider Name="timeline" Margin="60,440,60,60" Value="{Binding MainMedia.Timer}" Maximum="{Binding MainMedia.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="700" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <ProgressBar Height="24" Name="volume" Value="0.5" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <Slider Name="speedratio" IsSnapToTickEnabled="True" TickFrequency="0.5" Margin="54,481,670,38.8" Value="{Binding MainMedia.SpeedRatio}" Maximum="4" Minimum="0.5" Width="60"  ValueChanged="Speed_Ratio" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques">
@@ -61,21 +72,24 @@
             </TabItem>
             <TabItem Header="Playlists">
                 <Grid>
-                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ListBoxPlaylist}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="92*"/>
+                        <ColumnDefinition Width="691*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ListBoxPlaylist}" Grid.ColumnSpan="2">
                     </ListBox>
                     <Button Name="Create_button" Width="63" Content="Create" Height="30" Command="{Binding Initialize_Creation}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Import_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <Button Name="Confirmer" Width="63" Content="Confirmer" Height="30" Command="{Binding Confirm_CreatePlaylist}"  Margin="270,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Confirm_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <Button Name="Annuler" Width="63" Content="Annuler" Height="30" Command="{Binding Confirm_CreatePlaylist}" Margin="340,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Cancel_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <StackPanel Name="SetPlaylistName" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Model.SetPlaylistNameVisibility, Converter={StaticResource BoolToVis}}">
+                    <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Import_buttonVisibility, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2"/>
+                    <Button Name="Annuler" Width="63" Content="Annuler" Height="30" Command="{Binding Cancel_Playlist}" Margin="248.5,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Cancel_buttonVisibility, Converter={StaticResource BoolToVis}}" Grid.Column="1"/>
+                    <StackPanel Name="SetPlaylistName" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Model.SetPlaylistNameVisibility, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2">
                         <Label Height="30" Width="90" Content="Playlist Name"/>
-                        <TextBox Name="playlist_name" Height="25px" Width="150" AcceptsReturn="False">
+                        <TextBox Name="playlist_name" Height="25px" Width="230" AcceptsReturn="False">
                             <TextBox.InputBindings>
                                 <KeyBinding Key="Enter" Command="{Binding PickPlayList}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
                             </TextBox.InputBindings>
                         </TextBox>
                     </StackPanel>
-                    <ListBox Name="listBoxMediaForPlaylist" Visibility="Collapsed" Margin="0,50,0,0">
+                    <ListBox Name="listBoxMediaForPlaylist" Visibility="Collapsed" Margin="0,50,0,0" Grid.ColumnSpan="2">
                     </ListBox>
                 </Grid>
             </TabItem>
