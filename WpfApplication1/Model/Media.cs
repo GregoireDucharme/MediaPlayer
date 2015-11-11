@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-
-class Media
+[Serializable]
+public class Media
 {
 
+    public Media()
+    {
+
+    }
     public Media(string info, Uri uri, Uri source, ObservableCollection<Playlist> ListBoxPlaylist)
     {
         Info = info;
@@ -12,13 +16,13 @@ class Media
         Uri = uri;
         foreach (Playlist playlist in ListBoxPlaylist)
         {
-            _lbp.Add(new Tuple<Playlist, Uri>(playlist, Uri));
+            _lbp.Add(new Tuple<Playlist, Media>(playlist, this));
         }
     }
 
-    private ObservableCollection<Tuple<Playlist, Uri>> _lbp = new ObservableCollection<Tuple<Playlist, Uri>>();
+    private ObservableCollection<Tuple<Playlist, Media>> _lbp = new ObservableCollection<Tuple<Playlist, Media>>();
 
-    public ObservableCollection<Tuple<Playlist, Uri>> LBP
+    public ObservableCollection<Tuple<Playlist, Media>> LBP
     {
         get
         {   

@@ -224,12 +224,12 @@ class ViewModelWMP : BaseModel
     public void CheckName(object parameter)
     {
         String rec = (String)parameter + ".xml";
-        PlaylistXML playlist = new PlaylistXML((String)parameter);
+        Playlist playlist = new Playlist((String)parameter);
        // var media = new MediaXML("Croquette");
-        playlist.Add(new MediaXML("Croquette"));
-        playlist.Add(new MediaXML("Cachou"));
+        //playlist.Add(new Media("Croquette"));
+        //playlist.Add(new Media("Cachou"));
         //playlist.Add(media);
-        XmlSerializer xsl = new XmlSerializer(typeof(PlaylistXML));
+        XmlSerializer xsl = new XmlSerializer(typeof(Playlist));
         Environment.CurrentDirectory = @"C:\";
         TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + rec);
         xsl.Serialize(WriteFileStream, playlist);
@@ -251,13 +251,13 @@ class ViewModelWMP : BaseModel
     public void selectPlayList(object parameter)
     {
         String name = (String)parameter + ".xml"; // ".xml" à supprimer
-        XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(PlaylistXML));
+        XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(Playlist));
         Environment.CurrentDirectory = @"C:\";
         try
         {
             using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + name, FileMode.Open))
             {
-                PlaylistXML selectedPlaylist = (PlaylistXML)deserializerPlaylist.Deserialize(reader);
+                Playlist selectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
                 reader.Close();
              //   selectedPlaylist.Add(newMedia);
              // suprimer le fichier xml ouvert
