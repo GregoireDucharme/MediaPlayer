@@ -212,19 +212,6 @@ public class FirsTab : BaseModel
             _trigger();
         }
     }
-  /*  private Double volume = 0.5;
-    public Double Volume
-    {
-        get
-        {
-            return volume;
-        }
-        set
-        {
-            volume = value;
-            OnPropertyChanged("Volume");
-        }
-    }*/
     private Double max = 0.5;
     public Double Max
     {

@@ -76,12 +76,15 @@
     <Compile Include="Model\CommandHandler.cs" />
     <Compile Include="Model\FirstTab.cs" />
     <Compile Include="Model\Media.cs" />
+    <Compile Include="Model\ModelList.cs" />
     <Compile Include="Model\Playlist.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ViewModelWMP.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="ViewModel\ViewModelXML.cs" />
     <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>

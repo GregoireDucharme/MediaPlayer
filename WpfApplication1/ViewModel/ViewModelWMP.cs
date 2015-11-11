@@ -1,37 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
-using System.Xml;
 using System.Xml.Serialization;
 
-class ViewModelWMP : BaseModel
+class ViewModelWMP : BaseViewModel
 {
-    private ModelWMP model = new ModelWMP();
-    private FirsTab mainMedia = new FirsTab();
-    private Playlist _selectedPlaylist = new Playlist();
-    public ModelWMP Model
+    private ViewModelXML VMXML;
+    public ViewModelXML XML
     {
         get
         {
-            return model;
-        }
-    }
-    public FirsTab MainMedia
-    {
-        get
-        {
-            return mainMedia;
+            return VMXML;
         }
     }
 
-    private string RootRepo = ConfigurationManager.AppSettings.Get("RootRepo");
-    private string PublicRepo = ConfigurationManager.AppSettings.Get("PublicRepo");
-    private string ProjectRepo = ConfigurationManager.AppSettings.Get("ProjectRepo");
     public ViewModelWMP()
     {
         if (!Directory.Exists(RootRepo + Environment.UserName + ProjectRepo))
@@ -45,6 +31,23 @@ class ViewModelWMP : BaseModel
                 throw e;
             }
         }
+        VMXML = new ViewModelXML(mainMedia, model);
+        ModelList.ListBoxPlaylist = getPlaylist();
+        try
+        {
+            ModelList.ListBoxImage = _get_files(@"\Pictures", "jpg", "png", "gif");
+            ModelList.ListBoxMusique = _get_files(@"\Music", "mp3", "wav", "wma");
+            ModelList.ListBoxVideo = _get_files(@"\Videos", "mp4", "avi", "wmv");
+        }
+        catch (UnauthorizedAccessException)
+        {
+        }
+        catch (PathTooLongException)
+        {
+        }
+        catch (DirectoryNotFoundException)
+        {
+        }
     }
 
     private void _fill_list(string dir, IList<Media> tmp, string filePM)
@@ -54,20 +57,20 @@ class ViewModelWMP : BaseModel
         switch (filePM)
         {
             case @"\Videos":
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg"), ListBoxPlaylist));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\film.jpg"), ModelList.ListBoxPlaylist));
                 break;
             case @"\Music":
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg"), ListBoxPlaylist));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Images\music.jpg"), ModelList.ListBoxPlaylist));
                 break;
             default:
-                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath), ListBoxPlaylist));
+                tmp.Add(new Media(filename, new Uri(new Uri(dir).LocalPath), new Uri(new Uri(dir).LocalPath), ModelList.ListBoxPlaylist));
                 break;
         }
     }
 
-    private IList<Media> _get_files(string filePM, string type0, string type1, string type2)
+    private ObservableCollection<Media> _get_files(string filePM, string type0, string type1, string type2)
     {
-        IList<Media> tmp = new List<Media>();
+        ObservableCollection<Media> tmp = new ObservableCollection<Media>();
         var files = Directory.EnumerateFiles(RootRepo + Environment.UserName + filePM, "*.*", SearchOption.AllDirectories)
         .Where(s => s.EndsWith("." + type0, StringComparison.OrdinalIgnoreCase) || s.EndsWith("." + type1, StringComparison.OrdinalIgnoreCase) ||
         s.EndsWith("." + type2, StringComparison.OrdinalIgnoreCase));
@@ -83,74 +86,6 @@ class ViewModelWMP : BaseModel
             _fill_list(dir, tmp, filePM);
         }
         return tmp;
-    }
-    public IList<Media> ListBoxImage
-    {
-        get
-        {
-            try
-            {
-                return _get_files(@"\Pictures", "jpg", "png", "gif");
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return null;
-            }
-            catch (PathTooLongException)
-            {
-                return null;
-            }
-            catch (DirectoryNotFoundException)
-            {
-                return null;
-            }
-        }
-    }
-
-    public IList<Media> ListBoxMusique
-    {
-        get
-        {
-            try
-            {
-                return _get_files(@"\Music", "mp3", "wav", "wma");
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return null;
-            }
-            catch (PathTooLongException)
-            {
-                return null;
-            }
-            catch (DirectoryNotFoundException)
-            {
-                return null;
-            }
-        }
-    }
-
-    public IList<Media> ListBoxVideo
-    {
-        get
-        {
-            try
-            {
-                return _get_files(@"\Videos", "mp4", "avi", "wmv");
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return null;
-            }
-            catch (PathTooLongException)
-            {
-                return null;
-            }
-            catch (DirectoryNotFoundException)
-            {
-                return null;
-            }
-        }
     }
   
     public void Switch(object parameter)
@@ -186,19 +121,19 @@ class ViewModelWMP : BaseModel
                 break;
             case "Prev":
                 MainMedia.StopState = false;
-                if (MainMedia.Index < _selectedPlaylist.ListMedia.Count && MainMedia.Index > 0)
+                if (MainMedia.Index < VMXML.SelectedPlaylist.ListMedia.Count && MainMedia.Index > 0)
                 {
                     MainMedia.Index -= 1;
-                    mainMedia.Source = new Uri(new Uri(_selectedPlaylist.ListMedia[MainMedia.Index].Info).AbsolutePath);
+                    mainMedia.Source = new Uri(VMXML.SelectedPlaylist.ListMedia[MainMedia.Index].UriXML);
                 }
                 MainMedia.PlayState = false;
                 break;
             case "Next":
                 MainMedia.StopState = false;
-                if (MainMedia.Index +1 < _selectedPlaylist.ListMedia.Count)
+                if (MainMedia.Index +1 < VMXML.SelectedPlaylist.ListMedia.Count)
                 {
                     MainMedia.Index += 1;
-                    mainMedia.Source = new Uri(new Uri(_selectedPlaylist.ListMedia[MainMedia.Index].Info).AbsolutePath);
+                    mainMedia.Source = new Uri(VMXML.SelectedPlaylist.ListMedia[MainMedia.Index].UriXML);
                 }
                 MainMedia.PlayState = false;
                 break;
@@ -236,10 +171,6 @@ class ViewModelWMP : BaseModel
     {
         String rec = (String)parameter + ".xml";
         Playlist playlist = new Playlist((String)parameter);
-       // var media = new MediaXML("Croquette");
-        //playlist.Add(new Media("Croquette"));
-        //playlist.Add(new Media("Cachou"));
-        //playlist.Add(media);
         XmlSerializer xsl = new XmlSerializer(typeof(Playlist));
         Environment.CurrentDirectory = @"C:\";
         TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + rec);
@@ -259,89 +190,6 @@ class ViewModelWMP : BaseModel
         }
     }
 
-    public void selectPlayList(object parameter)
-    {
-        String name = (String)parameter;
-        XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(Playlist));
-        Environment.CurrentDirectory = @"C:\";
-        try
-        {
-            using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + name, FileMode.Open))
-            {
-                _selectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
-                if (_selectedPlaylist.ListMedia.Count > 0)
-                    mainMedia.Source = new Uri(new Uri(_selectedPlaylist.ListMedia[0].Info).AbsolutePath);
-                model.CurrentTab = 0;
-                mainMedia.NextState = true;
-                mainMedia.PlayState = false;
-                mainMedia.Len = 10;
-                reader.Close();
-             //   selectedPlaylist.Add(newMedia);
-             // suprimer le fichier xml ouvert
-             // Serializer la nouvelle liste
-            }
-        }
-        catch (InvalidOperationException e)
-        {
-           
-        }
-        catch (Exception e)
-        {
-
-        }
-    }
-
-    private ICommand pickPlayList;
-
-    public ICommand PickPlayList
-    {
-        get
-        {
-            return pickPlayList ?? (pickPlayList = new CommandHandler(selectPlayList, true));
-        }
-    }
-
-    public void updatePlayListAction(object parameter)
-    {
-        Tuple<Playlist, Media> parameters = (Tuple<Playlist, Media>)parameter;
-
-        String nameList = (String)parameters.Item1.Index;
-        // String nameNewMedia = (String)parameter.Item2;
-        XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(Playlist));
-            Environment.CurrentDirectory = @"C:\";
-            try
-            {
-                using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList, FileMode.Open))
-                {
-                _selectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
-                    reader.Close();
-                _selectedPlaylist.Add(parameters.Item2);
-                if (File.Exists(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList))
-                {
-                    File.Delete(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList);
-                    XmlSerializer serializePlaylist = new XmlSerializer(typeof(Playlist));
-                    TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + nameList);
-                    serializePlaylist.Serialize(WriteFileStream, _selectedPlaylist);
-                    WriteFileStream.Close();
-                }
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-    }
-
-    private ICommand updatePlayList;
-
-    public ICommand UpdatePlayList
-    {
-        get
-        {
-            return updatePlayList ?? (updatePlayList = new CommandHandler(updatePlayListAction, true));
-        }
-    }
-
     private ObservableCollection<Playlist> getPlaylist()
     {
         ObservableCollection<Playlist> list = new ObservableCollection<Playlist>();
@@ -358,22 +206,10 @@ class ViewModelWMP : BaseModel
 
     public void ListBoxPlaylistAdd(String rec)
     {
-        listBoxPlaylist.Add(new Playlist(rec));
-        OnPropertyChanged("ListBoxPlaylist");
+        ModelList.ListBoxPlaylist.Add(new Playlist(rec));
     }
-
-    private ObservableCollection<Playlist> listBoxPlaylist = null;
-
-    public ObservableCollection<Playlist> ListBoxPlaylist
-    {
-        get
-        {
-            if (listBoxPlaylist == null)
-                listBoxPlaylist = getPlaylist();
-            return listBoxPlaylist;
-        }
-    }
-    public void MyAction(object parameter)
+  
+    public void ListBox_MouseDoubleClickAction(object parameter)
     {
         mainMedia.Source = (Uri)parameter;
         model.CurrentTab = 0;
@@ -387,20 +223,7 @@ class ViewModelWMP : BaseModel
     {
         get
         {
-            return listBox_MouseDoubleClick ?? (listBox_MouseDoubleClick = new CommandHandler(MyAction, true));
-        }
-    }
-    public void InsertMediaAction(object parameter)
-    {
-
-    }
-
-    private ICommand insertMedia;
-    public ICommand InsertMedia
-    {
-        get
-        {
-            return insertMedia ?? (insertMedia = new CommandHandler(InsertMediaAction, true));
+            return listBox_MouseDoubleClick ?? (listBox_MouseDoubleClick = new CommandHandler(ListBox_MouseDoubleClickAction, true));
         }
     }
 }
