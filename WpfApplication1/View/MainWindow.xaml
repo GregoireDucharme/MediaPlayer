@@ -11,6 +11,9 @@
         <DataTemplate x:Key="ListBoxPlaylistTemplate">
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="50" Width="700">
                 <Label Margin="10,20,0,0" Content="{Binding Index}"/>
+                <StackPanel.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.PickPlayList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Index}"/>
+                </StackPanel.InputBindings>
             </StackPanel>
 
         </DataTemplate>
