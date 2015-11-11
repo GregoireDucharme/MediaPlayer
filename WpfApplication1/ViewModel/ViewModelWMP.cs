@@ -287,7 +287,9 @@ class ViewModelWMP : BaseModel
 
     public void updatePlayListAction(object parameter)
     {
-/*        if (parameter.Item1 && parameter.Item2)
+       // Tuple parameters = (Tuple)parameter;
+        /*
+       if (parameters.Item1 && parameters.Item2)
         {
             String nameList = (String)parameter.Item1;
             String nameNewMedia = (String)parameter.Item2;
