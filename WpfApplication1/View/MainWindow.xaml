@@ -9,16 +9,16 @@
 
     <Window.Resources>
         <DataTemplate x:Key="ListBoxPlaylistTemplate">
-            <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="50" Width="700">
+            <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="50" Width="700" Background="Transparent">
                 <Label Margin="10,20,0,0" Content="{Binding Index}"/>
                 <StackPanel.InputBindings>
-                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.PickPlayList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Index}"/>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.XML.PickPlayList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Index}"/>
                 </StackPanel.InputBindings>
             </StackPanel>
 
         </DataTemplate>
         <DataTemplate x:Key="ContextMenuTemplate">
-            <MenuItem Header="{Binding Item1.Index}" Command="{Binding DataContext.UpdatePlayList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}"/>
+            <MenuItem Header="{Binding Item1.Index}" Command="{Binding DataContext.XML.UpdatePlayList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Key="ListBoxMediaTemplate">
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700" Background="Transparent">
@@ -61,16 +61,16 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques">
-                <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ListBoxMusique}">
+                <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ModelList.ListBoxMusique}">
                 </ListBox>
             </TabItem>
             <TabItem Header="Videos">
-                <ListBox Name="listBoxVideos" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ListBoxVideo}">
+                <ListBox Name="listBoxVideos" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ModelList.ListBoxVideo}">
                 </ListBox>
             </TabItem>
 
             <TabItem Header="Images">
-                <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ListBoxImage}">
+                <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ModelList.ListBoxImage}">
                 </ListBox>
             </TabItem>
             <TabItem Header="Playlists">
@@ -79,7 +79,7 @@
                         <ColumnDefinition Width="92*"/>
                         <ColumnDefinition Width="691*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ListBoxPlaylist}" Grid.ColumnSpan="2">
+                    <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ModelList.ListBoxPlaylist}" Grid.ColumnSpan="2">
                     </ListBox>
                     <Button Name="Create_button" Width="63" Content="Create" Height="30" Command="{Binding Initialize_Creation}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
                     <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Import_buttonVisibility, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2"/>

@@ -4,6 +4,22 @@ using System.Windows.Threading;
 public class FirsTab : BaseModel
 {
     DispatcherTimer _timer = new DispatcherTimer();
+    private int index = 0;
+    public int Index
+    {
+        get
+        {
+            return index;
+        }
+        set
+        {
+            index = value;
+            index = (index < 0 ?  0 : index);
+            NextState = true;
+            PlayState = false;
+            Len = 10;
+        }
+    }
     public FirsTab()
     {
         _timer.Interval = TimeSpan.FromMilliseconds(1000);
@@ -196,19 +212,6 @@ public class FirsTab : BaseModel
             _trigger();
         }
     }
-  /*  private Double volume = 0.5;
-    public Double Volume
-    {
-        get
-        {
-            return volume;
-        }
-        set
-        {
-            volume = value;
-            OnPropertyChanged("Volume");
-        }
-    }*/
     private Double max = 0.5;
     public Double Max
     {

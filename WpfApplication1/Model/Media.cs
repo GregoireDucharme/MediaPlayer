@@ -33,6 +33,21 @@ public class Media
 
     private string info;
     private Uri _source;
+    private string uriXML = null;
+    public string UriXML
+    {
+        get
+        {
+            if (uriXML == null)
+                return uri.ToString();
+            return uriXML.ToString();
+        }
+        set
+        {
+            uriXML = value;
+        }
+    }
+    [XmlIgnore]
 
     public string Info
     {
