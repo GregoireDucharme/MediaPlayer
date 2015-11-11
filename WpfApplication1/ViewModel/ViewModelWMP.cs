@@ -253,7 +253,7 @@ class ViewModelWMP : BaseModel
         Environment.CurrentDirectory = @"C:\";
         try
         {
-            Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + name, FileMode.Open))
+            using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + name, FileMode.Open))
             {
                 PlaylistXML selectedPlaylist = (PlaylistXML)deserializerPlaylist.Deserialize(reader);
                 reader.Close();
