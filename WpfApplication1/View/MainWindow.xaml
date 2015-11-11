@@ -15,7 +15,7 @@
 
         </DataTemplate>
         <DataTemplate x:Key="ContextMenuTemplate">
-            <MenuItem Header="{Binding Index}" Command="{Binding InsertMedia}" CommandParameter="{Binding ElementName=HiddenLabel,Path=Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+            <MenuItem Header="{Binding Item1.Index}" Command="{Binding Item1.InsertMedia}" CommandParameter="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Key="ListBoxMediaTemplate">
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700" Background="Transparent">

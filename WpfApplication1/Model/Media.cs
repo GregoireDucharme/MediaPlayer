@@ -10,12 +10,15 @@ class Media
         Info = info;
         ListSource = source;
         Uri = uri;
-        _lbp = ListBoxPlaylist;
+        foreach (Playlist playlist in ListBoxPlaylist)
+        {
+            _lbp.Add(new Tuple<Playlist, Uri>(playlist, Uri));
+        }
     }
 
-    private ObservableCollection<Playlist> _lbp;
+    private ObservableCollection<Tuple<Playlist, Uri>> _lbp = new ObservableCollection<Tuple<Playlist, Uri>>();
 
-    public ObservableCollection<Playlist> LBP
+    public ObservableCollection<Tuple<Playlist, Uri>> LBP
     {
         get
         {
