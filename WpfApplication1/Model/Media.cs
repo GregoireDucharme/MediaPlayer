@@ -1,33 +1,39 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using System.Xml.Serialization;
 
-class Media
+[Serializable]
+public class Media
 {
-    FirsTab mainMedia;
-    ModelWMP model;
-    public Media(string info, Uri uri, Uri source, FirsTab MM, ModelWMP M, ObservableCollection<Playlist> ListBoxPlaylist)
+
+    public Media()
+    {
+
+    }
+    public Media(string info, Uri uri, Uri source, ObservableCollection<Playlist> ListBoxPlaylist)
     {
         Info = info;
         ListSource = source;
         Uri = uri;
-        mainMedia = MM;
-        model = M;
-        _lbp = ListBoxPlaylist;
+        foreach (Playlist playlist in ListBoxPlaylist)
+        {
+            _lbp.Add(new Tuple<Playlist, Media>(playlist, this));
+        }
     }
 
-    private ObservableCollection<Playlist> _lbp;
-
-    public ObservableCollection<Playlist> LBP
+    private ObservableCollection<Tuple<Playlist, Media>> _lbp = new ObservableCollection<Tuple<Playlist, Media>>();
+    [XmlIgnore]
+    public ObservableCollection<Tuple<Playlist, Media>> LBP
     {
         get
-        {
+        {   
             return (_lbp);
         }
     }
 
     private string info;
     private Uri _source;
+
     public string Info
     {
         get
@@ -39,6 +45,7 @@ class Media
             info = value;
         }
     }
+    [XmlIgnore]
     public Uri ListSource
     {
         get
@@ -51,6 +58,7 @@ class Media
         }
     }
     private Uri uri;
+    [XmlIgnore]
     public Uri Uri
     {
         get
@@ -60,22 +68,6 @@ class Media
         set
         {
             uri = value;
-        }
-    }
-    public void MyAction(object parameter)
-    {
-        mainMedia.Source = Uri;
-        model.CurrentTab = 0;
-        mainMedia.NextState = true;
-        mainMedia.PlayState = false;
-        mainMedia.Len = 10;
-    }
-    private ICommand listBox_MouseDoubleClick;
-    public ICommand ListBox_MouseDoubleClick
-    {
-        get
-        {
-            return listBox_MouseDoubleClick ?? (listBox_MouseDoubleClick = new CommandHandler(MyAction, true));
         }
     }
 }

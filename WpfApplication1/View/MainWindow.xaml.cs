@@ -13,12 +13,10 @@ namespace mediaPlayer
 {
     public partial class MainWindow : Window
     {
-        ViewModelWMP VM = new ViewModelWMP();
-
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = VM;
+            DataContext = new ViewModelWMP();
         }
 
         private void Action_File(object sender, RoutedEventArgs e)
@@ -39,9 +37,11 @@ namespace mediaPlayer
                     break;
                 case "Prev":
                     mediaElement.Stop();
+                    mediaElement.Play();
                     break;
                 case "Next":
                     mediaElement.Stop();
+                    mediaElement.Play();
                     break;
             }
         }
