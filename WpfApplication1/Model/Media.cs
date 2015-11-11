@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using System.Xml.Serialization;
 
-class Media
+[Serializable]
+public class Media
 {
 
+    public Media()
+    {
+
+    }
     public Media(string info, Uri uri, Uri source, ObservableCollection<Playlist> ListBoxPlaylist)
     {
         Info = info;
@@ -12,13 +17,13 @@ class Media
         Uri = uri;
         foreach (Playlist playlist in ListBoxPlaylist)
         {
-            _lbp.Add(new Tuple<Playlist, Uri>(playlist, Uri));
+            _lbp.Add(new Tuple<Playlist, Media>(playlist, this));
         }
     }
 
-    private ObservableCollection<Tuple<Playlist, Uri>> _lbp = new ObservableCollection<Tuple<Playlist, Uri>>();
-
-    public ObservableCollection<Tuple<Playlist, Uri>> LBP
+    private ObservableCollection<Tuple<Playlist, Media>> _lbp = new ObservableCollection<Tuple<Playlist, Media>>();
+    [XmlIgnore]
+    public ObservableCollection<Tuple<Playlist, Media>> LBP
     {
         get
         {   
@@ -28,6 +33,7 @@ class Media
 
     private string info;
     private Uri _source;
+
     public string Info
     {
         get
@@ -39,6 +45,7 @@ class Media
             info = value;
         }
     }
+    [XmlIgnore]
     public Uri ListSource
     {
         get
@@ -51,6 +58,7 @@ class Media
         }
     }
     private Uri uri;
+    [XmlIgnore]
     public Uri Uri
     {
         get
