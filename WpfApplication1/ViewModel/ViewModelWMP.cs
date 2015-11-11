@@ -13,7 +13,7 @@ class ViewModelWMP : BaseModel
 {
     private ModelWMP model = new ModelWMP();
     private FirsTab mainMedia = new FirsTab();
-    private PlaylistXML _selectedPlaylist;
+    private Playlist _selectedPlaylist;
     public ModelWMP Model
     {
         get
@@ -252,13 +252,13 @@ class ViewModelWMP : BaseModel
     public void selectPlayList(object parameter)
     {
         String name = (String)parameter;
-        XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(PlaylistXML));
+        XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(Playlist));
         Environment.CurrentDirectory = @"C:\";
         try
         {
             using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + name, FileMode.Open))
             {
-                _selectedPlaylist = (PlaylistXML)deserializerPlaylist.Deserialize(reader);
+                _selectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
                 reader.Close();
              //   selectedPlaylist.Add(newMedia);
              // suprimer le fichier xml ouvert

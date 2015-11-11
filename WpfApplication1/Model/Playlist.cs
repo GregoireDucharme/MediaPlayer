@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
+using System.Xml.Serialization;
 
+[Serializable]
 public class Playlist
 {
     public Playlist()
@@ -24,7 +27,7 @@ public class Playlist
         }
     }
     private List<Media> _listMedia = new List<Media>();
-
+    
     public List<Media> ListMedia
     {
         get
