@@ -278,7 +278,7 @@ class ViewModelWMP : BaseModel
         }
     }
 
-    private IList<Playlist> getPlaylist()
+    private ObservableCollection<Playlist> getPlaylist()
     {
         ObservableCollection<Playlist> list = new ObservableCollection<Playlist>();
 
