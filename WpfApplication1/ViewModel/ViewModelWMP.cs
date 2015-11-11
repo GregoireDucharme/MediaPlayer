@@ -223,6 +223,10 @@ class ViewModelWMP : BaseModel
     {
         String rec = (String)parameter + ".xml";
         PlaylistXML playlist = new PlaylistXML((String)parameter);
+       // var media = new MediaXML("Croquette");
+        playlist.Add(new MediaXML("Croquette"));
+        playlist.Add(new MediaXML("Cachou"));
+        //playlist.Add(media);
         XmlSerializer xsl = new XmlSerializer(typeof(PlaylistXML));
         Environment.CurrentDirectory = @"C:\";
         TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + rec);
@@ -242,7 +246,39 @@ class ViewModelWMP : BaseModel
         }
     }
 
-    private ObservableCollection<Playlist> getPlaylist()
+    public void selectPlayList(object parameter)
+    {
+        String name = (String)parameter + ".xml"; // ".xml" à supprimer
+        XmlSerializer deserializerPlaylist = new XmlSerializer(typeof(PlaylistXML));
+        Environment.CurrentDirectory = @"C:\";
+        try
+        {
+            Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + name, FileMode.Open))
+            {
+                PlaylistXML selectedPlaylist = (PlaylistXML)deserializerPlaylist.Deserialize(reader);
+                reader.Close();
+             //   selectedPlaylist.Add(newMedia);
+             // suprimer le fichier xml ouvert
+             // Serializer la nouvelle liste
+            }
+        }
+        catch (InvalidOperationException e)
+        {
+           
+        }
+    }
+
+    private ICommand pickPlayList;
+
+    public ICommand PickPlayList
+    {
+        get
+        {
+            return pickPlayList ?? (pickPlayList = new CommandHandler(selectPlayList, true));
+        }
+    }
+
+    private IList<Playlist> getPlaylist()
     {
         ObservableCollection<Playlist> list = new ObservableCollection<Playlist>();
 
@@ -280,8 +316,8 @@ class ViewModelWMP : BaseModel
         mainMedia.NextState = true;
         mainMedia.PlayState = false;
         mainMedia.Len = 10;
-    }
-
+}
+    
     private ICommand listBox_MouseDoubleClick;
     public ICommand ListBox_MouseDoubleClick
     {

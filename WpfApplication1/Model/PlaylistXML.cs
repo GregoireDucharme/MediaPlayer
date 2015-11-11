@@ -8,7 +8,7 @@ public class PlaylistXML
 {
     private String _name;
 
-    private List<MediaXML> _listMedia;
+    private List<MediaXML> _listMedia = new List<MediaXML>();
 
     public List<MediaXML> ListMedia
     {
