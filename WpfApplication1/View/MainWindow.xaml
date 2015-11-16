@@ -46,8 +46,11 @@
             <TabItem Header="En lecture">
                 <Grid  Background="{Binding Model.BackgroundColor}">
                     <MediaElement Name="mediaElement" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len"/>
-                    <StackPanel Name="options" Orientation="Horizontal" Width="578" Height="auto" Margin="120,457,120,32" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
-                       
+                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="options" Orientation="Horizontal" Width="700" Height="auto" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
+                        <StackPanel Orientation="Vertical" Margin="0,6,0,0">
+                            <TextBlock Background="White">Speed</TextBlock>
+                            <Slider Name="speedratio" IsSnapToTickEnabled="True" TickFrequency="0.5" Margin="0,0,10,0" Value="{Binding MainMedia.SpeedRatio}" Maximum="4" Minimum="0.5" Width="60"  ValueChanged="Speed_Ratio" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                        </StackPanel>
                         <Button x:Name="Prev" Background="Transparent" Padding="1" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
                             <StackPanel>
                                 <Image Source="/Resources/imgPrev.png"/>
@@ -73,11 +76,12 @@
                                 <Image Source="/Resources/imgNext.png"/>
                             </StackPanel>
                         </Button>
+                        <ProgressBar Height="24" Width="90" Name="volume" Value="0.5" Opacity="1" Minimum="0" Margin="10,0,0,0" Maximum="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                     </StackPanel>
                     <TextBlock Name="time" Text="{Binding MainMedia.TimeTxt}" Margin="54,471,-54,-19.2" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                     <Slider Name="timeline" Margin="60,440,60,60" Value="{Binding MainMedia.Timer}" Maximum="{Binding MainMedia.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="700" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    <ProgressBar Height="24" Name="volume" Value="0.5" VerticalAlignment="Center" Opacity="1" Minimum="0" Maximum="1" Margin="626,470,92,46" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    <Slider Name="speedratio" IsSnapToTickEnabled="True" TickFrequency="0.5" Margin="54,481,670,38.8" Value="{Binding MainMedia.SpeedRatio}" Maximum="4" Minimum="0.5" Width="60"  ValueChanged="Speed_Ratio" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    
+                    
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques">
@@ -118,7 +122,7 @@
             </TabItem>
             <TabItem Header="Paramètres">
                 <Grid Background="{Binding Model.BackgroundColor}">
-                <StackPanel Margin="8,6,656,-6.2" Width="200">
+                <StackPanel HorizontalAlignment="Left" Margin="8,6,0,-6.2" Width="200">
                     <TextBlock Foreground="{Binding Model.ForegroundColor}">
                         Selectionner thème
                     </TextBlock>
