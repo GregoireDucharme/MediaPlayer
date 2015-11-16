@@ -71,6 +71,32 @@ public class FirsTab : BaseModel
             OnPropertyChanged("OptionVisi");
         }
     }
+    private bool playVis = false;
+    public bool PlayVis
+    {
+        get
+        {
+            return playVis;
+        }
+        set
+        {
+            playVis = value;
+            OnPropertyChanged("PlayVis");
+        }
+    }
+    private bool pauseVis = false;
+    public bool PauseVis
+    {
+        get
+        {
+            return pauseVis;
+        }
+        set
+        {
+            pauseVis = value;
+            OnPropertyChanged("PauseVis");
+        }
+    }
 
     private bool chck;
     public Uri Source
@@ -85,6 +111,9 @@ public class FirsTab : BaseModel
             {
                 chck = true;
                 source = value;
+                PauseState = false;
+                PlayState = false;
+                PlayVis = false;
                 OnPropertyChanged("Source");
                 OptionVisi = true;
             }
@@ -153,6 +182,8 @@ public class FirsTab : BaseModel
         set
         {
             playState = value;
+            PlayVis = false;
+            PauseVis = true;
             pauseState = true;
             stopState = true;
             nextState = true;
@@ -169,6 +200,8 @@ public class FirsTab : BaseModel
         set
         {
             playState = true;
+            PlayVis = true;
+            PauseVis = false;
             pauseState = value;
             stopState = true;
             nextState = true;
@@ -185,11 +218,14 @@ public class FirsTab : BaseModel
         set
         {
             playState = true;
+            PlayVis = true;
+            PauseVis = false;
             pauseState = value;
             stopState = value;
-            nextState = false;
+            //nextState = false;
             _timer.Stop();
             timer = 0;
+            TimeTxt = "00:00:00";
             OnPropertyChanged("Timer");
             _trigger();
         }

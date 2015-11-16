@@ -21,9 +21,8 @@ namespace mediaPlayer
 
         private void Action_File(object sender, RoutedEventArgs e)
         {
-            mediaElement.LoadedBehavior = MediaState.Manual;
             Button tmp = (Button)sender;
-            switch ((String)tmp.Content)
+            switch (tmp.Name)
             {
                 case "Play":
                     mediaElement.SpeedRatio = speedratio.Value;
@@ -75,8 +74,8 @@ namespace mediaPlayer
             {
                 timeline.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
                 timeline.Value = mediaElement.Position.TotalMilliseconds;
-                //if (VM.MainMedia.Timer != 0)
-                  //  mediaElement.Position = TimeSpan.FromMilliseconds(VM.MainMedia.Timer);
+                mediaElement.LoadedBehavior = MediaState.Manual;
+                mediaElement.Play();
             }
         }
     }
