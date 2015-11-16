@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
 [Serializable]
-public class Media
+public class Media : BaseModel
 {
 
     public Media()
@@ -28,6 +28,11 @@ public class Media
         get
         {   
             return (_lbp);
+        }
+        set
+        {
+            _lbp = value;
+            OnPropertyChanged("LBP");
         }
     }
 

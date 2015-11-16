@@ -191,6 +191,23 @@ class ViewModelWMP : BaseViewModel
         }
     }
 
+    public void setThemeAction(object parameter)
+    {
+        String color = (String)parameter;
+
+        model.BackgroundColor = color;
+    }
+
+    private ICommand setTheme;
+
+    public ICommand SetTheme
+    {
+        get
+        {
+            return setTheme ?? (setTheme = new CommandHandler(setThemeAction, true));
+        }
+    }
+
     private ObservableCollection<Playlist> getPlaylist()
     {
         ObservableCollection<Playlist> list = new ObservableCollection<Playlist>();
@@ -208,6 +225,33 @@ class ViewModelWMP : BaseViewModel
     public void ListBoxPlaylistAdd(String rec)
     {
         ModelList.ListBoxPlaylist.Add(new Playlist(rec));
+        foreach (Media tmpMed in modelList.ListBoxImage)
+        {
+            ObservableCollection<Tuple<Playlist, Media>> tuppletmp = new ObservableCollection<Tuple<Playlist, Media>>();
+            foreach (Playlist tmp in ModelList.ListBoxPlaylist)
+            {
+                tuppletmp.Add(new Tuple<Playlist, Media>(tmp, tmpMed));
+            }
+            tmpMed.LBP = tuppletmp;
+        }
+        foreach (Media tmpMed in modelList.ListBoxMusique)
+        {
+            ObservableCollection<Tuple<Playlist, Media>> tuppletmp = new ObservableCollection<Tuple<Playlist, Media>>();
+            foreach (Playlist tmp in ModelList.ListBoxPlaylist)
+            {
+                tuppletmp.Add(new Tuple<Playlist, Media>(tmp, tmpMed));
+            }
+            tmpMed.LBP = tuppletmp;
+        }
+        foreach (Media tmpMed in modelList.ListBoxVideo)
+        {
+            ObservableCollection<Tuple<Playlist, Media>> tuppletmp = new ObservableCollection<Tuple<Playlist, Media>>();
+            foreach (Playlist tmp in ModelList.ListBoxPlaylist)
+            {
+                tuppletmp.Add(new Tuple<Playlist, Media>(tmp, tmpMed));
+            }
+            tmpMed.LBP = tuppletmp;
+        }
     }
 
     public void ListBox_MouseDoubleClickAction(object parameter)

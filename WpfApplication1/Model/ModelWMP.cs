@@ -1,5 +1,39 @@
 ﻿public class ModelWMP : BaseModel
 {
+    private string backgroundColor;
+    public string BackgroundColor
+    {
+        get
+        {
+            return backgroundColor;
+        }
+        set
+        {
+            backgroundColor = "#" + value;
+            if (value == "FF151515")
+            {
+                ForegroundColor = "White";
+            }
+            else
+            {
+                ForegroundColor = "Black";
+            }
+            OnPropertyChanged("BackgroundColor");
+        }
+    }
+    private string foregroundColor = "Black";
+    public string ForegroundColor
+    {
+        get
+        {
+            return foregroundColor;
+        }
+        set
+        {
+            foregroundColor = value;
+            OnPropertyChanged("ForegroundColor");
+        }
+    }
     private int currentTab = 1;
     public int CurrentTab
     {
