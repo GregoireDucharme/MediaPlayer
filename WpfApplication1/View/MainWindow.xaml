@@ -47,11 +47,32 @@
                 <Grid  Background="{Binding Model.BackgroundColor}">
                     <MediaElement Name="mediaElement" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len"/>
                     <StackPanel Name="options" Orientation="Horizontal" Width="578" Height="auto" Margin="120,457,120,32" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
-                        <Button x:Name="prec" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Prev" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
-                        <Button x:Name="play" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PlayState}" Content="Play" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
-                        <Button x:Name="pause" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.PauseState}" Content="Pause" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
-                        <Button x:Name="stop" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Content="Stop" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
-                        <Button x:Name="next" Padding="1" Background="Orange" Width="100" Height="30" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Content="Next"  Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource Self}}"/>
+                       
+                        <Button x:Name="Prev" Background="Transparent" Padding="1" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
+                            <StackPanel>
+                                <Image Source="/Resources/imgPrev.png"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Play" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.PlayState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
+                            <StackPanel>
+                                <Image Source="/Resources/imgPlay.png"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Pause" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.PauseState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
+                            <StackPanel>
+                                <Image Source="/Resources/imgPause.png"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Stop" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
+                            <StackPanel>
+                                <Image Source="/Resources/imgStop.png"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Next" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
+                            <StackPanel>
+                                <Image Source="/Resources/imgNext.png"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                     <TextBlock Name="time" Text="{Binding MainMedia.TimeTxt}" Margin="54,471,-54,-19.2" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                     <Slider Name="timeline" Margin="60,440,60,60" Value="{Binding MainMedia.Timer}" Maximum="{Binding MainMedia.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="700" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
@@ -103,7 +124,7 @@
                     </TextBlock>
                     <ListBox Width="180" Background="White" Height="100" Margin="0,10" SelectedIndex="0">
                         <ListBox.InputBindings>
-                           <KeyBinding Key="Enter" Command="{Binding SetTheme}" CommandParameter="{Binding SelectedValue.Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
+                            <KeyBinding Key="Enter" Command="{Binding SetTheme}" CommandParameter="{Binding SelectedValue.Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
                         </ListBox.InputBindings>
                         <ListBoxItem Content="Basique" Name="FFFFFFFF"/>
                         <ListBoxItem Content="Bleu comme tes yeux" Name="FF64A8A9"/>
