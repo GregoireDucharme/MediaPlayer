@@ -27,7 +27,7 @@
                 </StackPanel.InputBindings>
                 <Label Name="HiddenLabel" Visibility="Collapsed" Content="{Binding Uri}"/>
                 <MediaElement Source="{Binding ListSource}" Width="100" Height="120"/>
-                <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
+                 <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
                 <StackPanel.ContextMenu>
                     <ContextMenu>
 
