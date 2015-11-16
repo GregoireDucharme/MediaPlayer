@@ -46,11 +46,19 @@ class ViewModelXML : BaseViewModel
         }
         catch (InvalidOperationException e)
         {
-
+            MessageBoxResult result = MessageBox.Show("Erreur, " + name + " corrompue." , "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
         }
         catch (Exception e)
         {
-
+            MessageBoxResult result = MessageBox.Show("Erreur, " + name + " n'a pas pu être ouvert." , "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 
@@ -118,10 +126,6 @@ class ViewModelXML : BaseViewModel
                 {
                     Application.Current.Shutdown();
                 }
-            }
-            finally
-            {
-
             }
         }
     }

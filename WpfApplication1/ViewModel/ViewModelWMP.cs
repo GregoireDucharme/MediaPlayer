@@ -29,7 +29,11 @@ class ViewModelWMP : BaseViewModel
             }
             catch (Exception e)
             {
-                throw e;
+                MessageBoxResult result = MessageBox.Show("Erreur lors de la création du répertoire.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Application.Current.Shutdown();
+                }
             }
         }
         VMXML = new ViewModelXML(mainMedia, model);
@@ -39,15 +43,30 @@ class ViewModelWMP : BaseViewModel
             ModelList.ListBoxImage = _get_files(@"\Pictures", "jpg", "png", "gif");
             ModelList.ListBoxMusique = _get_files(@"\Music", "mp3", "wav", "wma");
             ModelList.ListBoxVideo = _get_files(@"\Videos", "mp4", "avi", "wmv");
-    }
+        }
         catch (UnauthorizedAccessException)
         {
+            MessageBoxResult result = MessageBox.Show("Erreur : Accès refusé.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
         }
         catch (PathTooLongException)
         {
+            MessageBoxResult result = MessageBox.Show("Erreur : Chemin d'accès incorrecte.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
         }
         catch (DirectoryNotFoundException)
         {
+            MessageBoxResult result = MessageBox.Show("Erreur : Fichier introuvable.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 
@@ -172,13 +191,24 @@ class ViewModelWMP : BaseViewModel
     {
         String rec = (String)parameter + ".xml";
         Playlist playlist = new Playlist((String)parameter);
-        XmlSerializer xsl = new XmlSerializer(typeof(Playlist));
         Environment.CurrentDirectory = @"C:\";
-        TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + rec);
-        xsl.Serialize(WriteFileStream, playlist);
-        WriteFileStream.Close();
-        CancelPlaylist(null);
-        ListBoxPlaylistAdd(rec);
+        try
+        {
+            XmlSerializer xsl = new XmlSerializer(typeof(Playlist));
+            TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + rec);
+            xsl.Serialize(WriteFileStream, playlist);
+            WriteFileStream.Close();
+            CancelPlaylist(null);
+            ListBoxPlaylistAdd(rec);
+        }
+        catch (Exception e)
+        {
+            MessageBoxResult result = MessageBox.Show("Erreur lors de la création de la playlist", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+        }
     }
 
     private ICommand setPlaylistName;
