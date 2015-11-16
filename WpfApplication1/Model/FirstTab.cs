@@ -85,6 +85,8 @@ public class FirsTab : BaseModel
             {
                 chck = true;
                 source = value;
+                PauseState = false;
+                PlayState = false;
                 OnPropertyChanged("Source");
                 OptionVisi = true;
             }
@@ -187,9 +189,10 @@ public class FirsTab : BaseModel
             playState = true;
             pauseState = value;
             stopState = value;
-            nextState = false;
+            //nextState = false;
             _timer.Stop();
             timer = 0;
+            TimeTxt = "00:00:00";
             OnPropertyChanged("Timer");
             _trigger();
         }

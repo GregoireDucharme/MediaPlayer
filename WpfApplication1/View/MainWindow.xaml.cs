@@ -21,7 +21,6 @@ namespace mediaPlayer
 
         private void Action_File(object sender, RoutedEventArgs e)
         {
-            mediaElement.LoadedBehavior = MediaState.Manual;
             Button tmp = (Button)sender;
             switch ((String)tmp.Content)
             {
@@ -75,6 +74,8 @@ namespace mediaPlayer
             {
                 timeline.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
                 timeline.Value = mediaElement.Position.TotalMilliseconds;
+                mediaElement.LoadedBehavior = MediaState.Manual;
+                mediaElement.Play();
                 //if (VM.MainMedia.Timer != 0)
                   //  mediaElement.Position = TimeSpan.FromMilliseconds(VM.MainMedia.Timer);
             }

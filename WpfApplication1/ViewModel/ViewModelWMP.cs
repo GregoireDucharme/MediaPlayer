@@ -252,36 +252,24 @@ class ViewModelWMP : BaseViewModel
         return list;
     }
 
+    private void updateContextMenu(ObservableCollection<Media> var)
+    {
+        foreach (Media tmpMed in var)
+        {
+            ObservableCollection<Tuple<Playlist, Media>> tuppletmp = new ObservableCollection<Tuple<Playlist, Media>>();
+            foreach (Playlist tmp in ModelList.ListBoxPlaylist)
+            {
+                tuppletmp.Add(new Tuple<Playlist, Media>(tmp, tmpMed));
+            }
+            tmpMed.LBP = tuppletmp;
+        }
+    }
     public void ListBoxPlaylistAdd(String rec)
     {
         ModelList.ListBoxPlaylist.Add(new Playlist(rec));
-        foreach (Media tmpMed in modelList.ListBoxImage)
-        {
-            ObservableCollection<Tuple<Playlist, Media>> tuppletmp = new ObservableCollection<Tuple<Playlist, Media>>();
-            foreach (Playlist tmp in ModelList.ListBoxPlaylist)
-            {
-                tuppletmp.Add(new Tuple<Playlist, Media>(tmp, tmpMed));
-            }
-            tmpMed.LBP = tuppletmp;
-        }
-        foreach (Media tmpMed in modelList.ListBoxMusique)
-        {
-            ObservableCollection<Tuple<Playlist, Media>> tuppletmp = new ObservableCollection<Tuple<Playlist, Media>>();
-            foreach (Playlist tmp in ModelList.ListBoxPlaylist)
-            {
-                tuppletmp.Add(new Tuple<Playlist, Media>(tmp, tmpMed));
-            }
-            tmpMed.LBP = tuppletmp;
-        }
-        foreach (Media tmpMed in modelList.ListBoxVideo)
-        {
-            ObservableCollection<Tuple<Playlist, Media>> tuppletmp = new ObservableCollection<Tuple<Playlist, Media>>();
-            foreach (Playlist tmp in ModelList.ListBoxPlaylist)
-            {
-                tuppletmp.Add(new Tuple<Playlist, Media>(tmp, tmpMed));
-            }
-            tmpMed.LBP = tuppletmp;
-        }
+        updateContextMenu(ModelList.ListBoxImage);
+        updateContextMenu(ModelList.ListBoxVideo);
+        updateContextMenu(ModelList.ListBoxMusique);
     }
 
     public void ListBox_MouseDoubleClickAction(object parameter)
