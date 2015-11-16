@@ -22,7 +22,7 @@ namespace mediaPlayer
         private void Action_File(object sender, RoutedEventArgs e)
         {
             Button tmp = (Button)sender;
-            switch ((String)tmp.Content)
+            switch ((String)tmp.Name)
             {
                 case "Play":
                     mediaElement.SpeedRatio = speedratio.Value;
