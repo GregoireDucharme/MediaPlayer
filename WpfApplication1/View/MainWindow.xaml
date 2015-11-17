@@ -49,27 +49,27 @@
     </Window.Resources>
     
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0">
-        <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0" TabStripPlacement="Left">
+        <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0" TabStripPlacement="{Binding Model.TabPlacement}">
             <TabControl.Background>
                 <ImageBrush ImageSource="{Binding Model.BackgroundColor}"/>
             </TabControl.Background>
-            <TabItem Header="En lecture">
+            <TabItem Header="En lecture" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource PlayerTabTemplate}" Margin="1,0,-0.6,-0.4"  />
             </TabItem>
-            <TabItem Header="Musiques">
+            <TabItem Header="Musiques" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxMusique}" Foreground="{Binding Model.ForegroundColor}">
                 </ListBox>
             </TabItem>
-            <TabItem Header="Videos">
+            <TabItem Header="Videos" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <ListBox Name="listBoxVideos" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxVideo}" Foreground="{Binding Model.ForegroundColor}">
                 </ListBox>
             </TabItem>
 
-            <TabItem Header="Images">
+            <TabItem Header="Images" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxImage}" Foreground="{Binding Model.ForegroundColor}">
                 </ListBox>
             </TabItem>
-            <TabItem Header="Playlists">
+            <TabItem Header="Playlists" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="92*"/>
@@ -90,7 +90,7 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="Paramètres">
+            <TabItem Header="Paramètres" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ParameterTabTemplate}"  />
             </TabItem>
         </TabControl>

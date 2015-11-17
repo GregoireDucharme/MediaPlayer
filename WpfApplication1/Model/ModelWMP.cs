@@ -151,11 +151,39 @@ public class ModelWMP : BaseModel
             OnPropertyChanged("WState");
         }
     }
+    private string tabPlacement = "Left";
 
+    public string TabPlacement
+    {
+        get
+        {
+            return tabPlacement;
+        }
+        set
+        {
+            tabPlacement = value;
+            OnPropertyChanged("TabPlacement");
+        }
+    }
+    private bool tabVis = true;
+    public bool TabVis
+    {
+        get
+        {
+            return tabVis;
+        }
+        set
+        {
+            tabVis = value;
+            OnPropertyChanged("TabVis");
+        }
+    }
     public void ToggleScreenSizeAction(object parameter)
     {
         WStyle = (wStyle == "SingleBorderWindow" ? "None" : "SingleBorderWindow");
         WState = (wState == "Normal" ? "Maximized" : "Normal");
+        TabVis = (TabVis == true ? false : true);
+        TabPlacement = (TabPlacement == "Left" ? "Bottom" : "Left");
     }
 
     private ICommand toggleScreenSize;
