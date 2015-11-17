@@ -47,9 +47,13 @@
             <v:ParameterTabView/>
         </DataTemplate>
     </Window.Resources>
-    
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0">
-        <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0" TabStripPlacement="{Binding Model.TabPlacement}">
+    
+        <Grid.Background>
+            
+            <ImageBrush ImageSource="{Binding Model.BackgroundColor}" Opacity="0.90"/>
+        </Grid.Background>
+        <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0" TabStripPlacement="Left">
             <TabControl.Background>
                 <ImageBrush ImageSource="{Binding Model.BackgroundColor}"/>
             </TabControl.Background>
