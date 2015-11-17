@@ -48,7 +48,7 @@
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0">
         <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0" TabStripPlacement="Left">
             <TabItem Header="En lecture">
-                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource PlayerTabTemplate}"  />
+                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource PlayerTabTemplate}" Margin="1,0,-0.6,-0.4"  />
             </TabItem>
             <TabItem Header="Musiques">
                 <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ModelList.ListBoxMusique}" Background="{Binding Model.BackgroundColor}" Foreground="{Binding Model.ForegroundColor}">
