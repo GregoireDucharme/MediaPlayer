@@ -139,4 +139,19 @@ class ViewModelXML : BaseViewModel
             return updatePlayList ?? (updatePlayList = new CommandHandler(updatePlayListAction, true));
         }
     }
+
+    public void DeletePlaylist(Playlist tmp)
+    {
+        try {
+            File.Delete(RootRepo + Environment.UserName + ProjectRepo + "\\" +tmp.Index);
+        }
+        catch (Exception e)
+        {
+            MessageBoxResult result = MessageBox.Show("Erreur de la suppression de la playlist: \" "+ tmp.Index +" \"", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+    }
 }

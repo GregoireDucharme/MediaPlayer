@@ -40,7 +40,7 @@
         </DataTemplate>
     </Window.Resources>
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0" MouseWheel="Mouse_Volume">
-        <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0">
+        <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0" TabStripPlacement="Left">
             <TabItem Header="En lecture">
                 <Grid  Background="{Binding Model.BackgroundColor}">
                     <Grid.InputBindings>
@@ -71,9 +71,14 @@
                                 <Image Source="/Resources/imgPause.png"/>
                             </StackPanel>
                         </Button>
-                        <Button x:Name="Stop" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
+                        <Button Visibility="{Binding MainMedia.StopVis, Converter={StaticResource BoolToVis}}" x:Name="Stop" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
                             <StackPanel>
                                 <Image Source="/Resources/imgStop.png"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Visibility="{Binding MainMedia.StopGrayVis, Converter={StaticResource BoolToVis}}" x:Name="StopGray" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
+                            <StackPanel>
+                                <Image Source="/Resources/imgStopGray.png"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="Next" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
@@ -114,8 +119,8 @@
                     </Grid.ColumnDefinitions>
                     <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ModelList.ListBoxPlaylist}" Grid.ColumnSpan="2" Background="{Binding Model.BackgroundColor}" Foreground="{Binding Model.ForegroundColor}">
                     </ListBox>
-                    <Button Name="Create_button" Width="63" Content="Create" Height="30" Command="{Binding Initialize_Creation}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Import_buttonVisibility, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2"/>
+                    <Button Name="Create_button" Width="63" Content="Créer" Height="30" Command="{Binding Initialize_Creation}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
+                    <Button Command="{Binding DeletePlaylist}" CommandParameter="{Binding Path=Children[0].SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Name="Delete_button" Width="63" Content="Supprimer" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Import_buttonVisibility, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2"/>
                     <Button Name="Annuler" Width="63" Content="Annuler" Height="30" Command="{Binding Cancel_Playlist}" Margin="248.5,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Cancel_buttonVisibility, Converter={StaticResource BoolToVis}}" Grid.Column="1"/>
                     <StackPanel Name="SetPlaylistName" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Model.SetPlaylistNameVisibility, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2">
                         <Label Height="30" Width="90" Content="Playlist Name"/>
@@ -125,8 +130,6 @@
                             </TextBox.InputBindings>
                         </TextBox>
                     </StackPanel>
-                    <ListBox Name="listBoxMediaForPlaylist" Visibility="Collapsed" Margin="0,50,0,0" Grid.ColumnSpan="2">
-                    </ListBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Paramètres">

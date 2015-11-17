@@ -289,4 +289,22 @@ class ViewModelWMP : BaseViewModel
             return listBox_MouseDoubleClick ?? (listBox_MouseDoubleClick = new CommandHandler(ListBox_MouseDoubleClickAction, true));
         }
     }
+    public void DeletePlaylistAction(object parameter)
+    {
+        Playlist tmp = parameter as Playlist;
+        XML.DeletePlaylist(tmp);
+        ModelList.ListBoxPlaylist.Remove(tmp);
+        updateContextMenu(ModelList.ListBoxImage);
+        updateContextMenu(ModelList.ListBoxVideo);
+        updateContextMenu(ModelList.ListBoxMusique);
+    }
+    private ICommand deletePlayList;
+
+    public ICommand DeletePlaylist
+    {
+        get
+        {
+            return deletePlayList ?? (deletePlayList = new CommandHandler(DeletePlaylistAction, true));
+        }
+    }
 }
