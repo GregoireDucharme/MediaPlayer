@@ -2,7 +2,7 @@
 
 public class ModelWMP : BaseModel
 {
-    private string backgroundColor;
+    private string backgroundColor = "/Resources/Background01.png";
     public string BackgroundColor
     {
         get
