@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -12,6 +7,7 @@ using System.Xml.Serialization;
 class ViewModelXML : BaseViewModel
 {
     private Playlist _selectedPlaylist = new Playlist();
+    
     public Playlist SelectedPlaylist
     {
         get

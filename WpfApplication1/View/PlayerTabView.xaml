@@ -7,12 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <Grid  Background="{Binding Model.BackgroundColor}"  MouseWheel="Mouse_Volume">
+    <Grid  Background="{Binding Model.BackgroundColor}"  MouseWheel="Mouse_Volume"  Cursor="{Binding Model.Cursor}">
         <Grid.InputBindings>
             <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Model.ToggleScreenSize}"/>
+            <MouseBinding Gesture="LeftClick" Command="{Binding Appear}"/>
         </Grid.InputBindings>
-        <Image Name="placeHolder" Source="/Resources/music.png" Margin="10,10,10,40" Visibility="{Binding MainMedia.PlaceHolderVis, Converter={StaticResource BoolToVis}}"/>
-        <MediaElement Name="mediaElement" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len" Visibility="{Binding MainMedia.MainMediaVis, Converter={StaticResource BoolToVis}}"/>
+        <Image HorizontalAlignment="Center" VerticalAlignment="Center" Name="placeHolder" Width="311" Height="235" Source="/Resources/music.png" Margin="10,10,10,40" Visibility="{Binding MainMedia.PlaceHolderVis, Converter={StaticResource BoolToVis}}"/>
+        <MediaElement Name="mediaElement" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len" Visibility="{Binding MainMedia.MainMediaVis, Converter={StaticResource BoolToVis}}"/>
         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="options" Orientation="Horizontal" Width="700" Height="auto" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
             <StackPanel Orientation="Vertical" Margin="0,6,0,0">
                 <TextBlock Foreground="Orange">

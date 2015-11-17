@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 public class ModelWMP : BaseModel
 {
@@ -49,12 +51,7 @@ public class ModelWMP : BaseModel
             OnPropertyChanged("CurrentTab");
         }
     }
- 
-    public ModelWMP()
-    {
 
-    }
-   
     private bool setPlaylistNameVisibility = false;
     public bool SetPlaylistNameVisibility
     {
@@ -137,6 +134,20 @@ public class ModelWMP : BaseModel
             OnPropertyChanged("WStyle");
         }
     }
+    private string cursor = "Arrow";
+
+    public string Cursor
+    {
+        get
+        {
+            return cursor;
+        }
+        set
+        {
+            cursor = value;
+            OnPropertyChanged("Cursor");
+        }
+    }   
     private string wState = "Normal";
 
     public string WState

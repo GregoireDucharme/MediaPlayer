@@ -53,12 +53,12 @@
             
             <ImageBrush ImageSource="{Binding Model.BackgroundColor}" Opacity="0.90"/>
         </Grid.Background>
-        <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0" TabStripPlacement="Left">
+        <TabControl SelectedIndex="{Binding Model.CurrentTab, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  TabStripPlacement="{Binding Model.TabPlacement}">
             <TabControl.Background>
                 <ImageBrush ImageSource="{Binding Model.BackgroundColor}"/>
             </TabControl.Background>
             <TabItem Header="En lecture" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
-                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource PlayerTabTemplate}" Margin="1,0,-0.6,-0.4"  />
+                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource PlayerTabTemplate}"/>
             </TabItem>
             <TabItem Header="Musiques" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxMusique}" Foreground="{Binding Model.ForegroundColor}">
@@ -72,7 +72,7 @@
             <TabItem Header="Images" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxImage}" Foreground="{Binding Model.ForegroundColor}">
                 </ListBox>
-            </TabItem>
+            </TabItem> 
             <TabItem Header="Playlists" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <Grid>
                     <Grid.ColumnDefinitions>
