@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Threading;
 
 public class FirsTab : BaseModel
@@ -142,7 +143,20 @@ public class FirsTab : BaseModel
                 PlayVis = false;
                 StopVis = true;
                 StopGrayVis = false;
-                OnPropertyChanged("Source");
+                try
+                {
+                    OnPropertyChanged("Source");
+                }
+                catch (Exception e)
+                {
+                    MessageBoxResult result = MessageBox.Show("Erreur : Lecteur du média \"" + Source.AbsolutePath + "\".", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Application.Current.Shutdown();
+                    }
+                    source = null;
+                    OnPropertyChanged("Source");
+                }
                 OptionVisi = true;
             }
             else
