@@ -42,10 +42,6 @@
         <DataTemplate x:Key="PlayerTabTemplate">
             <v:PlayerTabView/>
         </DataTemplate>
-        
-        <DataTemplate x:Key="PlaylistTabTemplate">
-            <v:PlaylistTabView/>
-        </DataTemplate>
 
         <DataTemplate x:Key="ParameterTabTemplate">
             <v:ParameterTabView/>
