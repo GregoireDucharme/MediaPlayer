@@ -27,7 +27,7 @@
                     <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.ListBox_MouseDoubleClick, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding ElementName=HiddenLabel, Path=Content}"/>
                 </StackPanel.InputBindings>
                 <Label Name="HiddenLabel" Visibility="Collapsed" Content="{Binding Uri}"/>
-                <MediaElement Source="{Binding ListSource}" Width="100" Height="120"/>
+                <Image Source="{Binding ListSource}" Width="100" Height="120"/>
                  <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
                 <StackPanel.ContextMenu>
                     <ContextMenu>
@@ -47,20 +47,23 @@
     </Window.Resources>
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0">
         <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0" TabStripPlacement="Left">
+            <TabControl.Background>
+                <ImageBrush ImageSource="{Binding Model.BackgroundColor}"/>
+            </TabControl.Background>
             <TabItem Header="En lecture">
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource PlayerTabTemplate}"  />
             </TabItem>
             <TabItem Header="Musiques">
-                <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ModelList.ListBoxMusique}" Background="{Binding Model.BackgroundColor}" Foreground="{Binding Model.ForegroundColor}">
+                <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxMusique}" Foreground="{Binding Model.ForegroundColor}">
                 </ListBox>
             </TabItem>
             <TabItem Header="Videos">
-                <ListBox Name="listBoxVideos" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ModelList.ListBoxVideo}" Background="{Binding Model.BackgroundColor}" Foreground="{Binding Model.ForegroundColor}">
+                <ListBox Name="listBoxVideos" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxVideo}" Foreground="{Binding Model.ForegroundColor}">
                 </ListBox>
             </TabItem>
 
             <TabItem Header="Images">
-                <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" ItemsSource="{Binding ModelList.ListBoxImage}" Background="{Binding Model.BackgroundColor}" Foreground="{Binding Model.ForegroundColor}">
+                <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxImage}" Foreground="{Binding Model.ForegroundColor}">
                 </ListBox>
             </TabItem>
             <TabItem Header="Playlists">
@@ -95,9 +98,9 @@
                         <ListBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding SetTheme}" CommandParameter="{Binding SelectedValue.Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
                         </ListBox.InputBindings>
-                        <ListBoxItem Content="Basique" Name="FFFFFFFF"/>
-                        <ListBoxItem Content="Bleu comme tes yeux" Name="FF64A8A9"/>
-                        <ListBoxItem Content="Noir comme ton âme" Name="FF151515"/>
+                        <ListBoxItem Content="Basique" Name="Background01"/>
+                            <ListBoxItem Content="Bleu comme tes yeux" Name="Background02"/>
+                            <ListBoxItem Content="Noir comme ton âme" Name="Background03"/>
                     </ListBox>
                 </StackPanel>
                 </Grid>

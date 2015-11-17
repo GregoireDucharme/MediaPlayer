@@ -63,6 +63,36 @@ namespace mediaPlayer.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Background01 {
+            get {
+                object obj = ResourceManager.GetObject("Background01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Background02 {
+            get {
+                object obj = ResourceManager.GetObject("Background02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Background03 {
+            get {
+                object obj = ResourceManager.GetObject("Background03", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap imgNext {
             get {
                 object obj = ResourceManager.GetObject("imgNext", resourceCulture);
@@ -126,26 +156,6 @@ namespace mediaPlayer.Properties {
         internal static System.Drawing.Bitmap SliderThumb {
             get {
                 object obj = ResourceManager.GetObject("SliderThumb", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap test01 {
-            get {
-                object obj = ResourceManager.GetObject("test01", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap test02 {
-            get {
-                object obj = ResourceManager.GetObject("test02", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
