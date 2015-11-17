@@ -1,4 +1,6 @@
-﻿public class ModelWMP : BaseModel
+﻿using System.Windows.Input;
+
+public class ModelWMP : BaseModel
 {
     private string backgroundColor;
     public string BackgroundColor
@@ -119,6 +121,49 @@
         {
             import_buttonVisibility = value;
             OnPropertyChanged("Import_buttonVisibility");
+        }
+    }
+    private string wStyle = "SingleBorderWindow";
+
+    public string WStyle
+    {
+        get
+        {
+            return wStyle;
+        }
+        set
+        {
+            wStyle = value;
+            OnPropertyChanged("WStyle");
+        }
+    }
+    private string wState = "Normal";
+
+    public string WState
+    {
+        get
+        {
+            return wState;
+        }
+        set
+        {
+            wState = value;
+            OnPropertyChanged("WState");
+        }
+    }
+
+    public void ToggleScreenSizeAction(object parameter)
+    {
+        WStyle = (wStyle == "SingleBorderWindow" ? "None" : "SingleBorderWindow");
+        WState = (wState == "Normal" ? "Maximized" : "Normal");
+    }
+
+    private ICommand toggleScreenSize;
+    public ICommand ToggleScreenSize
+    {
+        get
+        {
+            return toggleScreenSize ?? (toggleScreenSize = new CommandHandler(ToggleScreenSizeAction, true));
         }
     }
 }
