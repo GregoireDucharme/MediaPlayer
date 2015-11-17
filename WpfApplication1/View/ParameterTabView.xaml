@@ -17,9 +17,9 @@
                 <ListBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SetTheme}" CommandParameter="{Binding SelectedValue.Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
                 </ListBox.InputBindings>
-                <ListBoxItem Content="Basique" Name="FFFFFFFF"/>
-                <ListBoxItem Content="Bleu comme tes yeux" Name="FF64A8A9"/>
-                <ListBoxItem Content="Noir comme ton âme" Name="FF151515"/>
+                <ListBoxItem Content="Basique" Name="Background01"/>
+                <ListBoxItem Content="Bleu comme tes yeux" Name="Background02"/>
+                <ListBoxItem Content="Noir comme ton âme" Name="Background03"/>
             </ListBox>
         </StackPanel>
     </Grid>
