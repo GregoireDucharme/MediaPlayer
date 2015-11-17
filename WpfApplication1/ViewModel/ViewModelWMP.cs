@@ -6,10 +6,37 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using System.Xml.Serialization;
 
 class ViewModelWMP : BaseViewModel
 {
+    DispatcherTimer timer = new DispatcherTimer();
+    private void _disappear(object sender, EventArgs e)
+    {
+        if (Model.CurrentTab == 0)
+        {
+            MainMedia.OptionVisi = false;
+            Model.Cursor = "None";
+        }
+        timer.Stop();
+    }
+
+    public void AppearAction(object parameter)
+    {
+        MainMedia.OptionVisi = true;
+        Model.Cursor = "Arrow";
+        timer.Stop();
+        timer.Start();
+    }
+    private ICommand appear;
+    public ICommand Appear
+    {
+        get
+        {
+            return appear ?? (appear = new CommandHandler(AppearAction, true));
+        }
+    }
     private ViewModelXML VMXML;
     public ViewModelXML XML
     {
@@ -18,7 +45,6 @@ class ViewModelWMP : BaseViewModel
             return VMXML;
         }
     }
-
     public ViewModelWMP()
     {
         if (!Directory.Exists(RootRepo + Environment.UserName + ProjectRepo))
@@ -37,6 +63,8 @@ class ViewModelWMP : BaseViewModel
             }
         }
         VMXML = new ViewModelXML(mainMedia, model);
+        timer.Interval = TimeSpan.FromMilliseconds(5000);
+        timer.Tick += new EventHandler(_disappear);
         ModelList.ListBoxPlaylist = getPlaylist();
         try
         {
@@ -276,6 +304,8 @@ class ViewModelWMP : BaseViewModel
     {
         mainMedia.Source = (Uri)parameter;
         model.CurrentTab = 0;
+        AppearAction(parameter);
+        MainMedia.OptionVisi = true;
         mainMedia.NextState = true;
         mainMedia.PlayState = false;
         mainMedia.Len = 10;
