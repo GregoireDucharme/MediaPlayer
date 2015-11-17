@@ -11,7 +11,7 @@
         <Grid.InputBindings>
             <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Model.ToggleScreenSize}"/>
         </Grid.InputBindings>
-        <Image Name="placeHolder" Source="/Resources/music.jpg" Margin="10,10,10,40" Visibility="{Binding MainMedia.PlaceHolderVis, Converter={StaticResource BoolToVis}}"/>
+        <Image Name="placeHolder" Source="/Resources/imgNext.png" Margin="10,10,10,40" Visibility="{Binding MainMedia.PlaceHolderVis, Converter={StaticResource BoolToVis}}"/>
         <MediaElement Name="mediaElement" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len" Visibility="{Binding MainMedia.MainMediaVis, Converter={StaticResource BoolToVis}}"/>
         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="options" Orientation="Horizontal" Width="700" Height="auto" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
             <StackPanel Orientation="Vertical" Margin="0,6,0,0">

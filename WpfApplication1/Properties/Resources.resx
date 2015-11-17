@@ -139,13 +139,13 @@
   <data name="SliderThumb" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SliderThumb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="test01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\test01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Background01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Background01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="test02" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\test02.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Background02" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Background02.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="music" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\music.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Background03" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Background03.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

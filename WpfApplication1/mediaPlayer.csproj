@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>MaidiaPlailleur.ico</ApplicationIcon>
+    <ApplicationIcon>MediaPlayer.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -130,6 +130,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -168,22 +169,22 @@
     <Resource Include="Resources\imgStop.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="MaidiaPlailleur.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\imgStopGray.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\SliderThumb.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\test01.png" />
+    <Resource Include="Resources\Background01.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\test02.png" />
+    <Resource Include="Resources\Background02.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\music.jpg" />
+    <Resource Include="Resources\Background03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MediaPlayer.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,14 +11,14 @@ public class ModelWMP : BaseModel
         }
         set
         {
-            backgroundColor = "#" + value;
-            if (value == "FF151515")
+            backgroundColor = "/Resources/" + value + ".png";
+            if (value == "Background01")
             {
-                ForegroundColor = "White";
+                ForegroundColor = "Black";
             }
             else
             {
-                ForegroundColor = "Black";
+                ForegroundColor = "White";
             }
             OnPropertyChanged("BackgroundColor");
         }
