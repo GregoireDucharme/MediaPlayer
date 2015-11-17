@@ -48,7 +48,11 @@
                     <MediaElement Name="mediaElement" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len"/>
                     <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="options" Orientation="Horizontal" Width="700" Height="auto" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
                         <StackPanel Orientation="Vertical" Margin="0,6,0,0">
-                            <TextBlock Background="White">Speed</TextBlock>
+                            <TextBlock Foreground="Orange">
+                                <TextBlock.Inlines>
+                                    <Run FontWeight="Bold" FontSize="14" Text="Speed" />
+                                </TextBlock.Inlines>
+                            </TextBlock>
                             <Slider Name="speedratio" IsSnapToTickEnabled="True" TickFrequency="0.5" Margin="0,0,10,0" Value="{Binding MainMedia.SpeedRatio}" Maximum="4" Minimum="0.5" Width="60"  ValueChanged="Speed_Ratio" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                         </StackPanel>
                         <Button x:Name="Prev" Background="Transparent" Padding="1" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
@@ -78,7 +82,11 @@
                         </Button>
                         <ProgressBar Height="24" Width="90" Name="volume" Value="0.5" Opacity="1" Minimum="0" Margin="10,0,0,0" Maximum="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                     </StackPanel>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="time" Text="{Binding MainMedia.TimeTxt}" Margin="60,0,0,80" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+                    <TextBlock Foreground="orange" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="time" Margin="60,0,0,80" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
+                        <TextBlock.Inlines>
+                            <Run FontWeight="Bold" FontSize="14" Text="{Binding MainMedia.TimeTxt}"  />
+                        </TextBlock.Inlines>
+                    </TextBlock>
                     <Slider VerticalAlignment="Bottom" Name="timeline" Margin="60,0,60,60" Value="{Binding MainMedia.Timer}" Maximum="{Binding MainMedia.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
                     
                     
