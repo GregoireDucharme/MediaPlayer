@@ -90,9 +90,6 @@
     <Compile Include="View\PlayerTabView.xaml.cs">
       <DependentUpon>PlayerTabView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PlaylistTabView.xaml.cs">
-      <DependentUpon>PlaylistTabView.xaml</DependentUpon>
-    </Compile>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -112,10 +109,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PlayerTabView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PlaylistTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,6 +172,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\imgStopGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SliderThumb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\test01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\test02.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
