@@ -36,9 +36,14 @@
                     <Image Source="/Resources/imgPause.png"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="Stop" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
+            <Button Visibility="{Binding MainMedia.StopVis, Converter={StaticResource BoolToVis}}" x:Name="Stop" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
                 <StackPanel>
                     <Image Source="/Resources/imgStop.png"/>
+                </StackPanel>
+            </Button>
+            <Button Visibility="{Binding MainMedia.StopGrayVis, Converter={StaticResource BoolToVis}}" x:Name="StopGray" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.StopState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
+                <StackPanel>
+                    <Image Source="/Resources/imgStopGray.png"/>
                 </StackPanel>
             </Button>
             <Button x:Name="Next" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" IsEnabled="{Binding MainMedia.NextState}" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
