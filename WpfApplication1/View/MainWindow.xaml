@@ -72,7 +72,7 @@
             <TabItem Header="Images" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxImage}" Foreground="{Binding Model.ForegroundColor}">
                 </ListBox>
-            </TabItem>
+            </TabItem> 
             <TabItem Header="Playlists" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <Grid>
                     <Grid.ColumnDefinitions>
