@@ -27,7 +27,7 @@
                 </StackPanel.InputBindings>
                 <Label Name="HiddenLabel" Visibility="Collapsed" Content="{Binding Uri}"/>
                 <MediaElement Source="{Binding ListSource}" Width="100" Height="120"/>
-                 <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
+                <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
                 <StackPanel.ContextMenu>
                     <ContextMenu>
 
@@ -38,16 +38,26 @@
                 </StackPanel.ContextMenu>
             </StackPanel>
         </DataTemplate>
+
+
+
     </Window.Resources>
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0" MouseWheel="Mouse_Volume">
         <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0">
+            <!--<TabControl.Background>
+                <ImageBrush ImageSource="/Resources/test02.png"/>
+            </TabControl.Background>-->
             <TabItem Header="En lecture">
                 <Grid  Background="{Binding Model.BackgroundColor}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="319*"/>
+                        <ColumnDefinition Width="463*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.InputBindings>
                         <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Model.ToggleScreenSize}"/>
                     </Grid.InputBindings>
-                    <MediaElement Name="mediaElement" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len"/>
-                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="options" Orientation="Horizontal" Width="700" Height="auto" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
+                    <MediaElement Name="mediaElement" Margin="10,10,10,40" Source="{Binding MainMedia.Source}" MediaOpened="Get_Len" Grid.ColumnSpan="2"/>
+                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="options" Orientation="Horizontal" Width="700" Height="auto" Panel.ZIndex="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2" Margin="41,0">
                         <StackPanel Orientation="Vertical" Margin="0,6,0,0">
                             <TextBlock Foreground="Orange">
                                 <TextBlock.Inlines>
@@ -88,9 +98,9 @@
                             <Run FontWeight="Bold" FontSize="14" Text="{Binding MainMedia.TimeTxt}"  />
                         </TextBlock.Inlines>
                     </TextBlock>
-                    <Slider VerticalAlignment="Bottom" Name="timeline" Margin="60,0,60,60" Value="{Binding MainMedia.Timer}" Maximum="{Binding MainMedia.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-                    
-                    
+                    <Slider VerticalAlignment="Bottom" Name="timeline" Margin="60,0,60,60" Value="{Binding MainMedia.Timer}" Maximum="{Binding MainMedia.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2"/>
+
+
                 </Grid>
             </TabItem>
             <TabItem Header="Musiques">
@@ -135,16 +145,16 @@
                         <TextBlock Foreground="{Binding Model.ForegroundColor}">
                             Selectionner thème<LineBreak/>
                             ("Entrée" pour valider)
-                    </TextBlock>
-                    <ListBox Width="180" Background="White" Height="100" Margin="0,10" SelectedIndex="0">
-                        <ListBox.InputBindings>
-                            <KeyBinding Key="Enter" Command="{Binding SetTheme}" CommandParameter="{Binding SelectedValue.Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
-                        </ListBox.InputBindings>
-                        <ListBoxItem Content="Basique" Name="FFFFFFFF"/>
-                        <ListBoxItem Content="Bleu comme tes yeux" Name="FF64A8A9"/>
-                        <ListBoxItem Content="Noir comme ton âme" Name="FF151515"/>
-                    </ListBox>
-                </StackPanel>
+                        </TextBlock>
+                        <ListBox Width="180" Background="White" Height="100" Margin="0,10" SelectedIndex="0">
+                            <ListBox.InputBindings>
+                                <KeyBinding Key="Enter" Command="{Binding SetTheme}" CommandParameter="{Binding SelectedValue.Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
+                            </ListBox.InputBindings>
+                            <ListBoxItem Content="Basique" Name="FFFFFFFF"/>
+                            <ListBoxItem Content="Bleu comme tes yeux" Name="FF64A8A9"/>
+                            <ListBoxItem Content="Noir comme ton âme" Name="FF151515"/>
+                        </ListBox>
+                    </StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>
