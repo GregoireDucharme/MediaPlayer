@@ -143,6 +143,16 @@ public class FirsTab : BaseModel
                 PlayVis = false;
                 StopVis = true;
                 StopGrayVis = false;
+                if (source.LocalPath.EndsWith("mp3") || source.LocalPath.EndsWith("wav") || source.LocalPath.EndsWith("wma"))
+                {
+                    PlaceHolderVis = true;
+                    MainMediaVis = false;
+                }
+                else
+                {
+                    PlaceHolderVis = false;
+                    MainMediaVis = true;
+                }
                 try
                 {
                     OnPropertyChanged("Source");
@@ -307,6 +317,32 @@ public class FirsTab : BaseModel
         {
             max = value;
             OnPropertyChanged("Max");
+        }
+    }
+    private bool mainMediaVis = false;
+    public bool MainMediaVis
+    {
+        get
+        {
+            return mainMediaVis;
+        }
+        set
+        {
+            mainMediaVis = value;
+            OnPropertyChanged("MainMediaVis");
+        }
+    }
+    private bool placeHolderVis = false;
+    public bool PlaceHolderVis
+    {
+        get
+        {
+            return placeHolderVis;
+        }
+        set
+        {
+            placeHolderVis = value;
+            OnPropertyChanged("PlaceHolderVis");
         }
     }
 }
