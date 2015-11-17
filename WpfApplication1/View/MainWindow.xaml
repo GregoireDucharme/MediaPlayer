@@ -97,6 +97,10 @@
             <TabItem Header="Paramètres" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ParameterTabTemplate}"  />
             </TabItem>
+            <TabItem Header="RunningMedias">
+                <ListBox Name="Natalie" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding XML.SelectedPlaylist.ListMedia}">
+                </ListBox>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

@@ -157,7 +157,7 @@ public class FirsTab : BaseModel
                 {
                     OnPropertyChanged("Source");
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     MessageBoxResult result = MessageBox.Show("Erreur : Lecteur du média \"" + Source.AbsolutePath + "\".", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.Yes)

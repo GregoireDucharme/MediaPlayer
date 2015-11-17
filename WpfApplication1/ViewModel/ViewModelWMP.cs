@@ -27,7 +27,7 @@ class ViewModelWMP : BaseViewModel
             {
                 Directory.CreateDirectory(RootRepo + Environment.UserName + ProjectRepo);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBoxResult result = MessageBox.Show("Erreur lors de la création du répertoire.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
@@ -36,7 +36,7 @@ class ViewModelWMP : BaseViewModel
                 }
             }
         }
-        VMXML = new ViewModelXML(mainMedia, model);
+        VMXML = new ViewModelXML(mainMedia, model, modelList);
         ModelList.ListBoxPlaylist = getPlaylist();
         try
         {
@@ -201,7 +201,7 @@ class ViewModelWMP : BaseViewModel
             CancelPlaylist(null);
             ListBoxPlaylistAdd(rec);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             MessageBoxResult result = MessageBox.Show("Erreur lors de la création de la playlist", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)

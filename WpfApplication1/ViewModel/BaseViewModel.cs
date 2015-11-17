@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class BaseViewModel
+class BaseViewModel : BaseModel
 {
     protected string RootRepo = ConfigurationManager.AppSettings.Get("RootRepo");
     protected string PublicRepo = ConfigurationManager.AppSettings.Get("PublicRepo");

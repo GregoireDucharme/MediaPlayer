@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
 [Serializable]
-public class Playlist
+public class Playlist : BaseModel
 {
     public Playlist()
     {
@@ -26,9 +27,9 @@ public class Playlist
             _index = value;
         }
     }
-    private List<Media> _listMedia = new List<Media>();
+    private ObservableCollection<Media> _listMedia = new ObservableCollection<Media>();
     
-    public List<Media> ListMedia
+    public ObservableCollection<Media> ListMedia
     {
         get
         {
@@ -37,6 +38,7 @@ public class Playlist
         set
         {
             _listMedia = value;
+            OnPropertyChanged("ListMedia");
         }
     }
 

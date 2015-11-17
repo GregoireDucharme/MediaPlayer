@@ -18,12 +18,18 @@ class ViewModelXML : BaseViewModel
         {
             return _selectedPlaylist;
         }
+        set
+        {
+            _selectedPlaylist = value;
+            OnPropertyChanged("SelectedPlaylist");
+        }
     }
 
-    public ViewModelXML(FirsTab MM, ModelWMP M)
+    public ViewModelXML(FirsTab MM, ModelWMP M, ModelList ML)
     {
         mainMedia = MM;
         model = M;
+        modelList = ML;
     }
     public void selectPlayList(object parameter)
     {
@@ -34,9 +40,10 @@ class ViewModelXML : BaseViewModel
         {
             using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + name, FileMode.Open))
             {
-                _selectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
-                if (_selectedPlaylist.ListMedia.Count > 0)
-                    mainMedia.Source = new Uri(_selectedPlaylist.ListMedia[0].UriXML);
+                SelectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
+                SelectedPlaylist.ListMedia = SelectedPlaylist.ListMedia;
+                if (SelectedPlaylist.ListMedia.Count > 0)
+                    mainMedia.Source = new Uri(SelectedPlaylist.ListMedia[0].UriXML);
                 model.CurrentTab = 0;
                 mainMedia.NextState = true;
                 mainMedia.PlayState = false;
@@ -44,7 +51,7 @@ class ViewModelXML : BaseViewModel
                 reader.Close();
             }
         }
-        catch (InvalidOperationException e)
+        catch (InvalidOperationException)
         {
             MessageBoxResult result = MessageBox.Show("Erreur, " + name + " corrompue." , "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
@@ -52,7 +59,7 @@ class ViewModelXML : BaseViewModel
                 Application.Current.Shutdown();
             }
         }
-        catch (Exception e)
+        catch (Exception)
         {
             MessageBoxResult result = MessageBox.Show("Erreur, " + name + " n'a pas pu être ouvert." , "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
@@ -97,7 +104,7 @@ class ViewModelXML : BaseViewModel
                         serializePlaylist.Serialize(WriteFileStream, _selectedPlaylist);
                         WriteFileStream.Close();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         MessageBoxResult result = MessageBox.Show("Erreur lors de l'ajout du média", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                         if (result == MessageBoxResult.Yes)
@@ -111,7 +118,7 @@ class ViewModelXML : BaseViewModel
                     }
                 }
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 MessageBoxResult result = MessageBox.Show("Erreur lors de la lecture de la playlist", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
@@ -119,7 +126,7 @@ class ViewModelXML : BaseViewModel
                     Application.Current.Shutdown();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBoxResult result = MessageBox.Show("Erreur", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
@@ -145,7 +152,7 @@ class ViewModelXML : BaseViewModel
         try {
             File.Delete(RootRepo + Environment.UserName + ProjectRepo + "\\" +tmp.Index);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             MessageBoxResult result = MessageBox.Show("Erreur de la suppression de la playlist: \" "+ tmp.Index +" \"", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)

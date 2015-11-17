@@ -71,9 +71,9 @@ namespace mediaPlayer.View
             {
                 timeline.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
                 timeline.Value = mediaElement.Position.TotalMilliseconds;
-                mediaElement.LoadedBehavior = MediaState.Manual;
-                mediaElement.Play();
             }
+            mediaElement.LoadedBehavior = MediaState.Manual;
+            mediaElement.Play();
         }
     }
 }
