@@ -16,11 +16,12 @@
                     <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.XML.PickPlayList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Index}"/>
                 </StackPanel.InputBindings>
             </StackPanel>
-
         </DataTemplate>
+        
         <DataTemplate x:Key="ContextMenuTemplate">
             <MenuItem Header="{Binding Item1.Index}" Command="{Binding DataContext.XML.UpdatePlayList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}"/>
         </DataTemplate>
+        
         <DataTemplate x:Key="ListBoxMediaTemplate">
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700" Background="Transparent">
                 <StackPanel.InputBindings>
@@ -28,13 +29,11 @@
                 </StackPanel.InputBindings>
                 <Label Name="HiddenLabel" Visibility="Collapsed" Content="{Binding Uri}"/>
                 <MediaElement Source="{Binding ListSource}" Width="100" Height="120"/>
-                 <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
+                <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
                 <StackPanel.ContextMenu>
                     <ContextMenu>
-
                         <MenuItem Header="Add To ..."  ItemTemplate="{StaticResource ContextMenuTemplate}" ItemsSource="{Binding LBP}" >
                         </MenuItem>
-
                     </ContextMenu>
                 </StackPanel.ContextMenu>
             </StackPanel>
@@ -43,8 +42,16 @@
         <DataTemplate x:Key="PlayerTabTemplate">
             <v:PlayerTabView/>
         </DataTemplate>
-        
+
+        <DataTemplate x:Key="PlaylistTabTemplate">
+            <v:PlaylistTabView/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ParameterTabTemplate">
+            <v:ParameterTabView/>
+        </DataTemplate>
     </Window.Resources>
+    
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0">
         <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0" TabStripPlacement="Left">
             <TabItem Header="En lecture">
@@ -65,44 +72,13 @@
             </TabItem>
             <TabItem Header="Playlists">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="92*"/>
-                        <ColumnDefinition Width="691*"/>
-                    </Grid.ColumnDefinitions>
                     <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ModelList.ListBoxPlaylist}" Grid.ColumnSpan="2" Background="{Binding Model.BackgroundColor}" Foreground="{Binding Model.ForegroundColor}">
                     </ListBox>
-                    <Button Name="Create_button" Width="63" Content="Create" Height="30" Command="{Binding Initialize_Creation}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
-                    <Button Name="Import_button" Width="63" Content="Import" Height="30" Margin="80,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Import_buttonVisibility, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2"/>
-                    <Button Name="Annuler" Width="63" Content="Annuler" Height="30" Command="{Binding Cancel_Playlist}" Margin="248.5,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Cancel_buttonVisibility, Converter={StaticResource BoolToVis}}" Grid.Column="1"/>
-                    <StackPanel Name="SetPlaylistName" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Model.SetPlaylistNameVisibility, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2">
-                        <Label Height="30" Width="90" Content="Playlist Name"/>
-                        <TextBox Name="playlist_name" Height="25px" Width="230" AcceptsReturn="False">
-                            <TextBox.InputBindings>
-                                <KeyBinding Key="Enter" Command="{Binding SetPlaylistName}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
-                            </TextBox.InputBindings>
-                        </TextBox>
-                    </StackPanel>
-                    <ListBox Name="listBoxMediaForPlaylist" Visibility="Collapsed" Margin="0,50,0,0" Grid.ColumnSpan="2">
-                    </ListBox>
+                    <ContentControl Content="{Binding}" ContentTemplate="{StaticResource PlaylistTabTemplate}"  />
                 </Grid>
             </TabItem>
             <TabItem Header="Paramètres">
-                <Grid Background="{Binding Model.BackgroundColor}">
-                    <StackPanel HorizontalAlignment="Left" Margin="8,6,0,-6.2" Width="200">
-                        <TextBlock Foreground="{Binding Model.ForegroundColor}">
-                            Selectionner thème<LineBreak/>
-                            ("Entrée" pour valider)
-                    </TextBlock>
-                    <ListBox Width="180" Background="White" Height="100" Margin="0,10" SelectedIndex="0">
-                        <ListBox.InputBindings>
-                            <KeyBinding Key="Enter" Command="{Binding SetTheme}" CommandParameter="{Binding SelectedValue.Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
-                        </ListBox.InputBindings>
-                        <ListBoxItem Content="Basique" Name="FFFFFFFF"/>
-                        <ListBoxItem Content="Bleu comme tes yeux" Name="FF64A8A9"/>
-                        <ListBoxItem Content="Noir comme ton âme" Name="FF151515"/>
-                    </ListBox>
-                </StackPanel>
-                </Grid>
+                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ParameterTabTemplate}"  />
             </TabItem>
         </TabControl>
     </Grid>

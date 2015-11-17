@@ -84,8 +84,14 @@
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ViewModelWMP.cs" />
+    <Compile Include="View\ParameterTabView.xaml.cs">
+      <DependentUpon>ParameterTabView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PlayerTabView.xaml.cs">
       <DependentUpon>PlayerTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlaylistTabView.xaml.cs">
+      <DependentUpon>PlaylistTabView.xaml</DependentUpon>
     </Compile>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -101,7 +107,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ParameterTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\PlayerTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlaylistTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
