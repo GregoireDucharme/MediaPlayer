@@ -17,11 +17,11 @@
                 </StackPanel.InputBindings>
             </StackPanel>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="ContextMenuTemplate">
             <MenuItem Header="{Binding Item1.Index}" Command="{Binding DataContext.XML.UpdatePlayList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}"/>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="ListBoxMediaTemplate">
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700" Background="Transparent">
                 <StackPanel.InputBindings>
@@ -29,7 +29,7 @@
                 </StackPanel.InputBindings>
                 <Label Name="HiddenLabel" Visibility="Collapsed" Content="{Binding Uri}"/>
                 <Image Source="{Binding ListSource}" Width="100" Height="120"/>
-                 <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
+                <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
                 <StackPanel.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Add To ..."  ItemTemplate="{StaticResource ContextMenuTemplate}" ItemsSource="{Binding LBP}" >
@@ -42,13 +42,17 @@
         <DataTemplate x:Key="PlayerTabTemplate">
             <v:PlayerTabView/>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="ParameterTabTemplate">
             <v:ParameterTabView/>
         </DataTemplate>
     </Window.Resources>
-    
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0">
+        
+        <Grid.Background>
+            
+            <ImageBrush ImageSource="{Binding Model.BackgroundColor}" Opacity="0.90"/>
+        </Grid.Background>
         <TabControl SelectedIndex="{Binding Model.CurrentTab}" Margin="1,0,-1.4,0" TabStripPlacement="Left">
             <TabControl.Background>
                 <ImageBrush ImageSource="{Binding Model.BackgroundColor}"/>
