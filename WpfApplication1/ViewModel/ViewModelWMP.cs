@@ -337,4 +337,32 @@ class ViewModelWMP : BaseViewModel
             return deletePlayList ?? (deletePlayList = new CommandHandler(DeletePlaylistAction, true));
         }
     }
+    public void ResearchAction(object parameter)
+    {
+        string tmp = parameter as string;
+        switch (Model.CurrentTab)
+        {
+            case 1:
+                ModelList.ListBoxMusique = new ObservableCollection<Media>(from x in ModelList.ListBoxMusiqueFull where x.Info.ToLower().Contains(tmp.ToLower()) select x);
+                break;
+            case 2:
+                ModelList.ListBoxVideo = new ObservableCollection<Media>(from x in ModelList.ListBoxVideoFull where x.Info.ToLower().Contains(tmp.ToLower()) select x);
+                break;
+            case 3:
+                ModelList.ListBoxImage = new ObservableCollection<Media>(from x in ModelList.ListBoxImageFull where x.Info.ToLower().Contains(tmp.ToLower()) select x);
+                break;
+            case 4:
+                ModelList.ListBoxPlaylist = new ObservableCollection<Playlist>(from x in ModelList.ListBoxPlaylistFull where x.Index.ToLower().Contains(tmp.ToLower()) select x);
+                break;
+        }
+    }
+    private ICommand research;
+
+    public ICommand Research
+    {
+        get
+        {
+            return research ?? (research = new CommandHandler(ResearchAction, true));
+        }
+    }
 }

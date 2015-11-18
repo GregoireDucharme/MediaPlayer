@@ -17,11 +17,11 @@
                 </StackPanel.InputBindings>
             </StackPanel>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="ContextMenuTemplate">
             <MenuItem Header="{Binding Item1.Index}" Command="{Binding DataContext.XML.UpdatePlayList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}"/>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="ListBoxMediaTemplate">
             <StackPanel Orientation="Horizontal" Margin="10,10,0,10" Height="76" Width="700" Background="Transparent">
                 <StackPanel.InputBindings>
@@ -29,7 +29,7 @@
                 </StackPanel.InputBindings>
                 <Label Name="HiddenLabel" Visibility="Collapsed" Content="{Binding Uri}"/>
                 <Image Source="{Binding ListSource}" Width="100" Height="120"/>
-                 <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
+                <TextBlock Margin="10,10,0,10" Height="100" Width="700" Text="{Binding Info}"/>
                 <StackPanel.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Add To ..."  ItemTemplate="{StaticResource ContextMenuTemplate}" ItemsSource="{Binding LBP}" >
@@ -42,15 +42,15 @@
         <DataTemplate x:Key="PlayerTabTemplate">
             <v:PlayerTabView/>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="ParameterTabTemplate">
             <v:ParameterTabView/>
         </DataTemplate>
     </Window.Resources>
     <Grid Margin="0,0,0,0" RenderTransformOrigin="0,0">
-    
+
         <Grid.Background>
-            
+
             <ImageBrush ImageSource="{Binding Model.BackgroundColor}" Opacity="0.90"/>
         </Grid.Background>
         <TabControl SelectedIndex="{Binding Model.CurrentTab, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  TabStripPlacement="{Binding Model.TabPlacement}">
@@ -61,24 +61,98 @@
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource PlayerTabTemplate}"/>
             </TabItem>
             <TabItem Header="Musiques" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
-                <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxMusique}" Foreground="{Binding Model.ForegroundColor}">
-                </ListBox>
+                <Grid Background="Transparent">
+                    <TextBox Name="SearchMusique" Width="110" AcceptsReturn="False" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30, 10" Panel.ZIndex="1" Padding="-2">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Research}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock IsHitTestVisible="False" Text="Recherche par nom" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="34, 11" Foreground="DarkGray" Panel.ZIndex="1">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchMusique}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <ListBox Name="listBoxMusiques" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxMusique}" Foreground="{Binding Model.ForegroundColor}">
+                    </ListBox>
+                </Grid>
             </TabItem>
             <TabItem Header="Videos" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
-                <ListBox Name="listBoxVideos" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxVideo}" Foreground="{Binding Model.ForegroundColor}">
-                </ListBox>
+                <Grid Background="Transparent">
+                    <TextBox Name="SearchVideo" Width="110" AcceptsReturn="False" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30, 10" Panel.ZIndex="1" Padding="-2">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Research}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock IsHitTestVisible="False" Text="Recherche par nom" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="34, 11" Foreground="DarkGray" Panel.ZIndex="1">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchVideo}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <ListBox Name="listBoxVideos" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxVideo}" Foreground="{Binding Model.ForegroundColor}">
+                    </ListBox>
+                </Grid>
             </TabItem>
 
             <TabItem Header="Images" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
-                <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxImage}" Foreground="{Binding Model.ForegroundColor}">
-                </ListBox>
-            </TabItem> 
+                <Grid Background="Transparent">
+                    <TextBox Name="SearchImage" Width="110" AcceptsReturn="False" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30, 10" Panel.ZIndex="1" Padding="-2">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Research}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock IsHitTestVisible="False" Text="Recherche par nom" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="34, 11" Foreground="DarkGray" Panel.ZIndex="1">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchImage}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <ListBox Name="listBoxImages" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding ModelList.ListBoxImage}" Foreground="{Binding Model.ForegroundColor}">
+                    </ListBox>
+                </Grid>
+            </TabItem>
             <TabItem Header="Playlists" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="92*"/>
                         <ColumnDefinition Width="691*"/>
                     </Grid.ColumnDefinitions>
+                    <TextBox Name="SearchPlaylist" Width="110" AcceptsReturn="False" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,59,30,0" Panel.ZIndex="1" Padding="-2" Grid.Column="1">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding Research}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBlock IsHitTestVisible="False" Text="Recherche par nom" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,61,34,0" Foreground="DarkGray" Panel.ZIndex="1" Grid.Column="1">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchPlaylist}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                     <ListBox Name="listBoxPlaylist" Visibility="Visible" Margin="0,50,0,0" ItemTemplate="{StaticResource ListBoxPlaylistTemplate}" ItemsSource="{Binding ModelList.ListBoxPlaylist}" Grid.ColumnSpan="2" Background="{Binding Model.BackgroundColor}" Foreground="{Binding Model.ForegroundColor}">
                     </ListBox>
                     <Button Name="Create_button" Width="63" Content="Créer" Height="30" Command="{Binding Initialize_Creation}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Model.Create_buttonVisibility, Converter={StaticResource BoolToVis}}"/>
