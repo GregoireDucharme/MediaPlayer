@@ -133,6 +133,26 @@ namespace mediaPlayer.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap imgPlaylist01 {
+            get {
+                object obj = ResourceManager.GetObject("imgPlaylist01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap imgPlaylist02 {
+            get {
+                object obj = ResourceManager.GetObject("imgPlaylist02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap imgPrev {
             get {
                 object obj = ResourceManager.GetObject("imgPrev", resourceCulture);

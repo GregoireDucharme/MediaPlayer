@@ -54,11 +54,6 @@
                 </StackPanel>
             </Button>
             <ProgressBar Height="24" Width="90" Name="volume" Value="0.5" Opacity="1" Minimum="0" Margin="10,0,0,0" Maximum="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
-            <Button x:Name="ListView" Padding="1" Background="Transparent" Width="100" Height="50" Click="Action_File" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
-                <StackPanel>
-                    <Image Source="/Resources/imgPlay.png"/>
-                </StackPanel>
-            </Button>
         </StackPanel>
         <TextBlock Foreground="orange" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="time" Margin="60,0,0,80" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
             <TextBlock.Inlines>
@@ -66,5 +61,10 @@
             </TextBlock.Inlines>
         </TextBlock>
         <Slider VerticalAlignment="Bottom" Name="timeline" Margin="60,0,60,60" Value="{Binding MainMedia.Timer}" Maximum="{Binding MainMedia.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Thumb.DragCompleted="End_Timeline" Thumb.DragStarted="Start_Timeline" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+        <Button x:Name="ListView" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="1" Background="Transparent" Width="60" Height="50" Click="Action_File" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
+            <StackPanel>
+                <Image Source="/Resources/imgPlaylist01.png"/>
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>
