@@ -188,6 +188,9 @@ class ViewModelWMP : BaseViewModel
             case "ListView":
                 model.CurrentTab = 6;
                 break;
+            case "MediaView":
+                model.CurrentTab = 0;
+                break;
         }
     }
 

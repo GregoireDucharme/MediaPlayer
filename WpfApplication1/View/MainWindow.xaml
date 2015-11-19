@@ -172,8 +172,15 @@
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ParameterTabTemplate}"  />
             </TabItem>
             <TabItem Header="RunningPlaylist" Visibility="Collapsed">
-                <ListBox Name="Natalie" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding XML.SelectedPlaylist.ListMedia}">
-                </ListBox>
+                <Grid>
+                    <ListBox Name="RunnigPlaylistBox" ItemTemplate="{StaticResource ListBoxMediaTemplate}" Background="Transparent" ItemsSource="{Binding XML.SelectedPlaylist.ListMedia}">
+                    </ListBox>
+                    <Button x:Name="MediaView" Padding="1" Background="Transparent" Width="100" Height="50" Command="{Binding ButtonFirstTab}" CommandParameter="{Binding Path=Name, RelativeSource={RelativeSource Self}}">
+                        <StackPanel>
+                            <Image Source="/Resources/imgPlay.png"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
