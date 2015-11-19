@@ -185,6 +185,9 @@ class ViewModelWMP : BaseViewModel
                 }
                 MainMedia.PlayState = false;
                 break;
+            case "ListView":
+                model.CurrentTab = 6;
+                break;
         }
     }
 

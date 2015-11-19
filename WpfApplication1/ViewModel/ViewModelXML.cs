@@ -37,6 +37,11 @@ class ViewModelXML : BaseViewModel
             using (Stream reader = new FileStream(RootRepo + Environment.UserName + ProjectRepo + "\\" + name, FileMode.Open))
             {
                 SelectedPlaylist = (Playlist)deserializerPlaylist.Deserialize(reader);
+                foreach (Media media in SelectedPlaylist.ListMedia)
+                {
+                    media.Uri = new Uri(media.UriXML);
+                    media.ListSource = new Uri(media.SourceXML);
+                }
                 SelectedPlaylist.ListMedia = SelectedPlaylist.ListMedia;
                 if (SelectedPlaylist.ListMedia.Count > 0)
                     mainMedia.Source = new Uri(SelectedPlaylist.ListMedia[0].UriXML);
@@ -145,7 +150,9 @@ class ViewModelXML : BaseViewModel
 
     public void DeletePlaylist(Playlist tmp)
     {
-        try {
+
+        try
+        {
             File.Delete(RootRepo + Environment.UserName + ProjectRepo + "\\" +tmp.Index);
         }
         catch (Exception)

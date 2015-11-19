@@ -45,14 +45,28 @@ public class Media : BaseModel
         {
             if (uriXML == null)
                 return uri.ToString();
-            return uriXML.ToString();
+            return uriXML;
         }
         set
         {
             uriXML = value;
         }
     }
-    [XmlIgnore]
+
+    private string sourceXML = null;
+    public string SourceXML
+    {
+        get
+        {
+            if (sourceXML == null)
+                return _source.ToString();
+            return sourceXML;
+        }
+        set
+        {
+            sourceXML = value;
+        }
+    }
 
     public string Info
     {
