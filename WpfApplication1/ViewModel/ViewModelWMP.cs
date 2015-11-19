@@ -309,6 +309,8 @@ class ViewModelWMP : BaseViewModel
     public void ListBox_MouseDoubleClickAction(object parameter)
     {
         mainMedia.Source = (Uri)parameter;
+        XML.SelectedPlaylist.ListMediaFull = modelList.ListBoxMusique;
+        XML.SelectedPlaylist.ListMedia = modelList.ListBoxMusique;
         model.CurrentTab = 0;
         AppearAction(parameter);
         MainMedia.OptionVisi = true;
@@ -359,6 +361,9 @@ class ViewModelWMP : BaseViewModel
                 break;
             case 4:
                 ModelList.ListBoxPlaylist = new ObservableCollection<Playlist>(from x in ModelList.ListBoxPlaylistFull where x.Index.ToLower().Contains(tmp.ToLower()) select x);
+                break;
+            case 6:
+                XML.SelectedPlaylist.ListMedia = new ObservableCollection<Media>(from x in XML.SelectedPlaylist.ListMediaFull where x.Info.ToLower().Contains(tmp.ToLower()) select x);
                 break;
         }
     }

@@ -28,7 +28,6 @@ public class Playlist : BaseModel
         }
     }
     private ObservableCollection<Media> _listMedia = new ObservableCollection<Media>();
-    
     public ObservableCollection<Media> ListMedia
     {
         get
@@ -38,7 +37,20 @@ public class Playlist : BaseModel
         set
         {
             _listMedia = value;
+            listMediaFull = (value.Count > listMediaFull.Count ? value : listMediaFull);
             OnPropertyChanged("ListMedia");
+        }
+    }
+    private ObservableCollection<Media> listMediaFull;
+    public ObservableCollection<Media> ListMediaFull
+    {
+        get
+        {
+            return (listMediaFull);
+        }
+        set
+        {
+            listMediaFull = value;
         }
     }
 

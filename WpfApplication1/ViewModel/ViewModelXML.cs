@@ -42,7 +42,7 @@ class ViewModelXML : BaseViewModel
                     media.Uri = new Uri(media.UriXML);
                     media.ListSource = new Uri(media.SourceXML);
                 }
-                SelectedPlaylist.ListMedia = SelectedPlaylist.ListMedia;
+                SelectedPlaylist.ListMediaFull = SelectedPlaylist.ListMedia;
                 if (SelectedPlaylist.ListMedia.Count > 0)
                     mainMedia.Source = new Uri(SelectedPlaylist.ListMedia[0].UriXML);
                 model.CurrentTab = 0;
