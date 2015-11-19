@@ -223,7 +223,7 @@ class ViewModelWMP : BaseViewModel
         try
         {
             XmlSerializer xsl = new XmlSerializer(typeof(Playlist));
-            TextWriter WriteFileStream = new StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + rec);
+            TextWriter WriteFileStream = new    StreamWriter(RootRepo + Environment.UserName + ProjectRepo + "\\" + rec);
             xsl.Serialize(WriteFileStream, playlist);
             WriteFileStream.Close();
             CancelPlaylist(null);
