@@ -351,7 +351,8 @@ class ViewModelWMP : BaseViewModel
         switch (Model.CurrentTab)
         {
             case 1:
-                ModelList.ListBoxMusique = new ObservableCollection<Media>(from x in ModelList.ListBoxMusiqueFull where x.Info.ToLower().Contains(tmp.ToLower()) select x);
+                //ModelList.ListBoxMusique = new ObservableCollection<Media>(from x in ModelList.ListBoxMusiqueFull where x.Info.ToLower().Contains(tmp.ToLower()) select x);
+                ModelList.ListBoxMusique = new ObservableCollection<Media>(ModelList.ListBoxMusiqueFull.Where(x => x.Info.ToLower().Contains(tmp.ToLower())));
                 break;
             case 2:
                 ModelList.ListBoxVideo = new ObservableCollection<Media>(from x in ModelList.ListBoxVideoFull where x.Info.ToLower().Contains(tmp.ToLower()) select x);

@@ -119,7 +119,7 @@ class ViewModelXML : BaseViewModel
                     }
                 }
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
                 MessageBoxResult result = MessageBox.Show("Erreur lors de la lecture de la playlist", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)

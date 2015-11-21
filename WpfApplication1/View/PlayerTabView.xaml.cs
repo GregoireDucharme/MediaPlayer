@@ -19,26 +19,32 @@ namespace mediaPlayer.View
         private void Action_File(object sender, RoutedEventArgs e)
         {
             Button tmp = (Button)sender;
-            switch (tmp.Name)
+            try
             {
-                case "Play":
-                    mediaElement.SpeedRatio = speedratio.Value;
-                    mediaElement.Play();
-                    break;
-                case "Pause":
-                    mediaElement.Pause();
-                    break;
-                case "Stop":
-                    mediaElement.Stop();
-                    break;
-                case "Prev":
-                    mediaElement.Stop();
-                    mediaElement.Play();
-                    break;
-                case "Next":
-                    mediaElement.Stop();
-                    mediaElement.Play();
-                    break;
+                switch (tmp.Name)
+                {
+                    case "Play":
+                        mediaElement.SpeedRatio = speedratio.Value;
+                        mediaElement.Play();
+                        break;
+                    case "Pause":
+                        mediaElement.Pause();
+                        break;
+                    case "Stop":
+                        mediaElement.Stop();
+                        break;
+                    case "Prev":
+                        mediaElement.Stop();
+                        mediaElement.Play();
+                        break;
+                    case "Next":
+                        mediaElement.Stop();
+                        mediaElement.Play();
+                        break;
+                }
+            }
+            catch (Exception)
+            {
             }
         }
         private void Start_Timeline(object sender, DragStartedEventArgs args)
