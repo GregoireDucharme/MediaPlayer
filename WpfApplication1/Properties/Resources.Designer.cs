@@ -163,6 +163,16 @@ namespace mediaPlayer.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap imgSearch {
+            get {
+                object obj = ResourceManager.GetObject("imgSearch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap imgStop {
             get {
                 object obj = ResourceManager.GetObject("imgStop", resourceCulture);
@@ -176,6 +186,16 @@ namespace mediaPlayer.Properties {
         internal static System.Drawing.Bitmap imgStopGray {
             get {
                 object obj = ResourceManager.GetObject("imgStopGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap imgVolume {
+            get {
+                object obj = ResourceManager.GetObject("imgVolume", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

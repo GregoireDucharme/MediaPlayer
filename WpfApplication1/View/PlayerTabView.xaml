@@ -53,7 +53,10 @@
                     <Image Source="/Resources/imgNext.png"/>
                 </StackPanel>
             </Button>
-            <ProgressBar Height="24" Width="90" Name="volume" Value="0.5" Opacity="1" Minimum="0" Margin="10,0,0,0" Maximum="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Resources/imgVolume.png" Width="30" Height="30" Margin="10,0,0,0"/>
+                <ProgressBar Height="24" Width="90" Name="volume" Value="0.5" Opacity="1" Minimum="0" Margin="10,0,0,0" Maximum="1" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
         </StackPanel>
         <TextBlock Foreground="orange" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="time" Margin="60,0,0,80" Visibility="{Binding MainMedia.OptionVisi, Converter={StaticResource BoolToVis}}">
             <TextBlock.Inlines>

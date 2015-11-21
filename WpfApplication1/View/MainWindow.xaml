@@ -62,6 +62,7 @@
             </TabItem>
             <TabItem Header="Musiques" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <Grid Background="Transparent">
+                    <Image Source="/Resources/imgSearch.png" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,140,0"/>
                     <TextBox Name="SearchMusique" Width="110" AcceptsReturn="False" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30, 10" Panel.ZIndex="1" Padding="-2">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding Research}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
@@ -85,6 +86,7 @@
             </TabItem>
             <TabItem Header="Videos" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <Grid Background="Transparent">
+                    <Image Source="/Resources/imgSearch.png" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,140,0"/>
                     <TextBox Name="SearchVideo" Width="110" AcceptsReturn="False" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30, 10" Panel.ZIndex="1" Padding="-2">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding Research}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
@@ -109,6 +111,7 @@
 
             <TabItem Header="Images" Visibility="{Binding Model.TabVis, Converter={StaticResource BoolToVis}}">
                 <Grid Background="Transparent">
+                    <Image Source="/Resources/imgSearch.png" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,140,0"/>
                     <TextBox Name="SearchImage" Width="110" AcceptsReturn="False" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30, 10" Panel.ZIndex="1" Padding="-2">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding Research}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
@@ -136,6 +139,7 @@
                         <ColumnDefinition Width="92*"/>
                         <ColumnDefinition Width="691*"/>
                     </Grid.ColumnDefinitions>
+                    <Image Source="/Resources/imgSearch.png" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,59,145,0" Grid.Column="1"/>
                     <TextBox Name="SearchPlaylist" Width="110" AcceptsReturn="False" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,59,30,0" Panel.ZIndex="1" Padding="-2" Grid.Column="1">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding Research}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
@@ -173,6 +177,7 @@
             </TabItem>
             <TabItem Header="RunningPlaylist" Visibility="Collapsed">
                 <Grid Background="Transparent">
+                    <Image Source="/Resources/imgSearch.png" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,140,0"/>
                     <TextBox Name="SearchInPlaylist" Width="110" AcceptsReturn="False" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30, 10" Panel.ZIndex="1" Padding="-2">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding Research}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
