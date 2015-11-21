@@ -310,7 +310,13 @@ class ViewModelWMP : BaseViewModel
     {
         mainMedia.Source = (Uri)parameter;
         XML.SelectedPlaylist.ListMediaFull = modelList.ListBoxMusique;
-        XML.SelectedPlaylist.ListMedia = modelList.ListBoxMusique;
+        String media = parameter.ToString();
+        if (media.Contains("Music"))
+            XML.SelectedPlaylist.ListMedia = modelList.ListBoxMusique;
+        else if (media.Contains("Videos"))
+            XML.SelectedPlaylist.ListMedia = modelList.ListBoxVideo;
+         else if (media.Contains("Pictures"))
+            XML.SelectedPlaylist.ListMedia = modelList.ListBoxImage;
         model.CurrentTab = 0;
         AppearAction(parameter);
         MainMedia.OptionVisi = true;
